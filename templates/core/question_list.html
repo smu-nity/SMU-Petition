@@ -1,0 +1,19 @@
+<!--<!DOCTYPE html>-->
+<!--<html lang="en">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <title>Title</title>-->
+<!--</head>-->
+<!--<body>-->
+
+<!--</body>-->
+<!--</html>-->
+{% if question_list %}
+    <ul>
+        {% for question in question_list %} <!-- 순차적으로 question에 대입 -->
+            <li><a href ="/pybo/{{ question.id }}/">{{ question.subject }}</a></li> <!-- id번호 출력 (id), 제목 출력(subject) -->
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>질문이 없습니다.</p>
+{% end if %}
