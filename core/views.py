@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from .models import Question
 
 
 def home(request):
@@ -6,12 +7,16 @@ def home(request):
 
 
 def index(request):
-    return render(request, 'core/post_list.html')
+    question_list = Question.objects.order_by('-create_date')
+    context = {'question_list': question_list}
+    return render(request, 'core/post_list.html', context)
 
 
-def detail(request, post_id):
+def detail(request, post_id, question_id):
     print(post_id)
-    return render(request, 'core/post_detail.html')
+    question = get_object_or_404(Question, pk=question_id)
+    context = {'question': question}
+    return render(request, 'core/post_detail.html', 'core/question_detail.html', context)
 
 
 def post_create(request):
