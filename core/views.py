@@ -1,5 +1,7 @@
-from django.shortcuts import render
-from .models import Question
+from django.shortcuts import render, get_object_or_404, redirect
+from django.utils import timezone
+
+from core.models import Question, Answer
 
 
 def home(request):
@@ -9,20 +11,17 @@ def home(request):
 def index(request):
     question_list = Question.objects.order_by('-create_date')
     context = {'question_list': question_list}
-    return render(request, 'core/post_list.html', context)
+    return render(request, 'core/question_list.html', context)
 
 
-def detail(request, post_id, question_id):
-    print(post_id)
+def detail(request, question_id):
     question = get_object_or_404(Question, pk=question_id)
     context = {'question': question}
-    return render(request, 'core/post_detail.html', 'core/question_detail.html', context)
+    return render(request, 'core/question_detail.html', context)
 
 
-def post_create(request):
-    return render(request, 'core/post_form.html')
-
-
-def post_update(request, post_id):
-    print(post_id)
-    return render(request, 'core/post_form.html')
+def answer_create(request, question_id):
+    question = get_object_or_404(Question, pk=question_id)
+    answer = Answer(question=question, content=request.POST.get('content'), create_date=timezone.now())
+    answer.save()
+    return redirect('core:detail', question_id=question.id)
