@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="{% static 'css/bootstrap/bootstrap.min.css' %}" media="screen">
     <link rel="stylesheet" href="{% static 'css/post_list.css' %}" media="screen">
     <script src="https://kit.fontawesome.com/726bbd6862.js" crossorigin="anonymous"></script>
+
 </head>
 <body>
     {% include "navbar.html" %}
@@ -18,6 +19,7 @@
             <tr class="table-dark">
                 <th>번호</th>
                 <th>제목</th>
+                <th>작성자</th>
                 <th>작성일시</th>
             </tr>
             </thead>
@@ -32,6 +34,7 @@
                     <span class="text-danger small mx-2">{{ question.answer_set.count }}</span>
                     {% endif %}
                 </td>
+                <td>{{ question.author.username }}</td>
                 <td>{{ question.create_date }}</td>
             </tr>
             {% endfor %}
