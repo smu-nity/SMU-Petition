@@ -19,11 +19,26 @@
             <div class="card-body">
                 <div class="card-text" style="white-space: pre-line;">{{ question.content }}</div>
                 <div class="d-flex justify-content-end">
+                    {% if question.modify_date %}
+                    <div class="badge bg-light text-dark p-2 text-start mx-3">
+                        <div class="mb-2">수정된 날짜</div>
+                        <div>{{ question.modify_date }}</div>
+                    </div>
+                    {% endif %}
                     <div class="badge bg-light text-dark p-2">
                         {{ question.author.username }}
                         {{ question.create_date }}
                     </div>
                 </div>
+            </div>
+
+            <div class="my-3">
+            {% if request.user == question.author %}
+            <a href="{% url 'core:question_modify' question.id  %}"
+               class="btn btn-sm btn-outline-secondary">수정</a>
+            <a href="javascript:void(0)" class="delete btn btn-sm btn-outline-secondary"
+               data-uri="{% url 'core:question_delete' question.id  %}">삭제</a>
+            {% endif %}
             </div>
         </div>
         <!-- 답변 -->
@@ -33,11 +48,25 @@
             <div class="card-body">
                 <div class="card-text" style="white-space: pre-line;">{{ answer.content }}</div>
                 <div class="d-flex justify-content-end">
+                    {% if answer.modify_date %}
+                    <div class="badge bg-light text-dark p-2 text-start mx-3">
+                        <div class="mb-2">수정된 날짜</div>
+                        <div>{{ answer.modify_date }}</div>
+                    </div>
+                    {% endif %}
                     <div class="badge bg-light text-dark p-2">
                         {{ answer.create_date }}
                     </div>
                 </div>
             </div>
+            <div class="my-3">
+            {% if request.user == answer.author %}
+            <a href="{% url 'core:answer_modify' answer.id  %}"
+               class="btn btn-sm btn-outline-secondary">수정</a>
+            <a href="#" class="delete btn btn-sm btn-outline-secondary"
+               data-uri="{% url 'core:answer_delete' answer.id  %}">삭제</a>
+            {% endif %}
+        </div>
         </div>
         {% endfor %}
         <!-- 답변 등록 -->
@@ -63,6 +92,16 @@
             </div>
             <input type="submit" value="답변등록" class="btn btn-primary">
         </form>
+        <!-- message 표시 -->
+        {% if messages %}
+        <div class="alert alert-danger my-3" role="alert">
+        {% for message in messages %}
+            <strong>{{ message.tags }}</strong>
+            <ul><li>{{ message.message }}</li></ul>
+        {% endfor %}
+        </div>
+        {% endif %}
+        <h2 class="border-bottom py-2">{{ question.subject }}</h2>
     </div>
 
     {% include "footer.html" %}
@@ -80,3 +119,17 @@
         integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa"
         crossorigin="anonymous"></script>
 </html>
+<!--삭제 전 재확인 코드-->
+<!--base.html이 없기에 적용 불가-->
+{% block script %}
+<script type='text/javascript'>
+const delete_elements = document.getElementsByClassName("delete");
+Array.from(delete_elements).forEach(function(element) {
+    element.addEventListener('click', function() {
+        if(confirm("정말로 삭제하시겠습니까?")) {
+            location.href = this.dataset.uri;
+        };
+    });
+});
+</script>
+{% endblock %}
