@@ -9,7 +9,7 @@ from django.contrib import messages
 
 
 def home(request):
-    return render(request, 'home.html')
+    return render(request, 'core/home.html')
 
 
 def index(request):
@@ -27,7 +27,6 @@ def detail(request, question_id):
 
 @login_required
 def answer_create(request, question_id):
-
     question = get_object_or_404(Question, pk=question_id)
     if request.method == "POST":
         form = AnswerForm(request.POST)
@@ -42,9 +41,6 @@ def answer_create(request, question_id):
         return HttpResponseNotAllowed('Only POST is possible.')
     context = {'question': question, 'form': form}
     return render(request, 'core/question_detail.html', context)
-    # answer = Answer(question=question, content=request.POST.get('content'), create_date=timezone.now())
-    # answer.save()
-    # return redirect('core:detail', question_id=question.id)
 
 
 @login_required
@@ -63,7 +59,7 @@ def question_create(request):
     return render(request, 'core/question_form.html', context)
 
 
-@login_required(login_url='common:login')
+@login_required
 def question_modify(request, question_id):
     question = get_object_or_404(Question, pk=question_id)
     if request.user != question.author:
@@ -81,7 +77,8 @@ def question_modify(request, question_id):
     context = {'form': form}
     return render(request, 'core/question_form.html', context)
 
-@login_required(login_url='common:login')
+
+@login_required
 def question_delete(request, question_id):
     question = get_object_or_404(Question, pk=question_id)
     if request.user != question.author:
@@ -89,7 +86,9 @@ def question_delete(request, question_id):
         return redirect('core:detail', question_id=question.id)
     question.delete()
     return redirect('core:index')
-@login_required(login_url='common:login')
+
+
+@login_required
 def question_vote(request, question_id):
     question = get_object_or_404(Question, pk=question_id)
     if request.user == question.author:
@@ -98,7 +97,8 @@ def question_vote(request, question_id):
         question.voter.add(request.user)
     return redirect('core:detail', question_id=question.id)
 
-@login_required(login_url='common:login')
+
+@login_required
 def answer_modify(request, answer_id):
     answer = get_object_or_404(Answer, pk=answer_id)
     if request.user != answer.author:
@@ -116,7 +116,8 @@ def answer_modify(request, answer_id):
     context = {'answer': answer, 'form': form}
     return render(request, 'core/answer_form.html', context)
 
-@login_required(login_url='common:login')
+
+@login_required
 def answer_delete(request, answer_id):
     answer = get_object_or_404(Answer, pk=answer_id)
     if request.user != answer.author:
@@ -125,7 +126,8 @@ def answer_delete(request, answer_id):
         answer.delete()
     return redirect('core:detail', question_id=answer.question.id)
 
-@login_required(login_url='common:login')
+
+@login_required
 def answer_vote(request, answer_id):
     answer = get_object_or_404(Answer, pk=answer_id)
     if request.user == answer.author:

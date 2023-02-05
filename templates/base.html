@@ -1,28 +1,20 @@
+{% load static %}
 <!doctype html>
 <html lang="ko">
-{% load static %}
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Bootstrap demo</title>
     <link rel="stylesheet" href="{% static 'css/bootstrap/bootstrap.min.css' %}" media="screen">
-    <link rel="stylesheet" href="{% static 'css/home.css' %}" media="screen">
+    <script src="https://kit.fontawesome.com/726bbd6862.js" crossorigin="anonymous"></script>
+    {% block css %}
+    {% endblock %}
 </head>
 <body>
     {% include "navbar.html" %}
 
-    <section>
-        <div class="container main_bg">
-            <div class="row justify-content-between">
-                <div class="col-lg-6 text-light"></div>
-                <div class="col-lg-5 mt-5">
-                    <br><br><br><br><br><br>
-                    <h1 class="display-1 fw-bold lh-1 mb-5 text-light">Smunity</h1>
-                    <p class="col-lg-10 fs-1 text-light">상명대학교<br>청원 사이트</p>
-                </div>
-            </div>
-        </div>
-    </section>
+    {% block content %}
+    {% endblock %}
 
     {% include "footer.html" %}
 </body>
@@ -38,4 +30,6 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa"
         crossorigin="anonymous"></script>
+{% block script %}
+{% endblock %}
 </html>
