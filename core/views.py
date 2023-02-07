@@ -1,5 +1,5 @@
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render, get_object_or_404, redirect
+from django.shortcuts import render, get_object_or_404, redirect, resolve_url
 from django.utils import timezone
 
 from core.models import Question, Answer
@@ -38,7 +38,8 @@ def answer_create(request, question_id):
             answer.create_date = timezone.now()
             answer.question = question
             answer.save()
-            return redirect('core:detail', question_id=question.id)
+            return redirect('{}#answer_{}'.format(
+                resolve_url('core:detail', question_id=question.id), answer.id))
     else:
         return HttpResponseNotAllowed('Only POST is possible.')
     context = {'question': question, 'form': form}
@@ -114,7 +115,8 @@ def answer_modify(request, answer_id):
             answer = form.save(commit=False)
             answer.modify_date = timezone.now()
             answer.save()
-            return redirect('core:detail', question_id=answer.question.id)
+            return redirect('{}#answer_{}'.format(
+                resolve_url('core:detail', question_id=answer.question.id), answer.id))
     else:
         form = AnswerForm(instance=answer)
     context = {'answer': answer, 'form': form}
@@ -140,4 +142,5 @@ def answer_vote(request, answer_id):
         messages.error(request, '이미 추천한 글 입니다')
     else:
         answer.voter.add(request.user)
-    return redirect('core:detail', question_id=answer.question.id)
+    return redirect('{}#answer_{}'.format(
+        resolve_url('core:detail', question_id=answer.question.id), answer.id))
