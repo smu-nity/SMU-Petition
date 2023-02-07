@@ -57,8 +57,7 @@
         var value = document.getElementById("category");
         let params = new URLSearchParams(location.search);
         params.set("category", value.options[value.selectedIndex].value);
-        location.href = location.pathname + '?' + params
-        {#window.open(location.pathname + '?' + params, '_self');#}
+        window.open(location.pathname + '?' + params, '_self');
     }
     function searchParam(key) {
       return new URLSearchParams(location.search).get(key);
