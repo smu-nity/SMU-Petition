@@ -1,4 +1,5 @@
 from django.contrib.auth.decorators import login_required
+from django.db.models import Count
 from django.shortcuts import render, get_object_or_404, redirect, resolve_url
 from django.utils import timezone
 
@@ -13,10 +14,13 @@ def home(request):
 
 
 def index(request):
-    question_list = Question.objects.order_by('-create_date')
+    sort_dic = {'0': '-create_date', '1': 'create_date', '2': '-voter_count'}
+    question_list = Question.objects.all().annotate(voter_count=Count('voter'))
     category = request.GET.get('category', '0')
+    sort = request.GET.get('sort', '0')
     if category != '0':
         question_list = question_list.filter(category=int(category))
+    question_list = question_list.order_by(sort_dic[sort])
     context = {'question_list': question_list}
     return render(request, 'core/question_list.html', context)
 

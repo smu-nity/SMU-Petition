@@ -2,6 +2,11 @@
 {% block content %}
     <div class="container my-3">
         <div class="container my-3">
+            <select class="form-control" name="sort" id="sort" onchange="changeSort()">
+              <option value="0">최신순</option>
+              <option value="1">만료임박순</option>
+              <option value="2">동의순</option>
+            </select>
             <select class="form-control" name="category" id="category" onchange="changeValue()">
               <option value="0">전체</option>
               <option value="1">학사</option>
@@ -38,7 +43,7 @@
                 </td>
                 <td>{{ question.author.username }}</td>
                 <td>{{ question.create_date }}</td>
-                <td style="color: blue;">{{ question.voter.count }}</td>
+                <td style="color: blue;">{{ question.voter_count }}</td>
                 <td style="color: red;">{{ question.answer_set.count }}</td>
             </tr>
             {% endfor %}
@@ -54,19 +59,31 @@
 {% endblock %}
 {% block script %}
     <script>
-    function changeValue() {
-        var value = document.getElementById("category");
-        let params = new URLSearchParams(location.search);
-        params.set("category", value.options[value.selectedIndex].value);
-        window.open(location.pathname + '?' + params, '_self');
-    }
-    function searchParam(key) {
-      return new URLSearchParams(location.search).get(key);
-    }
+        function changeValue() {
+            var value = document.getElementById("category");
+            let params = new URLSearchParams(location.search);
+            params.set("category", value.options[value.selectedIndex].value);
+            window.open(location.pathname + '?' + params, '_self');
+        }
 
-    const category = searchParam("category");
-    if (category) {
-        $('#category').val(category).prop("selected",true);
-    }
+        function changeSort() {
+            var value = document.getElementById("sort");
+            let params = new URLSearchParams(location.search);
+            params.set("sort", value.options[value.selectedIndex].value);
+            window.open(location.pathname + '?' + params, '_self');
+        }
+
+        function searchParam(key) {
+          return new URLSearchParams(location.search).get(key);
+        }
+
+        const category = searchParam("category");
+        const sort = searchParam("sort")
+        if (category) {
+            $('#category').val(category).prop("selected",true);
+        }
+        if (sort) {
+            $('#sort').val(sort).prop("selected",true);
+        }
     </script>
 {% endblock %}
