@@ -24,6 +24,8 @@
                 <th>제목</th>
                 <th>작성자</th>
                 <th>작성일시</th>
+                <th>추천</th>
+                <th>댓글</th>
             </tr>
             </thead>
             <tbody>
@@ -33,17 +35,16 @@
                 <td>{{ question.get_category_display }}</td>
                 <td>
                     <a href="{% url 'core:detail' question.id %}">{{ question.subject }}</a>
-                    {% if question.answer_set.count > 0 %}
-                    <span class="text-danger small mx-2">{{ question.answer_set.count }}</span>
-                    {% endif %}
                 </td>
                 <td>{{ question.author.username }}</td>
                 <td>{{ question.create_date }}</td>
+                <td style="color: blue;">{{ question.voter.count }}</td>
+                <td style="color: red;">{{ question.answer_set.count }}</td>
             </tr>
             {% endfor %}
             {% else %}
             <tr>
-                <td colspan="3">질문이 없습니다.</td>
+                <td colspan="6">질문이 없습니다.</td>
             </tr>
             {% endif %}
             </tbody>
