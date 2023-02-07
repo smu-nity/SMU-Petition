@@ -1,6 +1,22 @@
 {% extends 'base.html' %}
 {% block content %}
     <div class="container my-3">
+        <div class="container my-3">
+            <select class="form-control" name="category" id="category" onchange="changeValue()">
+              <option value="0">전체</option>
+              <option value="1">학사</option>
+              <option value="2">일반</option>
+              <option value="3">사회봉사</option>
+              <option value="4">등록/장학</option>
+              <option value="5">학생생활</option>
+              <option value="6">채용</option>
+              <option value="7">글로벌</option>
+              <option value="8">진로취업</option>
+              <option value="9">비교과</option>
+              <option value="10">코로나19</option>
+              <option value="11">기타</option>
+            </select>
+        </div>
         <table class="table">
             <thead>
             <tr class="table-dark">
@@ -34,4 +50,23 @@
         </table>
         <a href="{% url 'core:question_create' %}" class="btn btn-primary">청원 등록</a>
     </div>
+{% endblock %}
+{% block script %}
+    <script>
+    function changeValue() {
+        var value = document.getElementById("category");
+        let params = new URLSearchParams(location.search);
+        params.set("category", value.options[value.selectedIndex].value);
+        location.href = location.pathname + '?' + params
+        {#window.open(location.pathname + '?' + params, '_self');#}
+    }
+    function searchParam(key) {
+      return new URLSearchParams(location.search).get(key);
+    }
+
+    const category = searchParam("category");
+    if (category) {
+        $('#category').val(category).prop("selected",true);
+    }
+    </script>
 {% endblock %}

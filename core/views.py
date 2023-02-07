@@ -14,6 +14,9 @@ def home(request):
 
 def index(request):
     question_list = Question.objects.order_by('-create_date')
+    category = request.GET.get('category', '0')
+    if category != '0':
+        question_list = question_list.filter(category=int(category))
     context = {'question_list': question_list}
     return render(request, 'core/question_list.html', context)
 
