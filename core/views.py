@@ -1,4 +1,5 @@
 from django.contrib.auth.decorators import login_required
+from django.core.paginator import Paginator
 from django.db.models import Count
 from django.shortcuts import render, get_object_or_404, redirect, resolve_url
 from django.utils import timezone
@@ -18,10 +19,13 @@ def index(request):
     question_list = Question.objects.all().annotate(voter_count=Count('voter'))
     category = request.GET.get('category', '0')
     sort = request.GET.get('sort', '0')
+    page = request.GET.get('page', '1')
     if category != '0':
         question_list = question_list.filter(category=int(category))
     question_list = question_list.order_by(sort_dic[sort])
-    context = {'question_list': question_list}
+    paginator = Paginator(question_list, 10)  # 페이지당 10개씩 보여주기
+    page_obj = paginator.get_page(page)
+    context = {'question_list': page_obj}
     return render(request, 'core/question_list.html', context)
 
 
