@@ -26,6 +26,7 @@
             <thead>
             <tr class="table-dark">
                 <th>분류</th>
+                <th>상태</th>
                 <th>제목</th>
                 <th>작성자</th>
                 <th>작성일시</th>
@@ -38,6 +39,7 @@
             {% for question in question_list %}
             <tr>
                 <td>{{ question.get_category_display }}</td>
+                <td style="color: blue;">[{{ question.get_status_display }}]</td>
                 <td>
                     <a href="{% url 'core:detail' question.id %}">{{ question.subject }}</a>
                 </td>
