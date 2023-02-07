@@ -13,10 +13,13 @@ def home(request):
 
 
 def index(request):
-    question_list = Question.objects.order_by('-create_date')
+    sort_dic = {'0': '-create_date', '1': 'create_date'}
+    question_list = Question.objects.all()
     category = request.GET.get('category', '0')
+    sort = request.GET.get('sort', '0')
     if category != '0':
         question_list = question_list.filter(category=int(category))
+    question_list = question_list.order_by(sort_dic[sort])
     context = {'question_list': question_list}
     return render(request, 'core/question_list.html', context)
 
