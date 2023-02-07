@@ -4,7 +4,7 @@
         <table class="table">
             <thead>
             <tr class="table-dark">
-                <th>번호</th>
+                <th>분류</th>
                 <th>제목</th>
                 <th>작성자</th>
                 <th>작성일시</th>
@@ -14,7 +14,7 @@
             {% if question_list %}
             {% for question in question_list %}
             <tr>
-                <td>{{ forloop.counter }}</td>
+                <td>{{ question.get_category_display }}</td>
                 <td>
                     <a href="{% url 'core:detail' question.id %}">{{ question.subject }}</a>
                     {% if question.answer_set.count > 0 %}
