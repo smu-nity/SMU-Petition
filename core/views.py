@@ -4,7 +4,7 @@ from django.db.models import Count
 from django.shortcuts import render, get_object_or_404, redirect, resolve_url
 from django.utils import timezone
 
-from core.models import Question, Answer
+from core.models import Petition, Comment, Answer
 from django.http import HttpResponseNotAllowed
 from .forms import QuestionForm, AnswerForm
 from django.contrib import messages
@@ -16,7 +16,7 @@ def home(request):
 
 def index(request):
     sort_dic = {'0': '-create_date', '1': 'create_date', '2': '-voter_count'}
-    question_list = Question.objects.all().annotate(voter_count=Count('voter'))
+    question_list = Petition.objects.all().annotate(voter_count=Count('voter'))
     category = request.GET.get('category', '0')
     sort = request.GET.get('sort', '0')
     page = request.GET.get('page', '1')
@@ -30,20 +30,19 @@ def index(request):
 
 
 def detail(request, question_id):
-    question = get_object_or_404(Question, pk=question_id)
+    question = get_object_or_404(Petition, pk=question_id)
     context = {'question': question}
     return render(request, 'core/question_detail.html', context)
 
 
 @login_required
 def answer_create(request, question_id):
-    question = get_object_or_404(Question, pk=question_id)
+    question = get_object_or_404(Petition, pk=question_id)
     if request.method == "POST":
         form = AnswerForm(request.POST)
         if form.is_valid():
             answer = form.save(commit=False)
             answer.author = request.user
-            answer.create_date = timezone.now()
             answer.question = question
             answer.save()
             return redirect('{}#answer_{}'.format(
@@ -61,7 +60,6 @@ def question_create(request):
         if form.is_valid():
             question = form.save(commit=False)
             question.author = request.user
-            question.create_date = timezone.now()
             question.save()
             return redirect('core:index')
     else:
@@ -72,7 +70,7 @@ def question_create(request):
 
 @login_required
 def question_modify(request, question_id):
-    question = get_object_or_404(Question, pk=question_id)
+    question = get_object_or_404(Petition, pk=question_id)
     if request.user != question.author:
         messages.error(request, '수정권한이 없습니다')
         return redirect('core:detail', question_id=question.id)
@@ -91,7 +89,7 @@ def question_modify(request, question_id):
 
 @login_required
 def question_delete(request, question_id):
-    question = get_object_or_404(Question, pk=question_id)
+    question = get_object_or_404(Petition, pk=question_id)
     if request.user != question.author:
         messages.error(request, '삭제권한이 없습니다')
         return redirect('core:detail', question_id=question.id)
@@ -101,7 +99,7 @@ def question_delete(request, question_id):
 
 @login_required
 def question_vote(request, question_id):
-    question = get_object_or_404(Question, pk=question_id)
+    question = get_object_or_404(Petition, pk=question_id)
     if request.user == question.author:
         messages.error(request, '본인이 작성한 글은 추천할 수 없습니다')
     elif request.user in question.voter.all():
@@ -113,7 +111,7 @@ def question_vote(request, question_id):
 
 @login_required
 def answer_modify(request, answer_id):
-    answer = get_object_or_404(Answer, pk=answer_id)
+    answer = get_object_or_404(Comment, pk=answer_id)
     if request.user != answer.author:
         messages.error(request, '수정권한이 없습니다')
         return redirect('core:detail', question_id=answer.question.id)
@@ -133,7 +131,7 @@ def answer_modify(request, answer_id):
 
 @login_required
 def answer_delete(request, answer_id):
-    answer = get_object_or_404(Answer, pk=answer_id)
+    answer = get_object_or_404(Comment, pk=answer_id)
     if request.user != answer.author:
         messages.error(request, '삭제권한이 없습니다')
     else:
@@ -143,7 +141,7 @@ def answer_delete(request, answer_id):
 
 @login_required
 def answer_vote(request, answer_id):
-    answer = get_object_or_404(Answer, pk=answer_id)
+    answer = get_object_or_404(Comment, pk=answer_id)
     if request.user == answer.author:
         messages.error(request, '본인이 작성한 글은 추천할 수 없습니다')
     elif request.user in answer.voter.all():

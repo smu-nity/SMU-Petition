@@ -44,7 +44,11 @@
                     <a href="{% url 'core:detail' question.id %}">{{ question.subject }}</a>
                 </td>
                 <td>{{ question.author.username }}</td>
-                <td>{{ question.create_date }}</td>
+                {% if question.modify_date %}
+                    <td>{{ question.modify_date }} (수정)</td>
+                {% else %}
+                    <td>{{ question.create_date }}</td>
+                {% endif %}
                 <td style="color: blue;">{{ question.voter_count }}</td>
                 <td style="color: red;">{{ question.answer_set.count }}</td>
             </tr>
