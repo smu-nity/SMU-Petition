@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load static %}
 {% block content %}
     <div class="container my-3">
         <!-- message 표시 -->
@@ -10,12 +11,33 @@
         {% endfor %}
         </div>
         {% endif %}
+        <div class="post_detail__title_container container my-3">
         <!-- 질문 -->
-        <h2 class="border-bottom py-2">{{ petition.subject }}</h2>
+        <div class="post_detail__title">
+            <h4 class="py-2 post_detail__title-status">[답변완료]</h4>
+            <h1 class="py-2 post_detail__title-title">{{ petition.subject }}</h1>
+            <h4 class="py-2 post_detail__title-agree">총 {{petition.voter.count}}명이 동의했습니다.</h4>
+        </div>
+    </div>
+
+    <div class="post_detail__body_container container my-3">
+        <div class="post_detail__body-title border-bottom">
+            <h4 class="post_detail__title-title my-3 py-2">청원내용</h4>
+            <div class="post_detail__body-title--button">
+                {% if request.user == petition.author %}
+                    <a href="{% url 'core:petition_modify' petition.id  %}" class="btn btn-sm btn-outline-secondary">수정</a>
+                    <a href="javascript:void(0)" class="delete btn btn-sm btn-outline-secondary"
+                        data-uri="{% url 'core:petition_delete' petition.id  %}">삭제</a>
+                {% endif %}
+            </div>
+        </div>
         <div class="card my-3">
             <div class="card-body">
-                <div class="card-text" style="white-space: pre-line;">{{ petition.content }}</div>
-                <div class="d-flex justify-content-end">
+                <div class="post_detail__body-text card-text">
+                    {{ petition.content }}
+                </div>
+            </div>
+            <div class="d-flex justify-content-end">
                     {% if petition.modify_date %}
                     <div class="badge bg-light text-dark p-2 text-start mx-3">
                         <div class="mb-2">수정된 날짜</div>
@@ -27,73 +49,85 @@
                         {{ petition.create_date }}
                     </div>
                 </div>
-            </div>
+        </div>
 
-            <div class="my-3">
-            <a href="javascript:void(0)" data-uri="{% url 'core:petition_vote' petition.id  %}"
-               class="recommend btn btn-sm btn-outline-secondary"> 추천
-                <span class="badge rounded-pill bg-success">{{petition.voter.count}}</span>
-            </a>
-            {% if request.user == petition.author %}
-            <a href="{% url 'core:petition_modify' petition.id  %}"
-               class="btn btn-sm btn-outline-secondary">수정</a>
-            <a href="javascript:void(0)" class="delete btn btn-sm btn-outline-secondary"
-               data-uri="{% url 'core:petition_delete' petition.id  %}">삭제</a>
-            {% endif %}
+        <div class="post_detail__body-title border-bottom">
+            <h4 class="post_detail__title-title my-3 py-2">답변내용</h4>
+            <div class="post_detail__body-title--button">
+                <a href="#" class="btn btn-sm btn-outline-secondary">답변
+                    등록하기</a>
             </div>
         </div>
+
+        <div class="card my-3">
+            <div class="card-body">
+                <div class="post_detail__body-text card-text">
+                    답변내용
+                </div>
+            </div>
+        </div>
+
+        <div class="post_detail__body-button my-3">
+            <a href="javascript:void(0)" data-uri="{% url 'core:petition_vote' petition.id  %}"
+                class="recommend btn btn-sm btn-outline-secondary"> 추천
+                <span class="badge rounded-pill bg-success">{{petition.voter.count}}</span>
+            </a>
+
+            <h5 class="post_detail__body-share--title">공유하기</h5>
+            <div class="container post_detail__body-share--url">
+                <div class="row">
+                    <div class="col-sm-2 post_detail__body-share--button post_detail__body-share--button--url">URL
+                    </div>
+                    <div class="col-sm-8 post_detail__body-share--button">https://www.smunity.co.kr</div>
+                    <div class="col-sm-2 post_detail__body-share--button post_detail__body-share--button--copy">복사
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <form action="{% url 'core:comment_create' petition.id %}" method="post" class="my-3">
+            {% csrf_token %}
+            <div class="mb-3">
+                <div class="post_detail__body-title border-bottom">
+                    <h4 class="post_detail__title-title my-3 py-2">동의하기</h4>
+                    <div class="post_detail__body-title--button">
+                        <input type="submit" value="답변등록" class="btn btn-primary">
+                    </div>
+                </div>
+                <textarea name="content" id="content" class="form-control" rows="2"></textarea>
+            </div>
+        </form>
+
         <!-- 답변 -->
         <h5 class="border-bottom my-3 py-2">{{petition.comment_set.count}}개의 답변이 있습니다.</h5>
-        {% for comment in petition.comment_set.all %}
-            <a id="comment_{{ comment.id }}"></a>
-            <div class="card my-3">
-                <div class="card-body">
-                    <div class="card-text" style="white-space: pre-line;">{{ comment.content }}</div>
-                    <div class="d-flex justify-content-end">
-                        {% if comment.modify_date %}
-                        <div class="badge bg-light text-dark p-2 text-start mx-3">
-                            <div class="mb-2">수정된 날짜</div>
-                            <div>{{ comment.modify_date }}</div>
+        <ul class="comment_data-container list-group list-group-flush">
+            {% for comment in petition.comment_set.all %}
+            <li class="list-group-item border-bottom comment_data-list">
+                <a id="comment_{{ comment.id }}"></a>
+                <div class="comment_data-content">
+                    <div class="commnet_data-left">
+                        <div class="comment_data-order">
+                            <div>#4</div>
                         </div>
-                        {% endif %}
-                        <div class="badge bg-light text-dark p-2">
-                            {{ comment.create_date }}
+                        <div class="comment_data-agree">
+                            <div>{{ comment.content }}</div>
+                        </div>
+                    </div>
+                    <div class="comment_data-right">
+                        <div class="comment_data-date">
+                            <div class="comment_data-time">{{ comment.create_date }}</div>
+                            <div class="my-3 comment_data-button">
+                            {% if request.user == comment.author %}
+                                <a href="{% url 'core:comment_modify' comment.id  %}" class="btn btn-sm btn-outline-secondary">수정</a>
+                                <a href="javascript:void(0)" class="delete btn btn-sm btn-outline-secondary" data-uri="{% url 'core:comment_delete' comment.id  %}">삭제</a>
+                            {% endif %}
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div class="my-3">
-                    {% if request.user == comment.author %}
-                    <a href="{% url 'core:comment_modify' comment.id  %}"
-                       class="btn btn-sm btn-outline-secondary">수정</a>
-                    <a href="#" class="delete btn btn-sm btn-outline-secondary"
-                       data-uri="{% url 'core:comment_delete' comment.id  %}">삭제</a>
-                    {% endif %}
-                </div>
-            </div>
-        {% endfor %}
-        <!-- 답변 등록 -->
-        <form action="{% url 'core:comment_create' petition.id %}" method="post" class="my-3">
-            {% csrf_token %}
-            <!-- 오류 표시 Start -->
-            {% if form.errors %}
-            <div class="alert alert-danger" role="alert">
-                {% for field in form %}
-                {% if field.errors %}
-                <div>
-                    <strong>{{ field.label }}</strong>
-                    {{ field.errors }}
-                </div>
-                {% endif %}
-                {% endfor %}
-            </div>
-            {% endif %}
-            <!-- 오류표시 End -->
-            <div class="form-group">
-                <label for="content" class="form-label"></label>
-                <textarea name="content" id="content" class="form-control" rows="10"></textarea>
-            </div>
-            <input type="submit" value="답변등록" class="btn btn-primary">
-        </form>
+            </li>
+            {% endfor %}
+        </ul>
     </div>
 {% endblock %}
 {% block script %}
