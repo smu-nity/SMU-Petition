@@ -4,6 +4,7 @@ from django.db.models import Count
 from django.shortcuts import render, get_object_or_404, redirect, resolve_url
 from django.utils import timezone
 
+from config.settings import SUCCESS_VALUE
 from core.models import Petition, Comment, Answer
 from django.http import HttpResponseNotAllowed
 
@@ -92,6 +93,9 @@ def petition_vote(request, petition_id):
         messages.error(request, '이미 추천한 글 입니다')
     else:
         petition.voter.add(request.user)
+        if petition.voter.count() >= SUCCESS_VALUE:
+            petition.status = 2
+            petition.save()
     return redirect('core:petition_detail', petition_id=petition.id)
 
 
@@ -182,5 +186,7 @@ def answer_delete(request, answer_id):
     answer = get_object_or_404(Answer, pk=answer_id)
     answer.delete()
     answer.petition.status = 1
+    if answer.petition.voter.count() >= SUCCESS_VALUE:
+        answer.petition.status = 2
     answer.petition.save()
     return redirect('core:petition_detail', petition_id=answer.petition.id)
