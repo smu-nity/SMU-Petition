@@ -6,6 +6,7 @@ from core.models import Question, Answer
 from django.http import HttpResponseNotAllowed
 from .forms import QuestionForm, AnswerForm
 from django.contrib import messages
+from django.core.paginator import Paginator
 
 
 def home(request):
@@ -135,3 +136,12 @@ def answer_vote(request, answer_id):
     else:
         answer.voter.add(request.user)
     return redirect('core:detail', question_id=answer.question.id)
+
+def index(request):
+    page = request.GET.get('page', '1')
+    question_list = Question.objects.order_by('-create_date')
+    paginator = Paginator(question_list, 10)  # 페이지당 10개씩 보여주기
+    max_index = len(paginator.page_range)
+    page_obj = paginator.get_page(page)
+    context = {'question_list': page_obj}
+    return render(request, 'core/question_list.html', context)
