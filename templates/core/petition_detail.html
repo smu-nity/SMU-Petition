@@ -14,7 +14,7 @@
         <div class="post_detail__title_container container my-3">
         <!-- 질문 -->
         <div class="post_detail__title">
-            <h4 class="py-2 post_detail__title-status">[답변완료]</h4>
+            <h4 class="py-2 post_detail__title-status" style="color: blue;">[{{ petition.get_status_display }}]</h4>
             <h1 class="py-2 post_detail__title-title">{{ petition.subject }}</h1>
             <h4 class="py-2 post_detail__title-agree">총 {{petition.voter.count}}명이 동의했습니다.</h4>
         </div>

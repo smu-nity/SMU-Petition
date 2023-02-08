@@ -154,6 +154,8 @@ def answer_create(request, petition_id):
             answer.author = request.user
             answer.petition = petition
             answer.save()
+            petition.status = 3
+            petition.save()
             return redirect('core:petition_detail', petition_id=petition.id)
     else:
         form = AnswerForm()
@@ -179,4 +181,6 @@ def answer_modify(request, answer_id):
 def answer_delete(request, answer_id):
     answer = get_object_or_404(Answer, pk=answer_id)
     answer.delete()
+    answer.petition.status = 1
+    answer.petition.save()
     return redirect('core:petition_detail', petition_id=answer.petition.id)
