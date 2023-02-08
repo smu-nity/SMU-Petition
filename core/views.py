@@ -4,6 +4,7 @@ from django.db.models import Count
 from django.shortcuts import render, get_object_or_404, redirect, resolve_url
 from django.utils import timezone
 
+from config.settings import SUCCESS_VALUE
 from core.models import Petition, Comment, Answer
 from django.http import HttpResponseNotAllowed
 
@@ -92,6 +93,9 @@ def petition_vote(request, petition_id):
         messages.error(request, '이미 추천한 글 입니다')
     else:
         petition.voter.add(request.user)
+        if petition.voter.count() >= SUCCESS_VALUE:
+            petition.status = 2
+            petition.save()
     return redirect('core:petition_detail', petition_id=petition.id)
 
 
@@ -128,7 +132,7 @@ def comment_modify(request, comment_id):
                 resolve_url('core:petition_detail', petition_id=comment.petition.id), comment.id))
     else:
         form = CommentForm(instance=comment)
-    return render(request, 'core/comment_form.html', {'form': form})
+    return render(request, 'core/form.html', {'form': form, 'content': '댓글 수정'})
 
 
 @login_required
@@ -142,7 +146,7 @@ def comment_delete(request, comment_id):
 
 
 @superuser_required
-def answer_create(request, petition_id):
+def answer_create(request, petition_id, type=None):
     petition = get_object_or_404(Petition, pk=petition_id)
     if Answer.objects.filter(petition=petition):
         messages.error(request, '이미 답변한 청원입니다')
@@ -154,10 +158,17 @@ def answer_create(request, petition_id):
             answer.author = request.user
             answer.petition = petition
             answer.save()
+            petition.status = 3
+            if type == 'reject':
+                petition.status = 5
+            petition.save()
             return redirect('core:petition_detail', petition_id=petition.id)
     else:
         form = AnswerForm()
-    return render(request, 'core/answer_form.html', {'form': form})
+    content = '답변 내용'
+    if type == 'reject':
+        content = '반려 이유'
+    return render(request, 'core/form.html', {'form': form, 'content': content})
 
 
 @superuser_required
@@ -172,11 +183,15 @@ def answer_modify(request, answer_id):
             return redirect('core:petition_detail', petition_id=answer.petition.id)
     else:
         form = AnswerForm(instance=answer)
-    return render(request, 'core/answer_form.html', {'form': form})
+    return render(request, 'core/form.html', {'form': form})
 
 
 @superuser_required
 def answer_delete(request, answer_id):
     answer = get_object_or_404(Answer, pk=answer_id)
     answer.delete()
+    answer.petition.status = 1
+    if answer.petition.voter.count() >= SUCCESS_VALUE:
+        answer.petition.status = 2
+    answer.petition.save()
     return redirect('core:petition_detail', petition_id=answer.petition.id)
