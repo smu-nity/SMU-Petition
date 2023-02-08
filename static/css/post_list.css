@@ -1,0 +1,182 @@
+.panel-group-smu {
+    display: flex;
+    justify-content: space-between;
+}
+
+.row-post_list {
+    margin-top: 80px;
+    margin-bottom: 60px;
+    align-items: center;
+}
+
+.petition-info__icon {
+    color: black;
+    font-size: 50px;
+    transition: all 1s ease-in-out;
+}
+
+.petition-info {
+    color: black;
+    transition: all 1s ease-in-out;
+}
+
+.petition-info__count {
+    font-weight: 600;
+}
+
+.petition-info__complete {
+    font-weight: 600;
+}
+
+.petition-warning {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.enroll-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+}
+
+.enroll-btn__icon {
+    margin-right: 10px;
+}
+
+.enroll-btn__btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: white;
+    font-size: 25px;
+    width: 300px;
+    height: 100px;
+    color: black;
+    border-color: var(--sangmyung);
+    margin: 0px 10px;
+}
+
+.enroll-btn__btn:hover {
+    background-color: var(--sangmyung);
+}
+
+
+.nav-item__icon {
+    margin: 0px 5px;
+}
+
+.navbar-smu {
+    font-weight: 300;
+}
+
+.table-sangmyung__header {
+    background-color: white;
+    color: black;
+    border-top: 1px solid var(--sangmyung);
+    text-decoration: none;
+}
+
+.table-body {
+    font-weight: 300;
+}
+
+.text-center {
+    display: table-row;
+}
+
+.table-sangmyung__body {
+    display: table-row;
+    background-color: white;
+    transition: all 0.3s ease-in-out;
+}
+
+.table-sangmyung__body:hover {
+    background-color: rgb(225, 228, 239);
+}
+
+.table-body__notice-icon {
+    font-size: 12px;
+    color: white;
+    background-color: rgb(252, 98, 8);
+    padding: 3px 10px;
+    border-radius: 5px;
+}
+
+.table-body__notice {
+    font-weight: 600;
+}
+
+.table-body__icon {
+    margin-right: 5px;
+}
+
+.table-body__like {
+    color: rgb(252, 52, 61);
+}
+
+.table-body__comment {
+    color: rgb(59, 111, 173);
+}
+
+.text-start a {
+    text-decoration: none;
+    color: black;
+}
+
+.table-body__proceeding {
+    color: rgb(42, 80, 135);
+}
+
+.table-body__complete {
+    color: rgb(191, 72, 84);
+}
+
+.text-start {
+    display: flex;
+    align-items: center;
+}
+
+.table-body__new {
+    font-size: 11px;
+    margin-right: 5px;
+    font-weight: 900;
+    color: white;
+    background-color: rgb(43, 143, 239);
+    padding: 1px 3px;
+    border-radius: 3px;
+}
+
+td:not(:first-child) {
+    padding-top: 17px;
+    padding-bottom: 17px;
+}
+
+td:first-child {
+    padding-top: 17px;
+    padding-bottom: 17px;
+}
+
+.input-group {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#search_kw {
+    margin-right: 20px;
+}
+
+.btn-smu {
+    background-color: var(--sangmyung);
+    color: white;
+}
+
+.offcanvas-header {
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-bottom: 1px solid black;
+
+}

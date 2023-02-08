@@ -6,7 +6,9 @@ from django.utils import timezone
 
 from core.models import Petition, Comment, Answer
 from django.http import HttpResponseNotAllowed
-from .forms import PetitionForm, CommentForm
+
+from .decorators import superuser_required
+from .forms import PetitionForm, CommentForm, AnswerForm
 from django.contrib import messages
 
 
@@ -30,7 +32,11 @@ def petition_list(request):
 
 def petition_detail(request, petition_id):
     petition = get_object_or_404(Petition, pk=petition_id)
-    return render(request, 'core/petition_detail.html', {'petition': petition})
+    context = {'petition': petition}
+    answers = Answer.objects.filter(petition=petition)
+    if answers:
+        context['answer'] = answers.first()
+    return render(request, 'core/petition_detail.html', context)
 
 
 @login_required
@@ -133,3 +139,44 @@ def comment_delete(request, comment_id):
     else:
         comment.delete()
     return redirect('core:petition_detail', petition_id=comment.petition.id)
+
+
+@superuser_required
+def answer_create(request, petition_id):
+    petition = get_object_or_404(Petition, pk=petition_id)
+    if Answer.objects.filter(petition=petition):
+        messages.error(request, '이미 답변한 청원입니다')
+        return redirect('core:petition_detail', petition_id=petition.id)
+    if request.method == "POST":
+        form = AnswerForm(request.POST)
+        if form.is_valid():
+            answer = form.save(commit=False)
+            answer.author = request.user
+            answer.petition = petition
+            answer.save()
+            return redirect('core:petition_detail', petition_id=petition.id)
+    else:
+        form = AnswerForm()
+    return render(request, 'core/answer_form.html', {'form': form})
+
+
+@superuser_required
+def answer_modify(request, answer_id):
+    answer = get_object_or_404(Answer, pk=answer_id)
+    if request.method == "POST":
+        form = AnswerForm(request.POST, instance=answer)
+        if form.is_valid():
+            answer = form.save(commit=False)
+            answer.modify_date = timezone.now()
+            answer.save()
+            return redirect('core:petition_detail', petition_id=answer.petition.id)
+    else:
+        form = AnswerForm(instance=answer)
+    return render(request, 'core/answer_form.html', {'form': form})
+
+
+@superuser_required
+def answer_delete(request, answer_id):
+    answer = get_object_or_404(Answer, pk=answer_id)
+    answer.delete()
+    return redirect('core:petition_detail', petition_id=answer.petition.id)
