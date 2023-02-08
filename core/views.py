@@ -30,7 +30,11 @@ def petition_list(request):
 
 def petition_detail(request, petition_id):
     petition = get_object_or_404(Petition, pk=petition_id)
-    return render(request, 'core/petition_detail.html', {'petition': petition})
+    context = {'petition': petition}
+    answers = Answer.objects.filter(petition=petition)
+    if answers:
+        context['answer'] = answers.first()
+    return render(request, 'core/petition_detail.html', context)
 
 
 @login_required
