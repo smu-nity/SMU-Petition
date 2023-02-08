@@ -11,68 +11,68 @@
         </div>
         {% endif %}
         <!-- 질문 -->
-        <h2 class="border-bottom py-2">{{ question.subject }}</h2>
+        <h2 class="border-bottom py-2">{{ petition.subject }}</h2>
         <div class="card my-3">
             <div class="card-body">
-                <div class="card-text" style="white-space: pre-line;">{{ question.content }}</div>
+                <div class="card-text" style="white-space: pre-line;">{{ petition.content }}</div>
                 <div class="d-flex justify-content-end">
-                    {% if question.modify_date %}
+                    {% if petition.modify_date %}
                     <div class="badge bg-light text-dark p-2 text-start mx-3">
                         <div class="mb-2">수정된 날짜</div>
-                        <div>{{ question.modify_date }}</div>
+                        <div>{{ petition.modify_date }}</div>
                     </div>
                     {% endif %}
                     <div class="badge bg-light text-dark p-2">
-                        {{ question.author.username }}
-                        {{ question.create_date }}
+                        {{ petition.author.username }}
+                        {{ petition.create_date }}
                     </div>
                 </div>
             </div>
 
             <div class="my-3">
-            <a href="javascript:void(0)" data-uri="{% url 'core:question_vote' question.id  %}"
+            <a href="javascript:void(0)" data-uri="{% url 'core:petition_vote' petition.id  %}"
                class="recommend btn btn-sm btn-outline-secondary"> 추천
-                <span class="badge rounded-pill bg-success">{{question.voter.count}}</span>
+                <span class="badge rounded-pill bg-success">{{petition.voter.count}}</span>
             </a>
-            {% if request.user == question.author %}
-            <a href="{% url 'core:question_modify' question.id  %}"
+            {% if request.user == petition.author %}
+            <a href="{% url 'core:petition_modify' petition.id  %}"
                class="btn btn-sm btn-outline-secondary">수정</a>
             <a href="javascript:void(0)" class="delete btn btn-sm btn-outline-secondary"
-               data-uri="{% url 'core:question_delete' question.id  %}">삭제</a>
+               data-uri="{% url 'core:petition_delete' petition.id  %}">삭제</a>
             {% endif %}
             </div>
         </div>
         <!-- 답변 -->
-        <h5 class="border-bottom my-3 py-2">{{question.answer_set.count}}개의 답변이 있습니다.</h5>
-        {% for answer in question.answer_set.all %}
-        <a id="answer_{{ answer.id }}"></a>
-        <div class="card my-3">
-            <div class="card-body">
-                <div class="card-text" style="white-space: pre-line;">{{ answer.content }}</div>
-                <div class="d-flex justify-content-end">
-                    {% if answer.modify_date %}
-                    <div class="badge bg-light text-dark p-2 text-start mx-3">
-                        <div class="mb-2">수정된 날짜</div>
-                        <div>{{ answer.modify_date }}</div>
-                    </div>
-                    {% endif %}
-                    <div class="badge bg-light text-dark p-2">
-                        {{ answer.create_date }}
+        <h5 class="border-bottom my-3 py-2">{{petition.comment_set.count}}개의 답변이 있습니다.</h5>
+        {% for comment in petition.comment_set.all %}
+            <a id="comment_{{ comment.id }}"></a>
+            <div class="card my-3">
+                <div class="card-body">
+                    <div class="card-text" style="white-space: pre-line;">{{ comment.content }}</div>
+                    <div class="d-flex justify-content-end">
+                        {% if comment.modify_date %}
+                        <div class="badge bg-light text-dark p-2 text-start mx-3">
+                            <div class="mb-2">수정된 날짜</div>
+                            <div>{{ comment.modify_date }}</div>
+                        </div>
+                        {% endif %}
+                        <div class="badge bg-light text-dark p-2">
+                            {{ comment.create_date }}
+                        </div>
                     </div>
                 </div>
+                <div class="my-3">
+                    {% if request.user == comment.author %}
+                    <a href="{% url 'core:comment_modify' comment.id  %}"
+                       class="btn btn-sm btn-outline-secondary">수정</a>
+                    <a href="#" class="delete btn btn-sm btn-outline-secondary"
+                       data-uri="{% url 'core:comment_delete' comment.id  %}">삭제</a>
+                    {% endif %}
+                </div>
             </div>
-            <div class="my-3">
-            {% if request.user == answer.author %}
-            <a href="{% url 'core:answer_modify' answer.id  %}"
-               class="btn btn-sm btn-outline-secondary">수정</a>
-            <a href="#" class="delete btn btn-sm btn-outline-secondary"
-               data-uri="{% url 'core:answer_delete' answer.id  %}">삭제</a>
-            {% endif %}
-        </div>
-        </div>
         {% endfor %}
         <!-- 답변 등록 -->
-        <form action="{% url 'core:answer_create' question.id %}" method="post" class="my-3">
+        <form action="{% url 'core:comment_create' petition.id %}" method="post" class="my-3">
             {% csrf_token %}
             <!-- 오류 표시 Start -->
             {% if form.errors %}
