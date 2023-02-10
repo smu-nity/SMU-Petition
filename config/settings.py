@@ -20,12 +20,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-1#*6jlug4psrg$@)^0op=yxzzr^5(x!gar)ean6#9wf+2=xfhe'
+SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-1#*6jlug4psrg$@)^0op=yxzzr^5(x!gar)ean6#9wf+2=xfhe')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = int(os.environ.get('DEBUG', 1))
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = os.environ.get('DJANGO_ALLOWED_HOSTS', 'localhost 127.0.0.1').split(' ')
 
 
 # Application definition
@@ -77,8 +77,12 @@ WSGI_APPLICATION = 'config.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': os.environ.get("SQL_ENGINE", 'django.db.backends.sqlite3'),
+        'NAME': os.environ.get('SQL_DATABASE', os.path.join(BASE_DIR, 'db.sqlite3')),
+        'USER': os.environ.get('SQL_USER', 'user'),
+        'PASSWORD': os.environ.get('SQL_PASSWORD', 'password'),
+        'HOST': os.environ.get('SQL_HOST', 'localhost'),
+        'PORT': os.environ.get("SQL_PORT", '5432'),
     }
 }
 
@@ -142,3 +146,14 @@ SUCCESS_VALUE = 2
 # 필드 도메인
 CATEGORY_CHOICES = ((1, "학사"), (2, "일반"), (3, "사회봉사"), (4, "등록/장학"), (5, "학생생활"), (6, "채용"), (7, "글로벌"), (8, "진로취업"), (9, "비교과"), (10, "코로나19"), (11, "기타"))
 STATUS_CHOICES = ((1, "진행중"), (2, "답변대기"), (3, "답변완료"), (4, "만료"), (5, "반려"))
+
+DATABASES = {
+    'default': {
+        'ENGINE': os.environ.get("SQL_ENGINE", 'django.db.backends.sqlite3'),
+        'NAME': os.environ.get('SQL_DATABASE', os.path.join(BASE_DIR, 'db.sqlite3')),
+        'USER': os.environ.get('SQL_USER', 'user'),
+        'PASSWORD': os.environ.get('SQL_PASSWORD', 'password'),
+        'HOST': os.environ.get('SQL_HOST', 'localhost'),
+        'PORT': os.environ.get("SQL_PORT", '5432'),
+    }
+}
