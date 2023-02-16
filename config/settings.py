@@ -38,7 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'accounts',
-    'core',
+    'petitions',
 ]
 
 MIDDLEWARE = [
@@ -146,14 +146,79 @@ SUCCESS_VALUE = os.environ.get('SUCCESS_VALUE', 2)
 # 필드 도메인
 CATEGORY_CHOICES = ((1, "학사"), (2, "일반"), (3, "사회봉사"), (4, "등록/장학"), (5, "학생생활"), (6, "채용"), (7, "글로벌"), (8, "진로취업"), (9, "비교과"), (10, "코로나19"), (11, "기타"))
 STATUS_CHOICES = ((1, "진행중"), (2, "답변대기"), (3, "답변완료"), (4, "만료"), (5, "반려"))
+COLLEGE_CHOICES = (("융합공과대학", "융합공과대학"), ("인문사회과학대학", "인문사회과학대학"), ("사범대학", "사범대학"), ("경영경제대학", "경영경제대학"), ("문화예술대학", "문화예술대학"))
+YEAR_CHOICES = (("커스텀", "커스텀"), ("2017", "17학번"), ("2018", "18학번"), ("2019", "19학번"), ("2020", "20학번"), ("2021", "21학번"), ("2022", "22학번"), ("2023", "23학번"))
+TYPE_CHOICES = (("1전선", "1전선"), ("1전심", "1전심"), ("교선", "교선"), ("교필", "교필"), ("1교직", "1교직"), ("1전필", "1전필"),  ("일선", "일선"))
+SUBTYPE_CHOICES_E = (("전문지식탐구역량", "전문지식탐구역량"), ("창의적문제해결역량", "창의적문제해결역량"), ("융복합역량", "융복합역량"), ("다양성존중역량", "다양성존중역량"), ("윤리실천역량", "윤리실천역량"))
+SUBTYPE_CHOICES_S = (("인문", "인문"), ("사회", "사회"), ("자연", "자연"), ("공학", "공학"), ("예술", "예술"))
+CULTURES_1 = [{'number': 'HALR1032', 'name': '사고와표현', 'credit': 3, 'semester': '1, 2'}, {'number': 'HALR1050\nHALR1231', 'name': 'EnglishforAcademicPurpose\n기초수학', 'credit': 3, 'semester': '1, 2'}, {'number': 'HALR1238\nHALR1239', 'name': '컴퓨팅사고와데이터의이해\n알고리즘과게임콘텐츠', 'credit': 2, 'semester': '1 | 2'}]
+CULTURES_2 = [{'number': 'HALR1032', 'name': '사고와표현', 'credit': 3, 'semester': '1, 2'}, {'number': 'HALR1050\nHALR1231', 'name': 'EnglishforAcademicPurpose\n기초수학', 'credit': 3, 'semester': '1, 2'}, {'number': 'HALR1238', 'name': '컴퓨팅사고와데이터의이해', 'credit': 2, 'semester': '1'}, {'number': 'HALR1239', 'name': '알고리즘과게임콘텐츠', 'credit': 2, 'semester': '2'}]
+CULTURES_DIC1 = [['사고와표현'], ['English', '영어', '수학', '미적분학'], ['컴퓨팅사고', '알고리즘']]
+CULTURES_DIC2 = [['사고와표현'], ['English', '영어', '수학', '미적분학'], ['컴퓨팅사고'], ['알고리즘']]
+DEPT_DIC = {'융합전자공학전공': '지능IOT융합전공', '지능데이터융합학부': '핀테크전공'}
 
-DATABASES = {
-    'default': {
-        'ENGINE': os.environ.get("SQL_ENGINE", 'django.db.backends.sqlite3'),
-        'NAME': os.environ.get('SQL_DATABASE', os.path.join(BASE_DIR, 'db.sqlite3')),
-        'USER': os.environ.get('SQL_USER', 'user'),
-        'PASSWORD': os.environ.get('SQL_PASSWORD', 'password'),
-        'HOST': os.environ.get('SQL_HOST', 'localhost'),
-        'PORT': os.environ.get("SQL_PORT", '5432'),
+
+# 로깅설정
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'filters': {
+        'require_debug_false': {
+            '()': 'django.utils.log.RequireDebugFalse',
+        },
+        'require_debug_true': {
+            '()': 'django.utils.log.RequireDebugTrue',
+        },
+    },
+    'formatters': {
+        'django.server': {
+            '()': 'django.utils.log.ServerFormatter',
+            'format': '[{server_time}] {message}',
+            'style': '{',
+        },
+        'standard': {
+            'format': '%(asctime)s [%(levelname)s] %(name)s: %(message)s'
+        },
+    },
+    'handlers': {
+        'console': {
+            'level': 'INFO',
+            'filters': ['require_debug_true'],
+            'class': 'logging.StreamHandler',
+        },
+        'django.server': {
+            'level': 'INFO',
+            'class': 'logging.StreamHandler',
+            'formatter': 'django.server',
+        },
+        'mail_admins': {
+            'level': 'ERROR',
+            'filters': ['require_debug_false'],
+            'class': 'django.utils.log.AdminEmailHandler'
+        },
+        'file': {
+            'level': 'INFO',
+            'filters': ['require_debug_false'],
+            'class': 'logging.handlers.RotatingFileHandler',
+            'filename': BASE_DIR / 'django.log',
+            'maxBytes': 1024*1024*5,  # 5 MB
+            'backupCount': 5,
+            'formatter': 'standard',
+        },
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['console', 'mail_admins', 'file'],
+            'level': 'INFO',
+        },
+        'smunity': {
+            'handlers': ['console', 'file'],
+            'level': 'INFO',
+        },
+        'django.server': {
+            'handlers': ['django.server'],
+            'level': 'INFO',
+            'propagate': False,
+        },
     }
 }
