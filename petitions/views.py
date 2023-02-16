@@ -5,7 +5,7 @@ from django.shortcuts import render, get_object_or_404, redirect, resolve_url
 from django.utils import timezone
 
 from config.settings import SUCCESS_VALUE
-from core.models import Petition, Comment, Answer
+from petitions.models import Petition, Comment, Answer
 from django.http import HttpResponseNotAllowed
 
 from .decorators import superuser_required
@@ -14,7 +14,7 @@ from django.contrib import messages
 
 
 def home(request):
-    return render(request, 'core/home.html')
+    return render(request, 'petitions/home.html')
 
 
 def petition_list(request):
@@ -28,7 +28,7 @@ def petition_list(request):
     petition_list = petition_list.order_by(sort_dic[sort])
     paginator = Paginator(petition_list, 10)  # 페이지당 10개씩 보여주기
     page_obj = paginator.get_page(page)
-    return render(request, 'core/petition_list.html', {'petition_list': page_obj})
+    return render(request, 'petitions/petition_list.html', {'petition_list': page_obj})
 
 
 def petition_detail(request, petition_id):
@@ -37,7 +37,7 @@ def petition_detail(request, petition_id):
     answers = Answer.objects.filter(petition=petition)
     if answers:
         context['answer'] = answers.first()
-    return render(request, 'core/petition_detail.html', context)
+    return render(request, 'petitions/petition_detail.html', context)
 
 
 @login_required
@@ -48,11 +48,11 @@ def petition_create(request):
             petition = form.save(commit=False)
             petition.author = request.user
             petition.save()
-            return redirect('core:petition_list')
+            return redirect('petitions:petition_list')
     else:
         form = PetitionForm()
     context = {'form': form}
-    return render(request, 'core/petition_form.html', context)
+    return render(request, 'petitions/petition_form.html', context)
 
 
 @login_required
@@ -60,18 +60,18 @@ def petition_modify(request, petition_id):
     petition = get_object_or_404(Petition, pk=petition_id)
     if request.user != petition.author:
         messages.error(request, '수정권한이 없습니다')
-        return redirect('core:petition_detail', petition_id=petition.id)
+        return redirect('petitions:petition_detail', petition_id=petition.id)
     if request.method == "POST":
         form = PetitionForm(request.POST, instance=petition)
         if form.is_valid():
             petition = form.save(commit=False)
             petition.modify_date = timezone.now()  # 수정일시 저장
             petition.save()
-            return redirect('core:petition_detail', petition_id=petition.id)
+            return redirect('petitions:petition_detail', petition_id=petition.id)
     else:
         form = PetitionForm(instance=petition)
     context = {'form': form}
-    return render(request, 'core/petition_form.html', context)
+    return render(request, 'petitions/petition_form.html', context)
 
 
 @login_required
@@ -79,9 +79,9 @@ def petition_delete(request, petition_id):
     petition = get_object_or_404(Petition, pk=petition_id)
     if request.user != petition.author:
         messages.error(request, '삭제권한이 없습니다')
-        return redirect('core:petition_detail', petition_id=petition.id)
+        return redirect('petitions:petition_detail', petition_id=petition.id)
     petition.delete()
-    return redirect('core:petition_list')
+    return redirect('petitions:petition_list')
 
 
 @login_required
@@ -96,7 +96,7 @@ def petition_vote(request, petition_id):
         if petition.voter.count() >= SUCCESS_VALUE:
             petition.status = 2
             petition.save()
-    return redirect('core:petition_detail', petition_id=petition.id)
+    return redirect('petitions:petition_detail', petition_id=petition.id)
 
 
 @login_required
@@ -110,10 +110,10 @@ def comment_create(request, petition_id):
             comment.petition = petition
             comment.save()
             return redirect('{}#comment_{}'.format(
-                resolve_url('core:petition_detail', petition_id=petition.id), comment.id))
+                resolve_url('petitions:petition_detail', petition_id=petition.id), comment.id))
     else:
         return HttpResponseNotAllowed('Only POST is possible.')
-    return render(request, 'core/petition_detail.html', {'petition': petition, 'form': form})
+    return render(request, 'petitions/petition_detail.html', {'petition': petition, 'form': form})
 
 
 @login_required
@@ -121,7 +121,7 @@ def comment_modify(request, comment_id):
     comment = get_object_or_404(Comment, pk=comment_id)
     if request.user != comment.author:
         messages.error(request, '수정권한이 없습니다')
-        return redirect('core:petition_detail', petition_id=comment.petition.id)
+        return redirect('petitions:petition_detail', petition_id=comment.petition.id)
     if request.method == "POST":
         form = CommentForm(request.POST, instance=comment)
         if form.is_valid():
@@ -129,10 +129,10 @@ def comment_modify(request, comment_id):
             comment.modify_date = timezone.now()
             comment.save()
             return redirect('{}#comment_{}'.format(
-                resolve_url('core:petition_detail', petition_id=comment.petition.id), comment.id))
+                resolve_url('petitions:petition_detail', petition_id=comment.petition.id), comment.id))
     else:
         form = CommentForm(instance=comment)
-    return render(request, 'core/form.html', {'form': form, 'content': '댓글 수정'})
+    return render(request, 'petitions/form.html', {'form': form, 'content': '댓글 수정'})
 
 
 @login_required
@@ -142,7 +142,7 @@ def comment_delete(request, comment_id):
         messages.error(request, '삭제권한이 없습니다')
     else:
         comment.delete()
-    return redirect('core:petition_detail', petition_id=comment.petition.id)
+    return redirect('petitions:petition_detail', petition_id=comment.petition.id)
 
 
 @superuser_required
@@ -150,7 +150,7 @@ def answer_create(request, petition_id, type=None):
     petition = get_object_or_404(Petition, pk=petition_id)
     if Answer.objects.filter(petition=petition):
         messages.error(request, '이미 답변한 청원입니다')
-        return redirect('core:petition_detail', petition_id=petition.id)
+        return redirect('petitions:petition_detail', petition_id=petition.id)
     if request.method == "POST":
         form = AnswerForm(request.POST)
         if form.is_valid():
@@ -162,13 +162,13 @@ def answer_create(request, petition_id, type=None):
             if type == 'reject':
                 petition.status = 5
             petition.save()
-            return redirect('core:petition_detail', petition_id=petition.id)
+            return redirect('petitions:petition_detail', petition_id=petition.id)
     else:
         form = AnswerForm()
     content = '답변 내용'
     if type == 'reject':
         content = '반려 이유'
-    return render(request, 'core/form.html', {'form': form, 'content': content})
+    return render(request, 'petitions/form.html', {'form': form, 'content': content})
 
 
 @superuser_required
@@ -180,10 +180,10 @@ def answer_modify(request, answer_id):
             answer = form.save(commit=False)
             answer.modify_date = timezone.now()
             answer.save()
-            return redirect('core:petition_detail', petition_id=answer.petition.id)
+            return redirect('petitions:petition_detail', petition_id=answer.petition.id)
     else:
         form = AnswerForm(instance=answer)
-    return render(request, 'core/form.html', {'form': form})
+    return render(request, 'petitions/form.html', {'form': form})
 
 
 @superuser_required
@@ -194,4 +194,4 @@ def answer_delete(request, answer_id):
     if answer.petition.voter.count() >= SUCCESS_VALUE:
         answer.petition.status = 2
     answer.petition.save()
-    return redirect('core:petition_detail', petition_id=answer.petition.id)
+    return redirect('petitions:petition_detail', petition_id=answer.petition.id)

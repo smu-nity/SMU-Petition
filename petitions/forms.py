@@ -1,5 +1,5 @@
 from django import forms
-from core.models import Petition, Comment, Answer
+from petitions.models import Petition, Comment, Answer
 
 
 class PetitionForm(forms.ModelForm):

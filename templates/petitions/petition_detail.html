@@ -25,13 +25,13 @@
             <h4 class="post_detail__title-title my-3 py-2">청원내용</h4>
             <div class="post_detail__body-title--button">
                 {% if request.user.is_superuser and not answer %}
-                    <a href="{% url 'core:answer_create' petition.id %}" class="btn btn-sm btn-outline-secondary">답변 등록</a>
-                    <a href="{% url 'core:answer_create' petition.id 'reject' %}" class="btn btn-sm btn-outline-secondary">청원 반려</a>
+                    <a href="{% url 'petitions:answer_create' petition.id %}" class="btn btn-sm btn-outline-secondary">답변 등록</a>
+                    <a href="{% url 'petitions:answer_create' petition.id 'reject' %}" class="btn btn-sm btn-outline-secondary">청원 반려</a>
                 {% endif %}
                 {% if request.user == petition.author %}
-                    <a href="{% url 'core:petition_modify' petition.id  %}" class="btn btn-sm btn-outline-secondary">수정</a>
+                    <a href="{% url 'petitions:petition_modify' petition.id  %}" class="btn btn-sm btn-outline-secondary">수정</a>
                     <a href="javascript:void(0)" class="delete btn btn-sm btn-outline-secondary"
-                        data-uri="{% url 'core:petition_delete' petition.id  %}">삭제</a>
+                        data-uri="{% url 'petitions:petition_delete' petition.id  %}">삭제</a>
                 {% endif %}
             </div>
         </div>
@@ -60,9 +60,9 @@
                 <h4 class="post_detail__title-title my-3 py-2">답변내용</h4>
                 <div class="post_detail__body-title--button">
                     {% if request.user.is_superuser %}
-                        <a href="{% url 'core:answer_modify' answer.id  %}" class="btn btn-sm btn-outline-secondary">수정</a>
+                        <a href="{% url 'petitions:answer_modify' answer.id  %}" class="btn btn-sm btn-outline-secondary">수정</a>
                         <a href="javascript:void(0)" class="delete btn btn-sm btn-outline-secondary"
-                            data-uri="{% url 'core:answer_delete' answer.id  %}">삭제</a>
+                            data-uri="{% url 'petitions:answer_delete' answer.id  %}">삭제</a>
                     {% endif %}
                 </div>
             </div>
@@ -88,7 +88,7 @@
         {% endif %}
 
         <div class="post_detail__body-button my-3">
-            <a href="javascript:void(0)" data-uri="{% url 'core:petition_vote' petition.id  %}"
+            <a href="javascript:void(0)" data-uri="{% url 'petitions:petition_vote' petition.id  %}"
                 class="recommend btn btn-sm btn-outline-secondary"> 추천
                 <span class="badge rounded-pill bg-success">{{petition.voter.count}}</span>
             </a>
@@ -105,7 +105,7 @@
             </div>
         </div>
 
-        <form action="{% url 'core:comment_create' petition.id %}" method="post" class="my-3">
+        <form action="{% url 'petitions:comment_create' petition.id %}" method="post" class="my-3">
             {% csrf_token %}
             <div class="mb-3">
                 <div class="post_detail__body-title border-bottom">
@@ -138,8 +138,8 @@
                             <div class="comment_data-time">{{ comment.create_date }}</div>
                             <div class="my-3 comment_data-button">
                             {% if request.user == comment.author %}
-                                <a href="{% url 'core:comment_modify' comment.id  %}" class="btn btn-sm btn-outline-secondary">수정</a>
-                                <a href="javascript:void(0)" class="delete btn btn-sm btn-outline-secondary" data-uri="{% url 'core:comment_delete' comment.id  %}">삭제</a>
+                                <a href="{% url 'petitions:comment_modify' comment.id  %}" class="btn btn-sm btn-outline-secondary">수정</a>
+                                <a href="javascript:void(0)" class="delete btn btn-sm btn-outline-secondary" data-uri="{% url 'petitions:comment_delete' comment.id  %}">삭제</a>
                             {% endif %}
                             </div>
                         </div>

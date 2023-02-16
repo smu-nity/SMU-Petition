@@ -1,5 +1,5 @@
 from django.contrib import admin
-from core.models import Petition, Comment, Answer
+from petitions.models import Petition, Comment, Answer
 
 
 admin.site.register(Petition)

@@ -41,7 +41,7 @@
                 <td>{{ petition.get_category_display }}</td>
                 <td style="color: blue;">[{{ petition.get_status_display }}]</td>
                 <td>
-                    <a href="{% url 'core:petition_detail' petition.id %}">{{ petition.subject }}</a>
+                    <a href="{% url 'petitions:petition_detail' petition.id %}">{{ petition.subject }}</a>
                 </td>
                 <td>{{ petition.author.username }}</td>
                 {% if petition.modify_date %}
@@ -60,7 +60,7 @@
             {% endif %}
             </tbody>
         </table>
-        <a href="{% url 'core:petition_create' %}" class="btn btn-primary">청원 등록</a>
+        <a href="{% url 'petitions:petition_create' %}" class="btn btn-primary">청원 등록</a>
 
         <!-- 페이징처리 시작 -->
         <ul class="pagination justify-content-center">
