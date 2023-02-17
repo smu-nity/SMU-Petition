@@ -34,7 +34,11 @@ def petition_list(request):
 
 def petition_detail(request, petition_id):
     petition = get_object_or_404(Petition, pk=petition_id)
-    context = {'petition': petition}
+    comment_list = Comment.objects.filter(petition=petition)
+    page = request.GET.get('page', '1')
+    paginator = Paginator(comment_list, 5)  # 페이지당 5개씩 보여주기
+    page_obj = paginator.get_page(page)
+    context = {'petition': petition, 'comment_list': page_obj}
     answers = Answer.objects.filter(petition=petition)
     if answers:
         context['answer'] = answers.first()

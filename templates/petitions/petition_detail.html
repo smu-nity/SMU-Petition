@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load petitions_filter %}
 {% block content %}
     <div class="navbar-img">
         <img class="navbar-img-image" src="{% static 'img/main.jpg' %}"
@@ -139,13 +140,13 @@
         <!-- 답변 -->
         <h5 class="border-bottom my-3 py-2">{{petition.comment_set.count}}개의 댓글이 있습니다.</h5>
         <ul class="comment_data-container list-group list-group-flush">
-            {% for comment in petition.comment_set.all %}
+            {% for comment in comment_list %}
             <li class="list-group-item border-bottom comment_data-list">
                 <a id="comment_{{ comment.id }}"></a>
                 <div class="comment_data-content">
                     <div class="commnet_data-left">
                         <div class="comment_data-order">
-                            <div>#4</div>
+                            <div>#{{ comment_list.paginator.count|sub:comment_list.start_index|sub:forloop.counter0|add:1 }}</div>
                         </div>
                         <div class="comment_data-agree">
                             <div>{{ comment.content }}</div>
@@ -166,6 +167,44 @@
             </li>
             {% endfor %}
         </ul>
+        <!-- 페이징처리 시작 -->
+        <ul class="pagination justify-content-center comment_data-pagination">
+            <!-- 이전페이지 -->
+            {% if comment_list.has_previous %}
+            <li class="page-item">
+                <a class="page-link" href="javascript:void(0);" onclick="changePage({{ comment_list.previous_page_number }});">이전</a>
+            </li>
+            {% else %}
+            <li class="page-item disabled">
+                <a class="page-link" tabindex="-1" aria-disabled="true" href="#">이전</a>
+            </li>
+            {% endif %}
+            <!-- 페이지리스트 -->
+            {% for page_number in comment_list.paginator.page_range %}
+                {% if page_number >= comment_list.number|add:-3 and page_number <= comment_list.number|add:3 %}
+                    {% if page_number == comment_list.number %}
+                    <li class="page-item active" aria-current="page">
+                        <a class="page-link" href="javascript:void(0);" onclick="changePage({{ page_number }});">{{ page_number }}</a>
+                    </li>
+                    {% else %}
+                    <li class="page-item">
+                        <a class="page-link" href="javascript:void(0);" onclick="changePage({{ page_number }});">{{ page_number }}</a>
+                    </li>
+                    {% endif %}
+                {% endif %}
+            {% endfor %}
+            <!-- 다음페이지 -->
+            {% if comment_list.has_next %}
+            <li class="page-item">
+                <a class="page-link" href="javascript:void(0);" onclick="changePage({{ comment_list.next_page_number }});">다음</a>
+            </li>
+            {% else %}
+            <li class="page-item disabled">
+                <a class="page-link" tabindex="-1" aria-disabled="true" href="#">다음</a>
+            </li>
+            {% endif %}
+        </ul>
+        <!-- 페이징처리 끝 -->
     </div>
 {% endblock %}
 {% block script %}
@@ -187,5 +226,11 @@
             };
         });
     });
+
+    function changePage(page) {
+        let params = new URLSearchParams(location.search);
+        params.set("page", page);
+        window.open(location.pathname + '?' + params, '_self');
+    }
 </script>
 {% endblock %}
