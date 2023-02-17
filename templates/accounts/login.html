@@ -1,20 +1,142 @@
 {% extends 'base.html' %}
+{% load static %}
+{% block css %}
+    <link rel="stylesheet" href="{% static 'css/login.css' %}">
+{% endblock %}
 {% block content %}
-<div class="container my-3">
-    <form method="post" action="{% url 'accounts:login' %}">
-        {% csrf_token %}
-        {% include "form_errors.html" %}
-        <div class="mb-3">
-            <label for="username">사용자ID</label>
-            <input type="text" class="form-control" name="username" id="username"
-                   value="{{ form.username.value|default_if_none:'' }}">
+    <div class="navbar-img">
+        <img class="navbar-img-image" src="{% static 'img/main.jpg' %}"
+            style="width: 100%; height: 300px; object-fit:cover" />
+
+        <div class="navbar-img__text">
+            <span class="navbar-img__text--title">로그인</span>
+            <span class="navbar-img__text--subtitle">학번과 스뮤니티 비밀번호를 입력해 주세요.</span>
         </div>
-        <div class="mb-3">
-            <label for="password">비밀번호</label>
-            <input type="password" class="form-control" name="password" id="password"
-                   value="{{ form.password.value|default_if_none:'' }}">
+    </div>
+   <!-- 로그인 박스 -->
+    <div class="login-container">
+        <div class="login-form">
+            <form onsubmit="return check_up1();" method="post" action="{% url 'accounts:login' %}">
+                {% csrf_token %}
+
+                <div class="content">
+                    <div class="input-group flex-nowrap">
+                      <input type="text" class="form-control" name="username" id="id" placeholder="학번">
+                    </div>
+                    <div class="input-group flex-nowrap" style="margin-top: 1rem;">
+                      <input type="password" class="form-control" name="password" id="pw" placeholder="비밀번호">
+                    </div>
+                    <a id="b2" class="link">비밀번호를 잊어버리셨나요?</a>
+                </div>
+                <div class="action">
+                    <button id="login_button" type='submit'>로그인</button>
+                    <button id="register_button" type="button" onclick="location.href='{% url 'accounts:agree' %}';">회원가입</button>
+                </div>
+            </form>
         </div>
-        <button type="submit" class="btn btn-primary">로그인</button>
-    </form>
-</div>
+    </div>
+
+    <!-- 로그인시 로딩 모달 창 -->
+    <div id='m1' class="modal">
+        <div class="load-modal-content">
+            <div class="modal_loadcontainer">
+                <div class="sk-chase">
+                    <div class="sk-chase-dot"></div>
+                    <div class="sk-chase-dot"></div>
+                    <div class="sk-chase-dot"></div>
+                    <div class="sk-chase-dot"></div>
+                    <div class="sk-chase-dot"></div>
+                    <div class="sk-chase-dot"></div>
+                </div>
+                <div class="loading">
+                    <span>인</span>
+                    <span>증</span>
+                    <span>정</span>
+                    <span>보</span>
+                    <span>확</span>
+                    <span>인</span>
+                    <span>중</span>
+                    <span>.</span>
+                    <span>.</span>
+                    <span>.</span>
+                </div>
+                <div class="load_info">
+                    창을 이동하지 마세요!
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 비밀번호 변경 -->
+    <div id='m2' class="modal">
+        <div class="update_modal_content" style="width: 50%;">
+            <div id='c2' class="close">&times;</div>
+            <div class="login_title" style="font-size:2rem; margin-top:1.7rem;">
+                비밀번호 찾기
+            </div>
+            <div style="margin-top:1.8rem; font-size:0.9rem; color:rgb(199, 199, 199)">
+                이캠퍼스에 로그인하여 인증 후 비밀번호를 변경합니다. (상명대학교 포털 ID/PW와 동일)
+            </div>
+            <hr style="width:100%; margin-top:1.3rem;">
+            <!-- 폼 -->
+            <form onsubmit="return check_up2();" method="post" action="{% url 'accounts:find' %}" name='form2'>
+                {% csrf_token %}
+                <div class="regi_box">
+                    <input class="form-control" type="text" id="id2" name="id" placeholder='학번'>
+                    <input class="form-control" type="password" id="pw2" name="password1" placeholder="이캠퍼스 비밀번호" style="margin-top: 1rem;">
+                </div>
+                <input type='submit' class='login_btn' value='인증하기' style="margin:2.5rem 0 2rem 0;">
+            </form>
+        </div>
+    </div>
+    <!-- 예외처리 -->
+    {% if messages %}
+    {% for m in messages %}
+    {% if m.tags == 'error' %}
+    <script>
+        alert('{{ m }}');
+    </script>
+    {% endif %}
+    {% endfor %}
+    {% endif %}
+{% endblock %}
+{% block script %}
+<script src="{% static 'js/modal.js' %}"></script>
+<script>
+    // 인증하기 클릭시 modal 띄움
+    function pop_modal(){
+        document.getElementById('m1').style.display = "block";
+    }
+
+    // ID/비번 안치면 빠꾸
+    function check_up1() {
+        if (!document.getElementById('pw').value || !document.getElementById('id').value) {
+            alert('⚠️ 학번과 비밀번호를 입력해주세요.');
+            return false;
+        }
+        pop_modal();
+        return true;
+    }
+    function check_up2() {
+        if (!document.getElementById('pw2').value || !document.getElementById('id2').value) {
+            alert('⚠️ 학번과 이캠퍼스 비밀번호를 입력해주세요.');
+            form2.pw2.focus();
+            return false;
+        }
+        document.getElementById('m2').style.display = "none"
+        pop_modal();
+        return true;
+    }
+
+    var b2 = document.getElementById("b2");
+    var m2 = document.getElementById('m2');
+    var c2 = document.getElementById("c2");
+    Btnclick(b2, m2);
+    Spanclick(c2, m2);
+    window.onclick = function (event) {
+        if (event.target == m2) {
+            m2.style.display = "none";
+        }
+    }
+</script>
 {% endblock %}
