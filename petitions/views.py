@@ -28,12 +28,17 @@ def petition_list(request):
     petition_list = petition_list.order_by(sort_dic[sort])
     paginator = Paginator(petition_list, 10)  # 페이지당 10개씩 보여주기
     page_obj = paginator.get_page(page)
-    return render(request, 'petitions/petition_list.html', {'petition_list': page_obj})
+    all, complete = petition_list.count(), petition_list.filter(status=3).count()
+    return render(request, 'petitions/petition_list.html', {'petition_list': page_obj, 'all': all, 'complete': complete})
 
 
 def petition_detail(request, petition_id):
     petition = get_object_or_404(Petition, pk=petition_id)
-    context = {'petition': petition}
+    comment_list = Comment.objects.filter(petition=petition)
+    page = request.GET.get('page', '1')
+    paginator = Paginator(comment_list, 5)  # 페이지당 5개씩 보여주기
+    page_obj = paginator.get_page(page)
+    context = {'petition': petition, 'comment_list': page_obj}
     answers = Answer.objects.filter(petition=petition)
     if answers:
         context['answer'] = answers.first()
@@ -132,7 +137,7 @@ def comment_modify(request, comment_id):
                 resolve_url('petitions:petition_detail', petition_id=comment.petition.id), comment.id))
     else:
         form = CommentForm(instance=comment)
-    return render(request, 'petitions/form.html', {'form': form, 'content': '댓글 수정'})
+    return render(request, 'petitions/form.html', {'form': form, 'content': '댓글 수정', 'petition_id': comment.petition.id})
 
 
 @login_required
@@ -165,10 +170,10 @@ def answer_create(request, petition_id, type=None):
             return redirect('petitions:petition_detail', petition_id=petition.id)
     else:
         form = AnswerForm()
-    content = '답변 내용'
+    content = '답변 등록'
     if type == 'reject':
         content = '반려 이유'
-    return render(request, 'petitions/form.html', {'form': form, 'content': content})
+    return render(request, 'petitions/form.html', {'form': form, 'content': content, 'petition_id': petition_id})
 
 
 @superuser_required
@@ -183,7 +188,7 @@ def answer_modify(request, answer_id):
             return redirect('petitions:petition_detail', petition_id=answer.petition.id)
     else:
         form = AnswerForm(instance=answer)
-    return render(request, 'petitions/form.html', {'form': form})
+    return render(request, 'petitions/form.html', {'form': form, 'content': '답변 등록', 'petition_id': answer.petition.id})
 
 
 @superuser_required

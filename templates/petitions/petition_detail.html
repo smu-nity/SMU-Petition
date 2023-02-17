@@ -1,24 +1,39 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load petitions_filter %}
 {% block content %}
-    <div class="container my-3">
-        <!-- message 표시 -->
-        {% if messages %}
-        <div class="alert alert-danger my-3" role="alert">
-        {% for message in messages %}
-            <strong>{{ message.tags }}</strong>
-            <ul><li>{{ message.message }}</li></ul>
-        {% endfor %}
-        </div>
-        {% endif %}
-        <div class="post_detail__title_container container my-3">
-        <!-- 질문 -->
-        <div class="post_detail__title">
-            <h4 class="py-2 post_detail__title-status" style="color: blue;">[{{ petition.get_status_display }}]</h4>
-            <h1 class="py-2 post_detail__title-title">{{ petition.subject }}</h1>
-            <h4 class="py-2 post_detail__title-agree">총 {{petition.voter.count}}명이 동의했습니다.</h4>
+    <div class="navbar-img">
+        <img class="navbar-img-image" src="{% static 'img/main.jpg' %}"
+            style="width: 100%; height: 300px; object-fit:cover" />
+
+        <div class="navbar-img__text">
+            <span class="navbar-img__text--title">청원 게시판</span>
+            <span class="navbar-img__text--subtitle">상명대학교 학우 여러분들의 의견에</span>
+            <span class="navbar-img__text--subtitle">귀를 기울이는 학생회가 되겠습니다.</span>
         </div>
     </div>
+    <div>
+        <div class="post_detail__title_container container my-3">
+            <!-- message 표시 -->
+            {% if messages %}
+            <div class="alert alert-danger my-3" role="alert">
+            {% for message in messages %}
+                <strong>{{ message.tags }}</strong>
+                <ul><li>{{ message.message }}</li></ul>
+            {% endfor %}
+            </div>
+            {% endif %}
+            <!-- 질문 -->
+            <div class="post_detail__title">
+                {% if petition.status == 3 %}
+                    <h4 class="py-2 post_detail__title-status table-body__complete">[{{ petition.get_status_display }}]</h4>
+                {% else %}
+                    <h4 class="py-2 post_detail__title-status table-body__proceeding">[{{ petition.get_status_display }}]</h4>
+                {% endif %}
+                <h1 class="py-2 post_detail__title-title">{{ petition.subject }}</h1>
+                <h4 class="py-2 post_detail__title-agree">총 {{petition.voter.count}}명이 동의했습니다.</h4>
+            </div>
+        </div>
 
     <div class="post_detail__body_container container my-3">
         <div class="post_detail__body-title border-bottom">
@@ -38,19 +53,23 @@
         <div class="card my-3">
             <div class="card-body">
                 <div class="post_detail__body-text card-text">
-                    {{ petition.content }}
+                    {{ petition.content|mark }}
                 </div>
             </div>
             <div class="d-flex justify-content-end">
-                {% if petition.modify_date %}
                 <div class="badge bg-light text-dark p-2 text-start mx-3">
-                    <div class="mb-2">수정된 날짜</div>
-                    <div>{{ petition.modify_date }}</div>
+                    {% if petition.anonymous %}
+                        익명
+                    {% else %}
+                        {{ petition.author.username }}
+                    {% endif %}
                 </div>
-                {% endif %}
-                <div class="badge bg-light text-dark p-2">
-                    {{ petition.author.username }}
-                    {{ petition.create_date }}
+                <div class="badge bg-light text-dark p-2 text-start mx-3">
+                    {% if petition.modify_date %}
+                        {{ petition.modify_date }} (수정)
+                    {% else %}
+                        {{ petition.create_date }}
+                    {% endif %}
                 </div>
             </div>
         </div>
@@ -69,19 +88,19 @@
             <div class="card my-3">
                 <div class="card-body">
                     <div class="post_detail__body-text card-text">
-                        {{ answer.content }}
+                        {{ answer.content|mark }}
                     </div>
                 </div>
                 <div class="d-flex justify-content-end">
-                    {% if answer.modify_date %}
                     <div class="badge bg-light text-dark p-2 text-start mx-3">
-                        <div class="mb-2">수정된 날짜</div>
-                        <div>{{ answer.modify_date }}</div>
-                    </div>
-                    {% endif %}
-                    <div class="badge bg-light text-dark p-2">
                         {{ answer.author.username }}
-                        {{ answer.create_date }}
+                    </div>
+                    <div class="badge bg-light text-dark p-2 text-start mx-3">
+                        {% if answer.modify_date %}
+                            {{ answer.modify_date }} (수정)
+                        {% else %}
+                            {{ answer.create_date }}
+                        {% endif %}
                     </div>
                 </div>
             </div>
@@ -89,11 +108,11 @@
 
         <div class="post_detail__body-button my-3">
             <a href="javascript:void(0)" data-uri="{% url 'petitions:petition_vote' petition.id  %}"
-                class="recommend btn btn-sm btn-outline-secondary"> 추천
+                class="recommend btn btn-sm btn-outline-secondary">동의
                 <span class="badge rounded-pill bg-success">{{petition.voter.count}}</span>
             </a>
 
-            <h5 class="post_detail__body-share--title">공유하기</h5>
+            <h5 class="post_detail__body-share--title" style="margin-top: 2rem;">공유하기</h5>
             <div class="container post_detail__body-share--url">
                 <div class="row">
                     <div class="col-sm-2 post_detail__body-share--button post_detail__body-share--button--url">URL
@@ -109,9 +128,9 @@
             {% csrf_token %}
             <div class="mb-3">
                 <div class="post_detail__body-title border-bottom">
-                    <h4 class="post_detail__title-title my-3 py-2">동의하기</h4>
+                    <h4 class="post_detail__title-title my-3 py-2">댓글달기</h4>
                     <div class="post_detail__body-title--button">
-                        <input type="submit" value="답변등록" class="btn btn-primary">
+                        <input type="submit" value="댓글등록" class="btn btn-primary">
                     </div>
                 </div>
                 <textarea name="content" id="content" class="form-control" rows="2"></textarea>
@@ -119,18 +138,18 @@
         </form>
 
         <!-- 답변 -->
-        <h5 class="border-bottom my-3 py-2">{{petition.comment_set.count}}개의 답변이 있습니다.</h5>
+        <h5 class="border-bottom my-3 py-2">{{petition.comment_set.count}}개의 댓글이 있습니다.</h5>
         <ul class="comment_data-container list-group list-group-flush">
-            {% for comment in petition.comment_set.all %}
+            {% for comment in comment_list %}
             <li class="list-group-item border-bottom comment_data-list">
                 <a id="comment_{{ comment.id }}"></a>
                 <div class="comment_data-content">
                     <div class="commnet_data-left">
                         <div class="comment_data-order">
-                            <div>#4</div>
+                            <div>#{{ comment_list.paginator.count|sub:comment_list.start_index|sub:forloop.counter0|add:1 }}</div>
                         </div>
                         <div class="comment_data-agree">
-                            <div>{{ comment.content }}</div>
+                            <div>{{ comment.content|mark }}</div>
                         </div>
                     </div>
                     <div class="comment_data-right">
@@ -148,6 +167,44 @@
             </li>
             {% endfor %}
         </ul>
+        <!-- 페이징처리 시작 -->
+        <ul class="pagination justify-content-center comment_data-pagination">
+            <!-- 이전페이지 -->
+            {% if comment_list.has_previous %}
+            <li class="page-item">
+                <a class="page-link" href="javascript:void(0);" onclick="changePage({{ comment_list.previous_page_number }});">이전</a>
+            </li>
+            {% else %}
+            <li class="page-item disabled">
+                <a class="page-link" tabindex="-1" aria-disabled="true" href="#">이전</a>
+            </li>
+            {% endif %}
+            <!-- 페이지리스트 -->
+            {% for page_number in comment_list.paginator.page_range %}
+                {% if page_number >= comment_list.number|add:-3 and page_number <= comment_list.number|add:3 %}
+                    {% if page_number == comment_list.number %}
+                    <li class="page-item active" aria-current="page">
+                        <a class="page-link" href="javascript:void(0);" onclick="changePage({{ page_number }});">{{ page_number }}</a>
+                    </li>
+                    {% else %}
+                    <li class="page-item">
+                        <a class="page-link" href="javascript:void(0);" onclick="changePage({{ page_number }});">{{ page_number }}</a>
+                    </li>
+                    {% endif %}
+                {% endif %}
+            {% endfor %}
+            <!-- 다음페이지 -->
+            {% if comment_list.has_next %}
+            <li class="page-item">
+                <a class="page-link" href="javascript:void(0);" onclick="changePage({{ comment_list.next_page_number }});">다음</a>
+            </li>
+            {% else %}
+            <li class="page-item disabled">
+                <a class="page-link" tabindex="-1" aria-disabled="true" href="#">다음</a>
+            </li>
+            {% endif %}
+        </ul>
+        <!-- 페이징처리 끝 -->
     </div>
 {% endblock %}
 {% block script %}
@@ -169,5 +226,11 @@
             };
         });
     });
+
+    function changePage(page) {
+        let params = new URLSearchParams(location.search);
+        params.set("page", page);
+        window.open(location.pathname + '?' + params, '_self');
+    }
 </script>
 {% endblock %}
