@@ -13,27 +13,27 @@
         </div>
     </div>
     <div>
-        <!-- message 표시 -->
-        {% if messages %}
-        <div class="alert alert-danger my-3" role="alert">
-        {% for message in messages %}
-            <strong>{{ message.tags }}</strong>
-            <ul><li>{{ message.message }}</li></ul>
-        {% endfor %}
-        </div>
-        {% endif %}
         <div class="post_detail__title_container container my-3">
-        <!-- 질문 -->
-        <div class="post_detail__title">
-            {% if petition.status == 3 %}
-                <h4 class="py-2 post_detail__title-status table-body__complete">[{{ petition.get_status_display }}]</h4>
-            {% else %}
-                <h4 class="py-2 post_detail__title-status table-body__proceeding">[{{ petition.get_status_display }}]</h4>
+            <!-- message 표시 -->
+            {% if messages %}
+            <div class="alert alert-danger my-3" role="alert">
+            {% for message in messages %}
+                <strong>{{ message.tags }}</strong>
+                <ul><li>{{ message.message }}</li></ul>
+            {% endfor %}
+            </div>
             {% endif %}
-            <h1 class="py-2 post_detail__title-title">{{ petition.subject }}</h1>
-            <h4 class="py-2 post_detail__title-agree">총 {{petition.voter.count}}명이 동의했습니다.</h4>
+            <!-- 질문 -->
+            <div class="post_detail__title">
+                {% if petition.status == 3 %}
+                    <h4 class="py-2 post_detail__title-status table-body__complete">[{{ petition.get_status_display }}]</h4>
+                {% else %}
+                    <h4 class="py-2 post_detail__title-status table-body__proceeding">[{{ petition.get_status_display }}]</h4>
+                {% endif %}
+                <h1 class="py-2 post_detail__title-title">{{ petition.subject }}</h1>
+                <h4 class="py-2 post_detail__title-agree">총 {{petition.voter.count}}명이 동의했습니다.</h4>
+            </div>
         </div>
-    </div>
 
     <div class="post_detail__body_container container my-3">
         <div class="post_detail__body-title border-bottom">
