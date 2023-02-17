@@ -137,7 +137,7 @@ def comment_modify(request, comment_id):
                 resolve_url('petitions:petition_detail', petition_id=comment.petition.id), comment.id))
     else:
         form = CommentForm(instance=comment)
-    return render(request, 'petitions/form.html', {'form': form, 'content': '댓글 수정'})
+    return render(request, 'petitions/form.html', {'form': form, 'content': '댓글 수정', 'petition_id': comment.petition.id})
 
 
 @login_required
@@ -170,10 +170,10 @@ def answer_create(request, petition_id, type=None):
             return redirect('petitions:petition_detail', petition_id=petition.id)
     else:
         form = AnswerForm()
-    content = '답변 내용'
+    content = '답변 등록'
     if type == 'reject':
         content = '반려 이유'
-    return render(request, 'petitions/form.html', {'form': form, 'content': content})
+    return render(request, 'petitions/form.html', {'form': form, 'content': content, 'petition_id': petition_id})
 
 
 @superuser_required
@@ -188,7 +188,7 @@ def answer_modify(request, answer_id):
             return redirect('petitions:petition_detail', petition_id=answer.petition.id)
     else:
         form = AnswerForm(instance=answer)
-    return render(request, 'petitions/form.html', {'form': form})
+    return render(request, 'petitions/form.html', {'form': form, 'content': '답변 등록', 'petition_id': answer.petition.id})
 
 
 @superuser_required

@@ -5,7 +5,7 @@ from petitions.models import Petition, Comment, Answer
 class PetitionForm(forms.ModelForm):
     class Meta:
         model = Petition
-        fields = ['subject', 'content', 'category']
+        fields = ['subject', 'content', 'category', 'anonymous']
 
 
 class CommentForm(forms.ModelForm):
