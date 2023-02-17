@@ -1,67 +1,137 @@
 {% extends 'base.html' %}
+{% load static %}
 {% block content %}
-    <div class="container my-3">
-        <div class="container my-3">
-            <select class="form-control" name="sort" id="sort" onchange="changeSort()">
-              <option value="0">최신순</option>
-              <option value="1">만료임박순</option>
-              <option value="2">동의순</option>
-            </select>
-            <select class="form-control" name="category" id="category" onchange="changeValue()">
-              <option value="0">전체</option>
-              <option value="1">학사</option>
-              <option value="2">일반</option>
-              <option value="3">사회봉사</option>
-              <option value="4">등록/장학</option>
-              <option value="5">학생생활</option>
-              <option value="6">채용</option>
-              <option value="7">글로벌</option>
-              <option value="8">진로취업</option>
-              <option value="9">비교과</option>
-              <option value="10">코로나19</option>
-              <option value="11">기타</option>
-            </select>
-        </div>
-        <table class="table">
-            <thead>
-            <tr class="table-dark">
-                <th>분류</th>
-                <th>상태</th>
-                <th>제목</th>
-                <th>작성자</th>
-                <th>작성일시</th>
-                <th>추천</th>
-                <th>댓글</th>
-            </tr>
-            </thead>
-            <tbody>
-            {% if petition_list %}
-            {% for petition in petition_list %}
-            <tr>
-                <td>{{ petition.get_category_display }}</td>
-                <td style="color: blue;">[{{ petition.get_status_display }}]</td>
-                <td>
-                    <a href="{% url 'petitions:petition_detail' petition.id %}">{{ petition.subject }}</a>
-                </td>
-                <td>{{ petition.author.username }}</td>
-                {% if petition.modify_date %}
-                    <td>{{ petition.modify_date }} (수정)</td>
-                {% else %}
-                    <td>{{ petition.create_date }}</td>
-                {% endif %}
-                <td style="color: blue;">{{ petition.voter_count }}</td>
-                <td style="color: red;">{{ petition.comment_set.count }}</td>
-            </tr>
-            {% endfor %}
-            {% else %}
-            <tr>
-                <td colspan="6">질문이 없습니다.</td>
-            </tr>
-            {% endif %}
-            </tbody>
-        </table>
-        <a href="{% url 'petitions:petition_create' %}" class="btn btn-primary">청원 등록</a>
+    <div class="navbar-img">
+        <img class="navbar-img-image" src="{% static 'img/main.jpg' %}"
+            style="width: 100%; height: 300px; object-fit:cover" />
 
+        <div class="navbar-img__text">
+            <span class="navbar-img__text--title">청원 게시판</span>
+            <span class="navbar-img__text--subtitle">상명대학교 학우 여러분들의 의견에</span>
+            <span class="navbar-img__text--subtitle">귀를 기울이는 학생회가 되겠습니다.</span>
+        </div>
+    </div>
+    <div class="resized-elements container my-3 container-post_list">
+        <div class="row row-post_list">
+            <div class="col-1 petition-info__icon">
+                <i class="fas fa-check-double"></i>
+            </div>
+            <div class="col-6 petition-info">
+                <h1 class="petition-info__count">지금까지 총 {{ all }} 개의 청원과</h1>
+                <h1 class="petition-info__complete">{{ complete }} 개의 답변이 등록되었습니다.</h1>
+            </div>
+            <div class="col-5 enroll-btn">
+                <a href="{% url 'petitions:petition_create' %}" class="btn btn-primary enroll-btn__btn">
+                    <i class="fas fa-edit enroll-btn__icon"></i>청원 등록하기
+                </a>
+            </div>
+        </div>
+
+        <div class="container my-3">
+            <div class="row my-3">
+                <div class="col-3">
+                    <div class="input-group">
+                        <select class="form-control" name="sort" id="sort" onchange="changeSort()">
+                          <option value="0">최신순</option>
+                          <option value="1">만료임박순</option>
+                          <option value="2">동의순</option>
+                        </select>
+                        <select class="form-control" name="category" id="category" onchange="changeValue()">
+                          <option value="0">전체</option>
+                          <option value="1">학사</option>
+                          <option value="2">일반</option>
+                          <option value="3">사회봉사</option>
+                          <option value="4">등록/장학</option>
+                          <option value="5">학생생활</option>
+                          <option value="6">채용</option>
+                          <option value="7">글로벌</option>
+                          <option value="8">진로취업</option>
+                          <option value="9">비교과</option>
+                          <option value="10">코로나19</option>
+                          <option value="11">기타</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-4"></div>
+                <div class="col-5 petition-warning">
+                    <!-- Button trigger modal -->
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                        이런 청원은 숨김/삭제처리 또는 반려 될 수 있습니다.
+                    </button>
+
+                    <!-- Modal -->
+                    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                        aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    ...
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary"
+                                        data-bs-dismiss="modal">Close</button>
+                                    <button type="button" class="btn btn-primary">Save changes</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="table-responsive">
+            <table class="table">
+                <thead class="table-head">
+                    <tr class="text-center table-sangmyung__header">
+                        <th>분류</th>
+                        <th>상태</th>
+                        <th style="width:50%">제목</th>
+                        <th>작성자</th>
+                        <th>추천</th>
+                        <th>댓글</th>
+                    </tr>
+                </thead>
+                <tbody class="table-body">
+                    {% if petition_list %}
+                    {% for petition in petition_list %}
+                    <tr class="text-center table-sangmyung__body">
+                        <td class="table-body__number">
+                            {{ petition.get_category_display }}
+                        </td>
+                        {% if petition.status == 3 %}
+                            <td class="table-body__complete">{{ petition.get_status_display }}</td>
+                        {% else %}
+                            <td class="table-body__proceeding">{{ petition.get_status_display }}</td>
+                        {% endif %}
+                        <td class="text-start table-body__notice">
+                            <a href="{% url 'petitions:petition_detail' petition.id %}">{{ petition.subject }}</a>
+                        </td>
+                        {% if petition.anonymous %}
+                            <td>익명</td>
+                        {% else %}
+                            <td>{{ petition.author.username }}</td>
+                        {% endif %}
+                        <td class="table-body__like">
+                            <i class="far fa-thumbs-up table-body__icon"></i>{{ petition.voter_count }}
+                        </td>
+                        <td class="table-body__comment">
+                            <i class="far fa-comment table-body__icon"></i>{{ petition.comment_set.count }}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                    {% else %}
+                    <tr class="text-center table-sangmyung__body">
+                        <td colspan="6">청원이 없습니다.</td>
+                    </tr>
+                    {% endif %}
+                </tbody>
+            </table>
+        </div>
         <!-- 페이징처리 시작 -->
         <ul class="pagination justify-content-center">
             <!-- 이전페이지 -->
@@ -100,7 +170,6 @@
             {% endif %}
         </ul>
         <!-- 페이징처리 끝 -->
-
     </div>
 {% endblock %}
 {% block script %}

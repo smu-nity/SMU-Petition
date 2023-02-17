@@ -28,7 +28,8 @@ def petition_list(request):
     petition_list = petition_list.order_by(sort_dic[sort])
     paginator = Paginator(petition_list, 10)  # 페이지당 10개씩 보여주기
     page_obj = paginator.get_page(page)
-    return render(request, 'petitions/petition_list.html', {'petition_list': page_obj})
+    all, complete = petition_list.count(), petition_list.filter(status=3).count()
+    return render(request, 'petitions/petition_list.html', {'petition_list': page_obj, 'all': all, 'complete': complete})
 
 
 def petition_detail(request, petition_id):
