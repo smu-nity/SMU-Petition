@@ -5,7 +5,12 @@ from accounts import views
 app_name = 'accounts'
 
 urlpatterns = [
-    path('login/', auth_views.LoginView.as_view(template_name='accounts/login.html'), name='login'),
+    path('login/', views.login, name='login'),
     path('logout/', auth_views.LogoutView.as_view(), name='logout'),
-    path('signup/', views.signup, name='signup'),
+    path('register/', views.register, name='register'),
+    path('agree/', views.agree, name='agree'),
+    path('change/', views.change_pw, name='change'),
+    path('update/', views.update, name='update'),
+    path('update/dept/<int:pk>/', views.change_dept, name='chage_dept'),
+    path('find/', views.find_pw, name='find'),
 ]
