@@ -118,8 +118,9 @@
                     <div class="col-sm-2 post_detail__body-share--button post_detail__body-share--button--url">URL
                     </div>
                     <div class="col-sm-8 post_detail__body-share--button">https://www.smunity.co.kr</div>
-                    <div class="col-sm-2 post_detail__body-share--button post_detail__body-share--button--copy">복사
-                    </div>
+                    <button class="col-sm-2 post_detail__body-share--button post_detail__body-share--button--copy" onclick="clip();">
+                        복사
+                    </button>
                 </div>
             </div>
         </div>
@@ -231,6 +232,18 @@
         let params = new URLSearchParams(location.search);
         params.set("page", page);
         window.open(location.pathname + '?' + params, '_self');
+    }
+
+    function clip(){
+        var url = '';
+        var textarea = document.createElement("textarea");
+        document.body.appendChild(textarea);
+        url = window.document.location.href;
+        textarea.value = url;
+        textarea.select();
+        document.execCommand("copy");
+        document.body.removeChild(textarea);
+        alert("URL이 복사되었습니다.")
     }
 </script>
 {% endblock %}
