@@ -121,7 +121,7 @@
         <!-- 답변 -->
         <h5 class="border-bottom my-3 py-2">{{petition.comment_set.count}}개의 답변이 있습니다.</h5>
         <ul class="comment_data-container list-group list-group-flush">
-            {% for comment in petition.comment_set.all %}
+            {% for comment in petition_detail %}
             <li class="list-group-item border-bottom comment_data-list">
                 <a id="comment_{{ comment.id }}"></a>
                 <div class="comment_data-content">
@@ -207,5 +207,10 @@
             };
         });
     });
+    function changePage(page) {
+        let params = new URLSearchParams(location.search);
+        params.set("page", page);
+        window.open(location.pathname + '?' + params, '_self');
+    }
 </script>
 {% endblock %}

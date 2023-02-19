@@ -33,15 +33,15 @@ def petition_list(request):
 
 def petition_detail(request, petition_id):
     petition = get_object_or_404(Petition, pk=petition_id)
-    comment_list = Comment.objects.all().annotate(author_count=Count('author'))
-    context = {'petition': petition}
+    comment_list = Comment.objects.filter(petition=petition).annotate(author_count=Count('author'))
     answers = Answer.objects.filter(petition=petition)
+    paginator = Paginator(comment_list, 10)  # 페이지당 2개씩 보여주기
     page = request.GET.get('page', '1')
+    page_obj = paginator.get_page(page)
+    context = {'petition': petition, 'petition_detail': page_obj}
     if answers:
         context['answer'] = answers.first()
-    paginator = Paginator(comment_list, 10)  # 페이지당 10개씩 보여주기
-    page_obj = paginator.get_page(page)
-    return render(request, 'core/petition_detail.html', context, {'petition_detail': page_obj})
+    return render(request, 'core/petition_detail.html', context)
 
 
 @login_required
