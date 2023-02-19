@@ -1,5 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
+
+from accounts.models import Profile
 from config.settings import CATEGORY_CHOICES, STATUS_CHOICES
 
 
@@ -16,6 +18,14 @@ class Petition(models.Model):
 
     def __str__(self):
         return f'[{self.author}] {self.subject} ({self.create_date})'
+
+    def author_name(self):
+        user = self.author
+        profile = Profile.objects.filter(user=user)
+        if profile:
+            return profile.first().name
+        return '익명'
+
 
 class Comment(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE)
