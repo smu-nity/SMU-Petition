@@ -8,14 +8,12 @@
 
 {% block content %}
     <div class="navbar-img">
-        <img class="navbar-img-image" src="{% static 'img/main.jpg' %}"  style="width: 100%; height: 300px; object-fit:cover"/>
+        <img class="navbar-img-image" src="{% static 'img/main.jpg' %}"
+            style="width: 100%; height: 300px; object-fit:cover" />
+
         <div class="navbar-img__text">
-            <span class="navbar-img__text--title">
-                <div style="font-size:4rem;">
-                    <img src="{% static 'img/logo.png' %}" style="width:100px; height:100px;">
-                </div>
-                <div class="big_title">마이페이지</div>
-            </span>
+            <span class="navbar-img__text--title">마이페이지</span>
+            <span class="navbar-img__text--subtitle">스뮤니티 계정 정보를 수정 하실 수 있습니다.</span>
         </div>
     </div>
 
@@ -65,24 +63,17 @@
             <div class="my_box_grade">
                 <div style="padding:2.5rem 2.5rem 0 2.5rem">
                     <div class="my_box_title">
-                        <div><i class="fas fa-graduation-cap"></i>내 기이수과목</div>
-                        <div>
-{#                            <button id='b5' class="my_box_mod_btn" style="margin-right:1.3rem">커스텀하기</button>#}
-                            <button id='b4' class="my_box_mod_btn">업데이트</button>
-                        </div>
+                        <div><i class="fa-solid fa-pencil"></i>내 청원</div>
                     </div>
                     <hr>
 
-                    <!-- 7개 -->
                     <table id="short_table" class="grade_table" style="margin-top:2rem;">
                         <tr>
-                            <th class="grade_table_th" style="width:10%">년도</th>
-                            <th class="grade_table_th" style="width:10%">학기</th>
-                            <th class="grade_table_th" style="width:14%">학수번호</th>
-                            <th class="grade_table_th" style="width:30%">과목명</th>
-                            <th class="grade_table_th" style="width:14%">이수구분</th>
-                            <th class="grade_table_th" style="width:14%">선택영역</th>
-                            <th class="grade_table_th" style="width:8%; border-right :0px">학점</th>
+                            <th class="grade_table_th" style="width:15%">분류</th>
+                            <th class="grade_table_th" style="width:15%">상태</th>
+                            <th class="grade_table_th" style="width:50%">제목</th>
+                            <th class="grade_table_th" style="width:10%">추천</th>
+                            <th class="grade_table_th" style="width:10%">댓글</th>
                         </tr>
                         {% for course in short %}
                         <tr>
@@ -100,39 +91,6 @@
                         </tr>
                         {% endfor %}
                     </table>
-
-                    <!-- 전체보기 -->
-                    <table id="long_table" class="grade_table" style="display:none; ">
-                        <tr>
-                            <th class="grade_table_th" style="width:10%">년도</th>
-                            <th class="grade_table_th" style="width:10%">학기</th>
-                            <th class="grade_table_th" style="width:14%">학수번호</th>
-                            <th class="grade_table_th" style="width:30%">과목명</th>
-                            <th class="grade_table_th" style="width:14%">이수구분</th>
-                            <th class="grade_table_th" style="width:14%">선택영역</th>
-                            <th class="grade_table_th" style="width:8%; border-right :0px">학점</th>
-                        </tr>
-                        {% for course in courses %}
-                        <tr>
-                            <td class="grade_table_td">{{ course.year }}</td>
-                            <td class="grade_table_td">{{ course.semester }}</td>
-                            <td class="grade_table_td">{{ course.subject.number }}</td>
-                            <td class="grade_table_td">{{ course.subject.name }}</td>
-                            <td class="grade_table_td">{{ course.type }}</td>
-                            <td class="grade_table_td">
-                                {% if course.domain  %}
-                                    {{ course.domain }}
-                                {% endif %}
-                            </td>
-                            <td class="grade_table_td" style="border-right :0px">{{ course.credit }}</td>
-                        </tr>
-                        {% endfor %}
-                    </table>
-                </div>
-                <div id="show_btn" onclick="show_table()" class="show_table"><i class="fas fa-chevron-down"></i>&nbsp;펼치기
-                </div>
-                <div id="hide_btn" onclick="hide_table()" class="show_table" style="display:none"><i
-                        class="fas fa-chevron-up"></i>&nbsp;접기</div>
                 </div>
             </div>
         </div>
@@ -154,10 +112,10 @@
                 {% csrf_token %}
                 <div class="regi_box">
                     <label>학번</label>
-                    <input type="text" value="{{ user.username }}"
+                    <input class="form-control" type="text" value="{{ user.username }}"
                         style="background-color:rgb(248,249,250);" disabled>
                     <label>이캠퍼스 비밀번호</label>
-                    <input type="password" id="pw" name="password" placeholder="이캠퍼스 비밀번호">
+                    <input class="form-control" type="password" id="pw" name="password" placeholder="이캠퍼스 비밀번호">
                 </div>
                 <input type='submit' class='go_result_btn' value='로그인' style="margin:2.5rem 0 2rem 0;">
             </form>
@@ -175,9 +133,9 @@
                 {% csrf_token %}
                 <div class="regi_box">
                     <label>새 비밀번호</label>
-                    <input id="pw1" type="password" name="password1">
+                    <input class="form-control" id="pw1" type="password" name="password1">
                     <label>비밀번호 재확인</label>
-                    <input id="pw2" type="password" name="password2">
+                    <input class="form-control" id="pw2" type="password" name="password2">
                 </div>
                 <input type='submit' class='go_result_btn' value='변경하기' style="margin:2.5rem 0 2rem 0;">
             </form>
@@ -200,10 +158,10 @@
                 {% csrf_token %}
                 <div class="regi_box">
                     <label>학번</label>
-                    <input type="text" name="student_id" placeholder='{{ user.username }}'
+                    <input class="form-control" type="text" name="student_id" placeholder='{{ user.username }}'
                         style="background-color:rgb(248,249,250);" disabled>
                     <label>비밀번호</label>
-                    <input type="password" id="pw6" name="pw_del" placeholder="비밀번호">
+                    <input class="form-control" type="password" id="pw6" name="pw_del" placeholder="비밀번호">
                 </div>
                 <input type='submit' class='go_result_btn' value='탈퇴하기' style="margin:2.5rem 0 2rem 0;">
             </form>
@@ -337,8 +295,6 @@
     // 모달 켜는 버튼 id
     var b1 = document.getElementById("b1");     // 1. 내 정보 업데이트
     var b3 = document.getElementById("b3");     // 3. 비번 변경
-    var b4 = document.getElementById("b4");     // 4. 기이수성적 업로드
-    {#var b5 = document.getElementById("b5");     // 5. 커스텀#}
     var b6 = document.getElementById("b6");     // 6. 회원탈퇴
 
     // 모달 id
@@ -348,7 +304,6 @@
 
     // 모달 끄는 버튼(X) id
     var c1 = document.getElementById("c1");
-    var c2 = document.getElementById("c2");
     var c3 = document.getElementById("c3");
     var c6 = document.getElementById("c6");
 
@@ -368,12 +323,6 @@
         if (event.target == m3) {
             m3.style.display = "none";
         }
-        if (event.target == m4) {
-            m4.style.display = "none";
-        }
-        if (event.target == m5) {
-            m5.style.display = "none";
-        }
         if (event.target == m6) {
             m6.style.display = "none";
         }
@@ -391,7 +340,7 @@
         function Tooltipeb(btn, box) {
             btn.addEventListener('click', () => {
                 box.classList.toggle('active');
-            });송
+            });
         }
     }
 
@@ -399,18 +348,4 @@
         alert("죄송합니다. 서비스 잠정 중단 상태입니다.")
     }
     </script>
-
-    <!-- 지능·데이터융합학부 (핀테크전공, 빅데이터융합전공, 스마트생산전공) -->
-    {% if profile.department.pk == 7 or profile.department.pk == 8 or profile.department.pk == 9 %}
-        <script>
-            var major = document.getElementById("major");
-            var index = {{ profile.department.pk }} - 7;
-            major.options[index].selected = true;
-
-            function handleOnChange(e) {
-                const value = e.options[e.selectedIndex].value;
-                window.open("/accounts/update/dept/" + value, '_self');
-            }
-        </script>
-    {% endif %}
 {% endblock %}
