@@ -38,16 +38,10 @@
                     </tr>
                     {% if profile.department.pk == 7 or profile.department.pk == 8 or profile.department.pk == 9 %}
                     <!-- 지능·데이터융합학부 (핀테크전공, 빅데이터융합전공, 스마트생산전공) -->
-                    <tr>
-                        <td class="my_box_table_1st_td">학과</td>
-                        <td class="regi_box" style="width: 90%; margin-right: 1rem;">
-                             <select id="major" onchange="handleOnChange(this)">
-                                <option value="7">핀테크전공</option>
-                                <option value="8">빅데이터융합전공</option>
-                                <option value="9">스마트생산전공</option>
-                            </select>
-                        </td>
-                    </tr>
+                        <tr>
+                            <td class="my_box_table_1st_td">학과</td>
+                            <td>지능데이터융합학부</td>
+                        </tr>
                     {% else %}
                         <tr>
                             <td class="my_box_table_1st_td">학과</td>

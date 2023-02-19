@@ -2,7 +2,7 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container-nav px-1 py-1">
         <a href="{% url 'home' %}" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-dark text-decoration-none">
-            <span class="fs-4">Smunity</span>
+            <span class="fs-4">스뮤 청원</span>
         </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
                 aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
@@ -16,18 +16,21 @@
                 <li class="nav-item">
                     <a class="nav-link fs-5" href="{% url 'petitions:petition_list' %}">모든 청원</a>
                 </li>
+                {% if user.is_authenticated %}
                 <li class="nav-item">
-                    {% if user.is_authenticated %}
-                    <a class="nav-link fs-5" href="{% url 'accounts:logout' %}">{{ user.username }} (로그아웃)</a>
-                    {% else %}
+                    <a class="nav-link fs-5" href="{% url 'accounts:mypage' %}">마이페이지</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link fs-5" href="{% url 'accounts:logout' %}">로그아웃</a>
+                </li>
+                {% else %}
+                <li class="nav-item">
                     <a class="nav-link fs-5" href="{% url 'accounts:login' %}">로그인</a>
-                    {% endif %}
                 </li>
                 <li>
-                    {% if not user.is_authenticated %}
                     <a class="nav-link fs-5" href="{% url 'accounts:agree' %}">회원가입</a>
-                    {% endif %}
                 </li>
+                {% endif %}
             </ul>
         </div>
     </div>
