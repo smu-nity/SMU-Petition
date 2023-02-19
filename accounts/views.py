@@ -3,12 +3,15 @@ from django.contrib.auth import login as auth_login, authenticate
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.hashers import check_password
 from django.contrib.auth.models import User
+from django.core.paginator import Paginator
+from django.db.models import Count
 from django.shortcuts import render, redirect, get_object_or_404
 
 from accounts.ecampus import ecampus, information
 from accounts.forms import UserForm
 from accounts.models import Year, Department, Profile, LoginHistory
 from config.settings import DEPT_DIC
+from petitions.models import Petition
 
 
 def agree(request):
@@ -148,7 +151,11 @@ def change_dept(request, pk):
 def mypage(request):
     user = request.user
     profile = get_object_or_404(Profile, user=user)
-    return render(request, 'accounts/mypage.html', {'user': user, 'profile': profile})
+    page = request.GET.get('page', '1')
+    petition_list = Petition.objects.filter(author=user).annotate(voter_count=Count('voter')).order_by('-create_date')
+    paginator = Paginator(petition_list, 4)
+    page_obj = paginator.get_page(page)
+    return render(request, 'accounts/mypage.html', {'user': user, 'profile': profile, 'petition_list': page_obj})
 
 
 @login_required

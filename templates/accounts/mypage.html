@@ -67,32 +67,83 @@
                     </div>
                     <hr>
 
-                    <table id="short_table" class="grade_table" style="margin-top:2rem;">
-                        <tr>
-                            <th class="grade_table_th" style="width:15%">분류</th>
-                            <th class="grade_table_th" style="width:15%">상태</th>
-                            <th class="grade_table_th" style="width:50%">제목</th>
-                            <th class="grade_table_th" style="width:10%">추천</th>
-                            <th class="grade_table_th" style="width:10%">댓글</th>
-                        </tr>
-                        {% for course in short %}
-                        <tr>
-                            <td class="grade_table_td">{{ course.year }}</td>
-                            <td class="grade_table_td">{{ course.semester }}</td>
-                            <td class="grade_table_td">{{ course.subject.number }}</td>
-                            <td class="grade_table_td">{{ course.subject.name }}</td>
-                            <td class="grade_table_td">{{ course.type }}</td>
-                            <td class="grade_table_td">
-                                {% if course.domain  %}
-                                    {{ course.domain }}
-                                {% endif %}
-                            </td>
-                            <td class="grade_table_td" style="border-right :0px">{{ course.credit }}</td>
-                        </tr>
-                        {% endfor %}
-                    </table>
-                </div>
+                <table class="table">
+                <thead class="table-head">
+                    <tr class="text-center table-sangmyung__header">
+                        <th style="width:15%">상태</th>
+                        <th style="width:55%">제목</th>
+                        <th style="width:15%">추천</th>
+                        <th style="width:15%">댓글</th>
+                    </tr>
+                </thead>
+                <tbody class="table-body">
+                    {% if petition_list %}
+                    {% for petition in petition_list %}
+                    <tr class="text-center table-sangmyung__body">
+                        {% if petition.status == 3 %}
+                            <td class="table-body__complete">{{ petition.get_status_display }}</td>
+                        {% else %}
+                            <td class="table-body__proceeding">{{ petition.get_status_display }}</td>
+                        {% endif %}
+                        <td class="text-start table-body__notice">
+                            <a href="{% url 'petitions:petition_detail' petition.id %}">{{ petition.subject }}</a>
+                        </td>
+                        <td class="table-body__like">
+                            <i class="far fa-thumbs-up table-body__icon"></i>{{ petition.voter_count }}
+                        </td>
+                        <td class="table-body__comment">
+                            <i class="far fa-comment table-body__icon"></i>{{ petition.comment_set.count }}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                    {% else %}
+                    <tr class="text-center table-sangmyung__body">
+                        <td colspan="4">청원이 없습니다.</td>
+                    </tr>
+                    {% endif %}
+                </tbody>
+            </table>
             </div>
+            <!-- 페이징처리 시작 -->
+        <ul class="pagination justify-content-center">
+            <!-- 이전페이지 -->
+            {% if petition_list %}
+                {% if petition_list.has_previous %}
+                <li class="page-item">
+                    <a class="page-link" href="javascript:void(0);" onclick="changePage({{ petition_list.previous_page_number }});">이전</a>
+                </li>
+                {% else %}
+                <li class="page-item disabled">
+                    <a class="page-link" tabindex="-1" aria-disabled="true" href="#">이전</a>
+                </li>
+                {% endif %}
+                <!-- 페이지리스트 -->
+                {% for page_number in petition_list.paginator.page_range %}
+                    {% if page_number >= petition_list.number|add:-3 and page_number <= petition_list.number|add:3 %}
+                        {% if page_number == petition_list.number %}
+                        <li class="page-item active" aria-current="page">
+                            <a class="page-link" href="javascript:void(0);" onclick="changePage({{ page_number }});">{{ page_number }}</a>
+                        </li>
+                        {% else %}
+                        <li class="page-item">
+                            <a class="page-link" href="javascript:void(0);" onclick="changePage({{ page_number }});">{{ page_number }}</a>
+                        </li>
+                        {% endif %}
+                    {% endif %}
+                {% endfor %}
+                <!-- 다음페이지 -->
+                {% if petition_list.has_next %}
+                <li class="page-item">
+                    <a class="page-link" href="javascript:void(0);" onclick="changePage({{ petition_list.next_page_number }});">다음</a>
+                </li>
+                {% else %}
+                <li class="page-item disabled">
+                    <a class="page-link" tabindex="-1" aria-disabled="true" href="#">다음</a>
+                </li>
+                {% endif %}
+            {% endif %}
+        </ul>
+        <!-- 페이징처리 끝 -->
         </div>
     </div>
 
@@ -346,6 +397,12 @@
 
     function under_maintenance(){
         alert("죄송합니다. 서비스 잠정 중단 상태입니다.")
+    }
+
+    function changePage(page) {
+        let params = new URLSearchParams(location.search);
+        params.set("page", page);
+        window.open(location.pathname + '?' + params, '_self');
     }
     </script>
 {% endblock %}
