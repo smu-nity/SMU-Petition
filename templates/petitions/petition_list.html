@@ -114,7 +114,7 @@
                         {% if petition.anonymous %}
                             <td>익명</td>
                         {% else %}
-                            <td>{{ petition.author.username }}</td>
+                            <td>{{ petition.author_name }}</td>
                         {% endif %}
                         <td class="table-body__like">
                             <i class="far fa-thumbs-up table-body__icon"></i>{{ petition.voter_count }}

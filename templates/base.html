@@ -16,7 +16,7 @@
     <link rel="icon" href="{% static 'img/favicon.ico' %}">
     <link rel="stylesheet" href="{% static 'css/bootstrap/bootstrap.min.css' %}" media="screen">
     <link rel="stylesheet" href="{% static 'css/styles.css' %}" media="screen">
-    <script src="https://kit.fontawesome.com/726bbd6862.js" crossorigin="anonymous"></script>
+    <script src="https://kit.fontawesome.com/5b1d170f6d.js" crossorigin="anonymous"></script>
     {% block css %}
     {% endblock %}
 </head>
@@ -27,6 +27,16 @@
     {% endblock %}
 
     {% include "footer.html" %}
+    <!-- 예외처리 -->
+    {% if messages %}
+    {% for m in messages %}
+    {% if m.tags == 'error' %}
+    <script>
+        alert('{{ m }}');
+    </script>
+    {% endif %}
+    {% endfor %}
+    {% endif %}
 </body>
 <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
     integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"

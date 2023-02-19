@@ -89,16 +89,6 @@
             </form>
         </div>
     </div>
-    <!-- 예외처리 -->
-    {% if messages %}
-    {% for m in messages %}
-    {% if m.tags == 'error' %}
-    <script>
-        alert('{{ m }}');
-    </script>
-    {% endif %}
-    {% endfor %}
-    {% endif %}
 {% endblock %}
 {% block script %}
 <script src="{% static 'js/modal.js' %}"></script>

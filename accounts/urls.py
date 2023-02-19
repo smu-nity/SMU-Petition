@@ -13,4 +13,6 @@ urlpatterns = [
     path('update/', views.update, name='update'),
     path('update/dept/<int:pk>/', views.change_dept, name='chage_dept'),
     path('find/', views.find_pw, name='find'),
+    path('mypage/', views.mypage, name='mypage'),
+    path('member_del/', views.member_del, name='member_del'),
 ]

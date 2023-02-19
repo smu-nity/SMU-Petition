@@ -1,0 +1,408 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block css %}
+    <link rel="stylesheet" href="{% static 'css/mypage.css' %}">
+    <link rel="stylesheet" href="{% static 'css/navbar.css' %}">
+    <link rel="stylesheet" href="{% static 'css/register.css' %}">
+{% endblock %}
+
+{% block content %}
+    <div class="navbar-img">
+        <img class="navbar-img-image" src="{% static 'img/main.jpg' %}"
+            style="width: 100%; height: 300px; object-fit:cover" />
+
+        <div class="navbar-img__text">
+            <span class="navbar-img__text--title">마이페이지</span>
+            <span class="navbar-img__text--subtitle">스뮤니티 계정 정보를 수정 하실 수 있습니다.</span>
+        </div>
+    </div>
+
+    <div class="white_sec">
+        <div class="my_box_wrap">
+            <div class="my_box">
+                <div class="my_box_title">
+                    <div><i class="fas fa-user"></i>내 정보</div>
+                    <button id='b1' class="my_box_mod_btn">업데이트</button>
+                </div>
+                <hr>
+                <table>
+                    <tr>
+                        <td class="my_box_table_1st_td">이름</td>
+                        <td>{{ profile.name }}</td>
+                    </tr>
+                    <tr>
+                        <td class="my_box_table_1st_td">학번</td>
+                        <td>{{ profile.user.username }}</td>
+                    </tr>
+                    {% if profile.department.pk == 7 or profile.department.pk == 8 or profile.department.pk == 9 %}
+                    <!-- 지능·데이터융합학부 (핀테크전공, 빅데이터융합전공, 스마트생산전공) -->
+                        <tr>
+                            <td class="my_box_table_1st_td">학과</td>
+                            <td>지능데이터융합학부</td>
+                        </tr>
+                    {% else %}
+                        <tr>
+                            <td class="my_box_table_1st_td">학과</td>
+                            <td>{{ profile.department.name }}</td>
+                        </tr>
+                    {% endif %}
+                </table>
+                <hr style="margin-bottom:0.8rem; margin-top:1.6rem;">
+                <div class="my_box_title">
+                    <div><i class="fas fa-key"></i>비밀번호 변경</div>
+                    <button id='b3' class="my_box_mod_btn">변경하기</button>
+                </div>
+                <hr style="margin-bottom:0.8rem; margin-top:0.8rem;">
+                <div class="my_box_title">
+                    <div><i class="fas fa-exclamation-triangle"></i>회원 탈퇴</div>
+                    <button id='b6' class="my_box_mod_btn">탈퇴하기</button>
+                </div>
+            </div>
+
+            <!-- 기이수과목 -->
+            <div class="my_box_grade">
+                <div style="padding:2.5rem 2.5rem 0 2.5rem">
+                    <div class="my_box_title">
+                        <div><i class="fa-solid fa-pencil"></i>내 청원</div>
+                    </div>
+                    <hr>
+
+                <table class="table">
+                <thead class="table-head">
+                    <tr class="text-center table-sangmyung__header">
+                        <th style="width:15%">상태</th>
+                        <th style="width:55%">제목</th>
+                        <th style="width:15%">추천</th>
+                        <th style="width:15%">댓글</th>
+                    </tr>
+                </thead>
+                <tbody class="table-body">
+                    {% if petition_list %}
+                    {% for petition in petition_list %}
+                    <tr class="text-center table-sangmyung__body">
+                        {% if petition.status == 3 %}
+                            <td class="table-body__complete">{{ petition.get_status_display }}</td>
+                        {% else %}
+                            <td class="table-body__proceeding">{{ petition.get_status_display }}</td>
+                        {% endif %}
+                        <td class="text-start table-body__notice">
+                            <a href="{% url 'petitions:petition_detail' petition.id %}">{{ petition.subject }}</a>
+                        </td>
+                        <td class="table-body__like">
+                            <i class="far fa-thumbs-up table-body__icon"></i>{{ petition.voter_count }}
+                        </td>
+                        <td class="table-body__comment">
+                            <i class="far fa-comment table-body__icon"></i>{{ petition.comment_set.count }}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                    {% else %}
+                    <tr class="text-center table-sangmyung__body">
+                        <td colspan="4">청원이 없습니다.</td>
+                    </tr>
+                    {% endif %}
+                </tbody>
+            </table>
+            </div>
+            <!-- 페이징처리 시작 -->
+        <ul class="pagination justify-content-center">
+            <!-- 이전페이지 -->
+            {% if petition_list %}
+                {% if petition_list.has_previous %}
+                <li class="page-item">
+                    <a class="page-link" href="javascript:void(0);" onclick="changePage({{ petition_list.previous_page_number }});">이전</a>
+                </li>
+                {% else %}
+                <li class="page-item disabled">
+                    <a class="page-link" tabindex="-1" aria-disabled="true" href="#">이전</a>
+                </li>
+                {% endif %}
+                <!-- 페이지리스트 -->
+                {% for page_number in petition_list.paginator.page_range %}
+                    {% if page_number >= petition_list.number|add:-3 and page_number <= petition_list.number|add:3 %}
+                        {% if page_number == petition_list.number %}
+                        <li class="page-item active" aria-current="page">
+                            <a class="page-link" href="javascript:void(0);" onclick="changePage({{ page_number }});">{{ page_number }}</a>
+                        </li>
+                        {% else %}
+                        <li class="page-item">
+                            <a class="page-link" href="javascript:void(0);" onclick="changePage({{ page_number }});">{{ page_number }}</a>
+                        </li>
+                        {% endif %}
+                    {% endif %}
+                {% endfor %}
+                <!-- 다음페이지 -->
+                {% if petition_list.has_next %}
+                <li class="page-item">
+                    <a class="page-link" href="javascript:void(0);" onclick="changePage({{ petition_list.next_page_number }});">다음</a>
+                </li>
+                {% else %}
+                <li class="page-item disabled">
+                    <a class="page-link" tabindex="-1" aria-disabled="true" href="#">다음</a>
+                </li>
+                {% endif %}
+            {% endif %}
+        </ul>
+        <!-- 페이징처리 끝 -->
+        </div>
+    </div>
+
+    <!-- 1. 내정보 업데이트 모달 -->
+    <div id='m1' class="modal">
+        <div class="update_modal_content">
+            <div id='c1' class="close">&times;</div>
+            <div class="login_title" style="font-size:2rem; margin-top:1.7rem;">
+                내 정보 업데이트
+            </div>
+            <div style="margin-top:1.8rem; font-size:0.9rem; color:rgb(199, 199, 199)">
+                이캠퍼스에 로그인하여 이름, 학과 정보를 업데이트합니다. (상명대학교 포털 ID/PW와 동일)
+            </div>
+            <hr style="width:80%; margin-top:1.3rem;">
+            <!-- 폼 -->
+            <form action="{% url 'accounts:update' %}" method="post" name='form1' onsubmit="return check_up1()">
+                {% csrf_token %}
+                <div class="regi_box">
+                    <label>학번</label>
+                    <input class="form-control" type="text" value="{{ user.username }}"
+                        style="background-color:rgb(248,249,250);" disabled>
+                    <label>이캠퍼스 비밀번호</label>
+                    <input class="form-control" type="password" id="pw" name="password" placeholder="이캠퍼스 비밀번호">
+                </div>
+                <input type='submit' class='go_result_btn' value='로그인' style="margin:2.5rem 0 2rem 0;">
+            </form>
+        </div>
+    </div>
+
+    <!-- 3. 비번 변경 모달 -->
+    <div id='m3' class="modal">
+        <div class="update_modal_content">
+            <div id='c3' class="close">&times;</div>
+            <div class="login_title" style="font-size:2rem; margin-top:1.7rem; margin-bottom: 2rem;">비밀번호 변경</div>
+            <hr style="width:80%; margin-top:1.3rem;">
+            <!-- 폼 -->
+            <form action="{% url 'accounts:change' %}" method="post" name='form3' onsubmit="return check_up3()">
+                {% csrf_token %}
+                <div class="regi_box">
+                    <label>새 비밀번호</label>
+                    <input class="form-control" id="pw1" type="password" name="password1">
+                    <label>비밀번호 재확인</label>
+                    <input class="form-control" id="pw2" type="password" name="password2">
+                </div>
+                <input type='submit' class='go_result_btn' value='변경하기' style="margin:2.5rem 0 2rem 0;">
+            </form>
+        </div>
+    </div>
+
+    <!-- 6. 회원탈퇴 모달-->
+    <div id='m6' class="modal">
+        <div class="update_modal_content">
+            <div id='c6' class="close">&times;</div>
+            <div class="login_title" style="font-size:2rem; margin-top:1.7rem;">
+                회원 탈퇴
+            </div>
+            <div style="margin-top:1.8rem; font-size:0.9rem; color:rgb(199, 199, 199)">
+                스뮤니티에서 탈퇴합니다. (회원 정보 모두 삭제)
+            </div>
+            <hr style="width:80%; margin-top:1.3rem;">
+
+            <form action="{% url 'accounts:member_del' %}" method="POST" name='form6' onsubmit="return check_up6()">
+                {% csrf_token %}
+                <div class="regi_box">
+                    <label>학번</label>
+                    <input class="form-control" type="text" name="student_id" placeholder='{{ user.username }}'
+                        style="background-color:rgb(248,249,250);" disabled>
+                    <label>비밀번호</label>
+                    <input class="form-control" type="password" id="pw6" name="pw_del" placeholder="비밀번호">
+                </div>
+                <input type='submit' class='go_result_btn' value='탈퇴하기' style="margin:2.5rem 0 2rem 0;">
+            </form>
+        </div>
+    </div>
+
+    <!-- 로그인시 로딩 모달 창 -->
+    <div id='load_madal' class="modal">
+        <div class="load-modal-content">
+            <div class="modal_loadcontainer">
+                <div class="sk-chase">
+                    <div class="sk-chase-dot"></div>
+                    <div class="sk-chase-dot"></div>
+                    <div class="sk-chase-dot"></div>
+                    <div class="sk-chase-dot"></div>
+                    <div class="sk-chase-dot"></div>
+                    <div class="sk-chase-dot"></div>
+                </div>
+                <div class="loading">
+                    <span>정</span>
+                    <span>보</span>
+                    <span>업</span>
+                    <span>데</span>
+                    <span>이</span>
+                    <span>트</span>
+                    <span>중</span>
+                    <span>.</span>
+                    <span>.</span>
+                    <span>.</span>
+                </div>
+                <div class="load_info">
+                    창을 이동하지 마세요!
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block script %}
+<script src="{% static 'js/modal.js' %}"></script>
+
+<script>
+    // 마이페이지에서 뒤로가기 버튼 클릭시 무조건 home
+    history.pushState(null, null, location.href);
+    window.onpopstate = function (event) {
+        location.href = "{% url 'home' %}";
+    };
+
+    // 업데이트 클릭시 로딩 모달 띄우기
+    function pop_modal() {
+        document.getElementById('load_madal').style.display = "block";
+    }
+
+    function check_up1() {
+        if (!document.getElementById('pw').value) {
+            alert('비밀번호를 입력해주세요.');
+            form1.pw.focus();
+            return false;
+        }
+        pop_modal();
+        return true;
+    }
+
+    function check_up6() {
+        if (!document.getElementById('pw6').value) {
+            alert('비밀번호를 입력해주세요.');
+            form6.pw6.focus();
+            return false;
+        }
+        var con = confirm('😢정말 탈퇴하실건가요?')
+        if(con){
+            pop_modal();
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+
+
+    // 비번 안쓰거나 일치안하면 빠꾸
+    function check_up3() {
+        if (!document.getElementById('pw1').value) {
+            alert('비밀번호를 입력해주세요.');
+            form3.pw1.focus();
+            return false;
+        }
+        if (document.getElementById('pw1').value !== document.getElementById('pw2').value) {
+            alert('비밀번호가 일치하지 않습니다.');
+            form3.pw1.focus();
+            return false;
+        }
+        pop_modal();
+        return true;
+    }
+
+    // 파일 업로드 안하고 버튼 누르면 빠꾸
+    function check_up4() {
+        if (!document.getElementById("file_input").value) {
+            alert("엑셀파일을 첨부해주세요.");
+            return false;
+        }
+        pop_modal();
+        return true;
+    }
+
+    // 파일 업로드 css - jquery 적용
+    $(document).on("change", ".file-input", function () {
+        $filename = $('input[type=file]').val().replace(/.*(\/|\\)/, '');
+        if ($filename == "")
+            $filename = "파일을 선택해주세요.";
+        $(".filename").text($filename);
+    })
+
+    function show_table() {
+        // 테이블 전환
+        document.getElementById("short_table").style.display = "none";
+        document.getElementById("long_table").style.display = "table";
+        // 버튼 전환
+        document.getElementById("show_btn").style.display = "none";
+        document.getElementById("hide_btn").style.display = "block";
+    }
+
+    function hide_table() {
+        document.getElementById("short_table").style.display = "table";
+        document.getElementById("long_table").style.display = "none";
+        document.getElementById("show_btn").style.display = "block";
+        document.getElementById("hide_btn").style.display = "none";
+    }
+
+    // 모달 켜는 버튼 id
+    var b1 = document.getElementById("b1");     // 1. 내 정보 업데이트
+    var b3 = document.getElementById("b3");     // 3. 비번 변경
+    var b6 = document.getElementById("b6");     // 6. 회원탈퇴
+
+    // 모달 id
+    var m1 = document.getElementById('m1');
+    var m3 = document.getElementById('m3');
+    var m6 = document.getElementById('m6');
+
+    // 모달 끄는 버튼(X) id
+    var c1 = document.getElementById("c1");
+    var c3 = document.getElementById("c3");
+    var c6 = document.getElementById("c6");
+
+    // 모달 키는 함수 호출
+    Btnclick(b1, m1);
+    Btnclick(b3, m3);
+    Btnclick(b6, m6);
+    // 모달 끄는 함수 호출
+    Spanclick(c1, m1);
+    Spanclick(c3, m3);
+    Spanclick(c6, m6);
+    // 모달 밖 화면 누를때 꺼지게하기
+    window.onclick = function (event) {
+        if (event.target == m1) {
+            m1.style.display = "none";
+        }
+        if (event.target == m3) {
+            m3.style.display = "none";
+        }
+        if (event.target == m6) {
+            m6.style.display = "none";
+        }
+    }
+
+    // 툴팁 함수
+    let tooltip_btn = document.querySelectorAll('.tooltip');
+    let tooltip_box = document.querySelectorAll('.tooltip_text2');
+    window.onload = function(){
+
+        for (i = 0; i < tooltip_btn.length; i++) {
+            Tooltipeb(tooltip_btn[i], tooltip_box[i]);
+        }
+
+        function Tooltipeb(btn, box) {
+            btn.addEventListener('click', () => {
+                box.classList.toggle('active');
+            });
+        }
+    }
+
+    function under_maintenance(){
+        alert("죄송합니다. 서비스 잠정 중단 상태입니다.")
+    }
+
+    function changePage(page) {
+        let params = new URLSearchParams(location.search);
+        params.set("page", page);
+        window.open(location.pathname + '?' + params, '_self');
+    }
+    </script>
+{% endblock %}

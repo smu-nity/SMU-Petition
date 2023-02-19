@@ -1,13 +1,17 @@
 from django.contrib import messages
 from django.contrib.auth import login as auth_login, authenticate
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.hashers import check_password
 from django.contrib.auth.models import User
+from django.core.paginator import Paginator
+from django.db.models import Count
 from django.shortcuts import render, redirect, get_object_or_404
 
 from accounts.ecampus import ecampus, information
 from accounts.forms import UserForm
 from accounts.models import Year, Department, Profile, LoginHistory
 from config.settings import DEPT_DIC
+from petitions.models import Petition
 
 
 def agree(request):
@@ -92,7 +96,7 @@ def change_pw(request):
             messages.error(request, '비밀번호가 변경되었습니다.')
         else:
             messages.error("⚠️ 비밀번호가 일치하지 않습니다.")
-    return redirect('petitions:petition_list')
+    return redirect('home')
 
 
 @login_required
@@ -111,7 +115,7 @@ def update(request):
                 return redirect('petitions:petition_list')
             messages.error(request, '⚠️ 서비스에서 지원하지 않는 학과와 학번 입니다.')
         messages.error(request, '⚠️ 샘물 포털 ID/PW를 다시 확인하세요! (Caps Lock 확인)')
-    return redirect('petitions:petition_list')
+    return redirect('accounts:mypage')
 
 
 def find_pw(request):
@@ -141,3 +145,27 @@ def change_dept(request, pk):
         return redirect('petitions:petition_list')
     messages.error(request, '⚠️ 변경 권한이 없습니다!')
     return redirect('home')
+
+
+@login_required
+def mypage(request):
+    user = request.user
+    profile = get_object_or_404(Profile, user=user)
+    page = request.GET.get('page', '1')
+    petition_list = Petition.objects.filter(author=user).annotate(voter_count=Count('voter')).order_by('-create_date')
+    paginator = Paginator(petition_list, 4)
+    page_obj = paginator.get_page(page)
+    return render(request, 'accounts/mypage.html', {'user': user, 'profile': profile, 'petition_list': page_obj})
+
+
+@login_required
+def member_del(request):
+    if request.method == "POST":
+        pw_del = request.POST["pw_del"]
+        user = request.user
+        if check_password(pw_del, user.password):
+            user.delete()
+            messages.error(request, '회원 탈퇴 되었습니다.')
+            return redirect('home')
+    messages.error(request, '⚠️ 비밀번호가 일치하지 않습니다.')
+    return redirect('accounts:mypage')
