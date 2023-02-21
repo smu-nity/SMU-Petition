@@ -1,19 +1,119 @@
 {% extends 'base.html' %}
 {% load static %}
-{% block css %}
-    <link rel="stylesheet" href="{% static 'css/home.css' %}" media="screen">
-{% endblock %}
 {% block content %}
-    <section>
-        <div class="container main_bg">
-            <div class="row justify-content-between">
-                <div class="col-lg-6 text-light"></div>
-                <div class="col-lg-5 mt-5">
-                    <br><br><br><br><br><br>
-                    <h1 class="display-1 fw-bold lh-1 mb-5 text-light">Smunity</h1>
-                    <p class="col-lg-10 fs-1 text-light">상명대학교<br>청원 사이트</p>
-                </div>
-            </div>
+    <div class="navbar-img">
+        <img class="navbar-img-image" src="{% static 'img/main.jpg' %}"
+            style="width: 100%; height: 300px; object-fit:cover" />
+
+        <div class="navbar-img__text">
+            <span class="navbar-img__text--title">스뮤 청원</span>
+            <span class="navbar-img__text--subtitle">상명대학교 학우 여러분들의 의견에</span>
+            <span class="navbar-img__text--subtitle">귀를 기울이는 학생회가 되겠습니다.</span>
         </div>
-    </section>
+    </div>
+    <div class="container my-3 container-home main-div " style="width : 70%;">
+        <!--항목 별 분류 버튼 세트 -->
+        <div style="display : flex; justify-content: space-between;" >
+
+                <!--학사 버튼-->
+                <div class="main-search-by-category-icon-div">
+                    <a class="btn-primary main-search-by-category-icon" href="#" role="button">
+                        <i class="fas fa-user-graduate main-search-by-category-icon-details"></i>
+                    </a>
+                    <span class="main-search-by-category-icon-font">학사</span>
+                </div>
+
+
+                <!--일반 버튼-->
+                <div class="main-search-by-category-icon-div">
+                    <a class="btn-primary main-search-by-category-icon " href="#" role="button">
+                        <i class="fas fa-random main-search-by-category-icon-details"></i>
+                    </a>
+                    <span class="main-search-by-category-icon-font">일반</span>
+                </div>
+
+                <!--사회 봉사 버튼 -->
+                <div class="main-search-by-category-icon-div">
+                    <a class="btn-primary main-search-by-category-icon " href="#" role="button">
+                        <i class="fas fa-hands-helping main-search-by-category-icon-details"></i>
+                    </a>
+                    <span class="main-search-by-category-icon-font">사회봉사</span>
+                </div>
+
+                <!--등록/장학 버튼 -->
+                <div class="main-search-by-category-icon-div">
+                    <a class="btn-primary main-search-by-category-icon " href="#" role="button">
+                        <i class="fas fa-won-sign main-search-by-category-icon-details" ></i>
+                    </a>
+                    <span class="main-search-by-category-icon-font" style="font-size: 16.5px;">등록/장학</span>
+                </div>
+
+                <!--학생 생활 버튼 -->
+                <div class="main-search-by-category-icon-div">
+                    <a class="btn-primary main-search-by-category-icon " href="#" role="button">
+                        <i class="fas fa-university main-search-by-category-icon-details"></i>
+                    </a>
+                    <span class="main-search-by-category-icon-font">학생생활</span>
+                </div>
+
+                <!--채용 버튼 -->
+                <div class="main-search-by-category-icon-div">
+                    <a class="btn-primary main-search-by-category-icon " href="#" role="button">
+                        <i class="fas fa-people-arrows main-search-by-category-icon-details"></i>
+                    </a>
+                    <span class="main-search-by-category-icon-font">채용</span>
+                </div>
+
+                <!--글로벌 버튼 -->
+                <div class="main-search-by-category-icon-div">
+                    <a class="btn-primary main-search-by-category-icon " href="#" role="button">
+                        <i class="fas fa-globe-asia main-search-by-category-icon-details"></i>
+                    </a>
+                    <span class="main-search-by-category-icon-font">글로벌</span>
+                </div>
+
+                <!--진로취업 버튼 -->
+                <div class="main-search-by-category-icon-div">
+                    <a class="btn-primary main-search-by-category-icon " href="#" role="button">
+                        <i class="fas fa-briefcase main-search-by-category-icon-details"></i>
+                    </a>
+                    <span class="main-search-by-category-icon-font">진로취업</span>
+                </div>
+
+                <!--비교과 버튼 -->
+                <div class="main-search-by-category-icon-div">
+                    <a class="btn-primary main-search-by-category-icon " href="#" role="button">
+                        <i class="fas fa-book-reader main-search-by-category-icon-details"></i>
+                    </a>
+                    <span class="main-search-by-category-icon-font">비교과</span>
+                </div>
+
+                <!--코로나19 버튼 -->
+                <div class="main-search-by-category-icon-div">
+                    <a class="btn-primary main-search-by-category-icon " href="#" role="button">
+                        <i class="fas fa-viruses main-search-by-category-icon-details"></i>
+                    </a>
+                    <span class="main-search-by-category-icon-font">코로나19</span>
+                </div>
+
+                <!--기타 버튼 -->
+                <div class="main-search-by-category-icon-div">
+                    <a class="btn-primary main-search-by-category-icon " href="#" role="button">
+                        <i class="fas fa-question-circle main-search-by-category-icon-details"></i>
+                    </a>
+                    <span class="main-search-by-category-icon-font">기타</span>
+                </div>
+
+
+
+
+
+
+        <!--밑에 칸-->
+
+
+
+
+        </div>
+    </div>
 {% endblock %}
