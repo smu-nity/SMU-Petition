@@ -18,7 +18,7 @@ def home(request):
 
 
 def petition_list(request):
-    sort_dic = {'0': '-create_date', '1': 'create_date', '2': '-voter_count'}
+    sort_dic = {'0': '-create_date', '1': '-voter_count' , '2': 'create_date'}
     petition_list = Petition.objects.all().annotate(voter_count=Count('voter'))
     category = request.GET.get('category', '0')
     sort = request.GET.get('sort', '0')
