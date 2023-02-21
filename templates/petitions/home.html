@@ -17,7 +17,7 @@
 
                 <!--학사 버튼-->
                 <div class="main-search-by-category-icon-div">
-                    <a class="btn-primary main-search-by-category-icon" href="#" role="button">
+                    <a class="btn-primary main-search-by-category-icon" href="javascript:void(0);" onclick="changeCategory(1);" role="button">
                         <i class="fas fa-user-graduate main-search-by-category-icon-details"></i>
                     </a>
                     <span class="main-search-by-category-icon-font">학사</span>
@@ -26,7 +26,7 @@
 
                 <!--일반 버튼-->
                 <div class="main-search-by-category-icon-div">
-                    <a class="btn-primary main-search-by-category-icon " href="#" role="button">
+                    <a class="btn-primary main-search-by-category-icon " href="javascript:void(0);" onclick="changeCategory(2);" role="button">
                         <i class="fas fa-random main-search-by-category-icon-details"></i>
                     </a>
                     <span class="main-search-by-category-icon-font">일반</span>
@@ -34,7 +34,7 @@
 
                 <!--사회 봉사 버튼 -->
                 <div class="main-search-by-category-icon-div">
-                    <a class="btn-primary main-search-by-category-icon " href="#" role="button">
+                    <a class="btn-primary main-search-by-category-icon " href="javascript:void(0);" onclick="changeCategory(3);" role="button">
                         <i class="fas fa-hands-helping main-search-by-category-icon-details"></i>
                     </a>
                     <span class="main-search-by-category-icon-font">사회봉사</span>
@@ -42,7 +42,7 @@
 
                 <!--등록/장학 버튼 -->
                 <div class="main-search-by-category-icon-div">
-                    <a class="btn-primary main-search-by-category-icon " href="#" role="button">
+                    <a class="btn-primary main-search-by-category-icon " href="javascript:void(0);" onclick="changeCategory(4);" role="button">
                         <i class="fas fa-won-sign main-search-by-category-icon-details" ></i>
                     </a>
                     <span class="main-search-by-category-icon-font" style="font-size: 16.5px;">등록/장학</span>
@@ -50,7 +50,7 @@
 
                 <!--학생 생활 버튼 -->
                 <div class="main-search-by-category-icon-div">
-                    <a class="btn-primary main-search-by-category-icon " href="#" role="button">
+                    <a class="btn-primary main-search-by-category-icon " href="javascript:void(0);" onclick="changeCategory(5);" role="button">
                         <i class="fas fa-university main-search-by-category-icon-details"></i>
                     </a>
                     <span class="main-search-by-category-icon-font">학생생활</span>
@@ -58,7 +58,7 @@
 
                 <!--채용 버튼 -->
                 <div class="main-search-by-category-icon-div">
-                    <a class="btn-primary main-search-by-category-icon " href="#" role="button">
+                    <a class="btn-primary main-search-by-category-icon " href="javascript:void(0);" onclick="changeCategory(6);" role="button">
                         <i class="fas fa-people-arrows main-search-by-category-icon-details"></i>
                     </a>
                     <span class="main-search-by-category-icon-font">채용</span>
@@ -66,7 +66,7 @@
 
                 <!--글로벌 버튼 -->
                 <div class="main-search-by-category-icon-div">
-                    <a class="btn-primary main-search-by-category-icon " href="#" role="button">
+                    <a class="btn-primary main-search-by-category-icon " href="javascript:void(0);" onclick="changeCategory(7);" role="button">
                         <i class="fas fa-globe-asia main-search-by-category-icon-details"></i>
                     </a>
                     <span class="main-search-by-category-icon-font">글로벌</span>
@@ -74,7 +74,7 @@
 
                 <!--진로취업 버튼 -->
                 <div class="main-search-by-category-icon-div">
-                    <a class="btn-primary main-search-by-category-icon " href="#" role="button">
+                    <a class="btn-primary main-search-by-category-icon " href="javascript:void(0);" onclick="changeCategory(8);" role="button">
                         <i class="fas fa-briefcase main-search-by-category-icon-details"></i>
                     </a>
                     <span class="main-search-by-category-icon-font">진로취업</span>
@@ -82,7 +82,7 @@
 
                 <!--비교과 버튼 -->
                 <div class="main-search-by-category-icon-div">
-                    <a class="btn-primary main-search-by-category-icon " href="#" role="button">
+                    <a class="btn-primary main-search-by-category-icon " href="javascript:void(0);" onclick="changeCategory(9);" role="button">
                         <i class="fas fa-book-reader main-search-by-category-icon-details"></i>
                     </a>
                     <span class="main-search-by-category-icon-font">비교과</span>
@@ -90,7 +90,7 @@
 
                 <!--코로나19 버튼 -->
                 <div class="main-search-by-category-icon-div">
-                    <a class="btn-primary main-search-by-category-icon " href="#" role="button">
+                    <a class="btn-primary main-search-by-category-icon " href="javascript:void(0);" onclick="changeCategory(10);" role="button">
                         <i class="fas fa-viruses main-search-by-category-icon-details"></i>
                     </a>
                     <span class="main-search-by-category-icon-font">코로나19</span>
@@ -98,22 +98,20 @@
 
                 <!--기타 버튼 -->
                 <div class="main-search-by-category-icon-div">
-                    <a class="btn-primary main-search-by-category-icon " href="#" role="button">
+                    <a class="btn-primary main-search-by-category-icon " href="javascript:void(0);" onclick="changeCategory(11);" role="button">
                         <i class="fas fa-question-circle main-search-by-category-icon-details"></i>
                     </a>
                     <span class="main-search-by-category-icon-font">기타</span>
                 </div>
-
-
-
-
-
-
-        <!--밑에 칸-->
-
-
-
-
         </div>
     </div>
+{% endblock %}
+{% block script %}
+    <script>
+        function changeCategory(category) {
+            let params = new URLSearchParams();
+            params.set("category", category);
+            window.open({% url 'petitions:petition_list' %} + '?' + params, '_self');
+        }
+    </script>
 {% endblock %}
