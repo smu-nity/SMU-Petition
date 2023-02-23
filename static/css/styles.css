@@ -346,3 +346,9 @@ body {
       transform: scale(1.0);
     }
   }
+
+  @media screen and (max-width: 1000px) {
+  #category {
+    display: none;
+  }
+}
