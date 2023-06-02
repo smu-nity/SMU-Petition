@@ -94,3 +94,12 @@ class LoginHistory(models.Model):
 
     def __str__(self):
         return f'{self.user} - {self.login_datetime}'
+
+
+class Statistics(models.Model):
+    date = models.CharField(unique=True, max_length=10)
+    visit_count = models.IntegerField(default=1)
+
+    def __str__(self):
+        return f'{self.date} : {self.visit_count}'
+        
