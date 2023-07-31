@@ -66,9 +66,9 @@
                 </div>
                 <div class="badge bg-light text-dark p-2 text-start mx-3">
                     {% if petition.modify_date %}
-                        {{ petition.modify_date }} (수정)
+                        {{ petition.modify_date_str }} (수정)
                     {% else %}
-                        {{ petition.create_date }}
+                        {{ petition.create_date_str }}
                     {% endif %}
                 </div>
             </div>
