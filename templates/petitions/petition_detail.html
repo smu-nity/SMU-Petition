@@ -97,9 +97,9 @@
                     </div>
                     <div class="badge bg-light text-dark p-2 text-start mx-3">
                         {% if answer.modify_date %}
-                            {{ answer.modify_date }} (수정)
+                            {{ answer.modify_date_str }} (수정)
                         {% else %}
-                            {{ answer.create_date }}
+                            {{ answer.create_date_str }}
                         {% endif %}
                     </div>
                 </div>
@@ -155,7 +155,13 @@
                     </div>
                     <div class="comment_data-right">
                         <div class="comment_data-date">
-                            <div class="comment_data-time">{{ comment.create_date }}</div>
+                            <div class="comment_data-time">
+                                {% if comment.modify_date %}
+                                    {{ comment.modify_date_str }} (수정)
+                                {% else %}
+                                    {{ comment.create_date_str }}
+                                {% endif %}
+                            </div>
                             <div class="my-3 comment_data-button">
                             {% if request.user == comment.author %}
                                 <a href="{% url 'petitions:comment_modify' comment.id  %}" class="btn btn-sm btn-outline-secondary">수정</a>
