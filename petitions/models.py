@@ -28,10 +28,10 @@ class Petition(models.Model):
         return '익명'
 
     def create_date_str(self):
-        return self.create_date.astimezone(pytz.timezone(TIME_ZONE)).strftime("%m/%d %H:%M")
+        return time_format(self.create_date)
 
     def modify_date_str(self):
-        return self.modify_date.astimezone(pytz.timezone(TIME_ZONE)).strftime("%m/%d %H:%M")
+        return time_format(self.modify_date)
 
 
 class Comment(models.Model):
@@ -44,6 +44,12 @@ class Comment(models.Model):
     def __str__(self):
         return f'[{self.petition.subject}] {self.content} ({self.create_date})'
 
+    def create_date_str(self):
+        return time_format(self.create_date)
+
+    def modify_date_str(self):
+        return time_format(self.modify_date)
+
 
 class Answer(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -54,3 +60,13 @@ class Answer(models.Model):
 
     def __str__(self):
         return f'[{self.author}] {self.petition.subject} ({self.create_date})'
+
+    def create_date_str(self):
+        return time_format(self.create_date)
+
+    def modify_date_str(self):
+        return time_format(self.modify_date)
+
+
+def time_format(time):
+    return time.astimezone(pytz.timezone(TIME_ZONE)).strftime("%m/%d %H:%M")
