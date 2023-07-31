@@ -1,8 +1,9 @@
+import pytz
 from django.db import models
 from django.contrib.auth.models import User
 
 from accounts.models import Profile
-from config.settings import CATEGORY_CHOICES, STATUS_CHOICES
+from config.settings import CATEGORY_CHOICES, STATUS_CHOICES, TIME_ZONE
 
 
 class Petition(models.Model):
@@ -25,6 +26,12 @@ class Petition(models.Model):
         if profile:
             return profile.first().name
         return '익명'
+
+    def create_date_str(self):
+        return self.create_date.astimezone(pytz.timezone(TIME_ZONE)).strftime("%m/%d %H:%M")
+
+    def modify_date_str(self):
+        return self.modify_date.astimezone(pytz.timezone(TIME_ZONE)).strftime("%m/%d %H:%M")
 
 
 class Comment(models.Model):
