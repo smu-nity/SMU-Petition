@@ -2,8 +2,6 @@
 {% load static %}
 {% block css %}
     <link rel="stylesheet" href="{% static 'css/mypage.css' %}">
-    <link rel="stylesheet" href="{% static 'css/navbar.css' %}">
-    <link rel="stylesheet" href="{% static 'css/register.css' %}">
 {% endblock %}
 
 {% block content %}
@@ -162,11 +160,9 @@
             <form action="{% url 'accounts:update' %}" method="post" name='form1' onsubmit="return check_up1()">
                 {% csrf_token %}
                 <div class="regi_box">
-                    <label>학번</label>
                     <input class="form-control" type="text" value="{{ user.username }}"
                         style="background-color:rgb(248,249,250);" disabled>
-                    <label>이캠퍼스 비밀번호</label>
-                    <input class="form-control" type="password" id="pw" name="password" placeholder="이캠퍼스 비밀번호">
+                    <input class="form-control" type="password" id="pw" name="password" placeholder="이캠퍼스 비밀번호" style="margin-top: 1rem;">
                 </div>
                 <input type='submit' class='btn btn-primary' value='로그인' style="margin:2.5rem 0 2rem 0;">
             </form>
@@ -183,10 +179,8 @@
             <form action="{% url 'accounts:change' %}" method="post" name='form3' onsubmit="return check_up3()">
                 {% csrf_token %}
                 <div class="regi_box">
-                    <label>새 비밀번호</label>
-                    <input class="form-control" id="pw1" type="password" name="password1">
-                    <label>비밀번호 재확인</label>
-                    <input class="form-control" id="pw2" type="password" name="password2">
+                    <input class="form-control" id="pw1" type="password" name="password1" placeholder="새 비밀번호">
+                    <input class="form-control" id="pw2" type="password" name="password2" placeholder="비밀번호 재확인" style="margin-top: 1rem;">
                 </div>
                 <input type='submit' class='btn btn-primary' value='변경하기' style="margin:2.5rem 0 2rem 0;">
             </form>
@@ -208,11 +202,9 @@
             <form action="{% url 'accounts:member_del' %}" method="POST" name='form6' onsubmit="return check_up6()">
                 {% csrf_token %}
                 <div class="regi_box">
-                    <label>학번</label>
                     <input class="form-control" type="text" name="student_id" placeholder='{{ user.username }}'
                         style="background-color:rgb(248,249,250);" disabled>
-                    <label>비밀번호</label>
-                    <input class="form-control" type="password" id="pw6" name="pw_del" placeholder="비밀번호">
+                    <input class="form-control" type="password" id="pw6" name="pw_del" placeholder="비밀번호" style="margin-top: 1rem;">
                 </div>
                 <input type='submit' class='btn btn-primary' value='탈퇴하기' style="margin:2.5rem 0 2rem 0;">
             </form>
