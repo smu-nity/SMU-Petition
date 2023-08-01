@@ -331,6 +331,10 @@ body {
   .sk-chase-dot:nth-child(5):before { animation-delay: -0.7s; }
   .sk-chase-dot:nth-child(6):before { animation-delay: -0.6s; }
 
+  .title{
+      color: black;
+  }
+
   @keyframes sk-chase {
     100% { transform: rotate(360deg); }
   }
@@ -350,5 +354,20 @@ body {
   @media screen and (max-width: 1000px) {
   #category {
     display: none;
+  }
+
+  @media screen and (max-width: 1000px) {
+  #my_box_wrap {
+      display: block;
+  }
+
+  @media screen and (max-width: 1000px) {
+  #my_box {
+    width: 90%;
+  }
+
+  @media screen and (max-width: 1000px) {
+  #my_box_grade {
+        width: 90%;
   }
 }

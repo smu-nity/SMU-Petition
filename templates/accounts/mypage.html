@@ -16,51 +16,51 @@
     </div>
 
     <div class="white_sec">
-        <div class="my_box_wrap">
-            <div class="my_box">
+        <div id="my_box_wrap" class="my_box_wrap">
+            <div id="my_box" class="my_box">
                 <div class="my_box_title">
-                    <div><i class="fas fa-user"></i>내 정보</div>
+                    <div class="title"><i class="fas fa-user"></i>내 정보</div>
                     <button id='b1' class="my_box_mod_btn">업데이트</button>
                 </div>
                 <hr>
                 <table>
                     <tr>
-                        <td class="my_box_table_1st_td">이름</td>
+                        <td class="my_box_table_1st_td title">이름</td>
                         <td>{{ profile.name }}</td>
                     </tr>
                     <tr>
-                        <td class="my_box_table_1st_td">학번</td>
+                        <td class="my_box_table_1st_td title">학번</td>
                         <td>{{ profile.user.username }}</td>
                     </tr>
                     {% if profile.department.pk == 7 or profile.department.pk == 8 or profile.department.pk == 9 %}
                     <!-- 지능·데이터융합학부 (핀테크전공, 빅데이터융합전공, 스마트생산전공) -->
                         <tr>
-                            <td class="my_box_table_1st_td">학과</td>
+                            <td class="my_box_table_1st_td title">학과</td>
                             <td>지능데이터융합학부</td>
                         </tr>
                     {% else %}
                         <tr>
-                            <td class="my_box_table_1st_td">학과</td>
+                            <td class="my_box_table_1st_td title">학과</td>
                             <td>{{ profile.department.name }}</td>
                         </tr>
                     {% endif %}
                 </table>
                 <hr style="margin-bottom:0.8rem; margin-top:1.6rem;">
                 <div class="my_box_title">
-                    <div><i class="fas fa-key"></i>비밀번호 변경</div>
+                    <div class="title"><i class="fas fa-key"></i>비밀번호 변경</div>
                     <button id='b3' class="my_box_mod_btn">변경하기</button>
                 </div>
                 <hr style="margin-bottom:0.8rem; margin-top:0.8rem;">
                 <div class="my_box_title">
-                    <div><i class="fas fa-exclamation-triangle"></i>회원 탈퇴</div>
+                    <div class="title"><i class="fas fa-exclamation-triangle"></i>회원 탈퇴</div>
                     <button id='b6' class="my_box_mod_btn">탈퇴하기</button>
                 </div>
             </div>
 
-            <div class="my_box_grade">
+            <div id="my_box_grade" class="my_box_grade">
                 <div style="padding:2.5rem 2.5rem 0 2.5rem">
                     <div class="my_box_title">
-                        <div><i class="fa-solid fa-pencil"></i>내 청원</div>
+                        <div class="title"><i class="fa-solid fa-pencil"></i>내 청원</div>
                     </div>
                     <hr>
                 <table class="table">
@@ -154,7 +154,7 @@
             <div style="margin-top:1.8rem; font-size:0.9rem; color:rgb(199, 199, 199)">
                 이캠퍼스에 로그인하여 이름, 학과 정보를 업데이트합니다. (상명대학교 포털 ID/PW와 동일)
             </div>
-            <hr style="width:80%; margin-top:1.3rem;">
+            <hr style="width:100%; margin-top:1.3rem;">
             <!-- 폼 -->
             <form action="{% url 'accounts:update' %}" method="post" name='form1' onsubmit="return check_up1()">
                 {% csrf_token %}
@@ -173,7 +173,7 @@
         <div class="update_modal_content">
             <div id='c3' class="close">&times;</div>
             <div class="login_title" style="font-size:2rem; margin-top:1.7rem; margin-bottom: 2rem;">비밀번호 변경</div>
-            <hr style="width:80%; margin-top:1.3rem;">
+            <hr style="width:100%; margin-top:1.3rem;">
             <!-- 폼 -->
             <form action="{% url 'accounts:change' %}" method="post" name='form3' onsubmit="return check_up3()">
                 {% csrf_token %}
@@ -196,7 +196,7 @@
             <div style="margin-top:1.8rem; font-size:0.9rem; color:rgb(199, 199, 199)">
                 스뮤니티에서 탈퇴합니다. (회원 정보 모두 삭제)
             </div>
-            <hr style="width:80%; margin-top:1.3rem;">
+            <hr style="width:100%; margin-top:1.3rem;">
 
             <form action="{% url 'accounts:member_del' %}" method="POST" name='form6' onsubmit="return check_up6()">
                 {% csrf_token %}
