@@ -15,20 +15,18 @@
     </div>
     <!-- 입력란 -->
     <div class="white_sec">
-        <div class="container">
+        <div class="container box_web" id="box_mobile">
             <form action="{% url 'accounts:change' %}" method="post" name='regi_form' onsubmit="return check_up()">
                 {% csrf_token %}
-                <center>
-                    <div style="width: 35%;">
-                        <label style="margin-top: 3rem; margin-right: 26rem;">ID</label>
-                        <input class="form-control" type="text" name="id" value="{{ username }}" style="background-color:rgb(248,249,250);" readonly>
-                        <label style="margin-top: 3rem; margin-right: 23rem;">비밀번호</label>
-                        <input class="form-control" id="pw1" type="password" name="password1">
-                        <label style="margin-top: 3rem; margin-right: 20rem;">비밀번호 재확인</label>
-                        <input class="form-control" id="pw2" type="password" name="password2">
-                    </div>
-                    <input type='submit' class='regi_btn' value='변경하기'>
-                </center>
+                <label style="margin-top: 3rem;">ID</label>
+                <input class="form-control" type="text" name="id" value="{{ username }}" style="background-color:rgb(248,249,250);" readonly>
+                <label style="margin-top: 1rem;">비밀번호</label>
+                <input class="form-control" id="pw1" type="password" name="password1" placeholder="비밀번호">
+                <label style="margin-top: 1rem;">비밀번호 재확인</label>
+                <input class="form-control" id="pw2" type="password" name="password2" placeholder="비밀번호 재확인">
+                <div style="text-align: center; margin-top: 2rem; margin-bottom: 3rem;">
+                    <input type='submit' class='btn btn-primary' value='변경하기'>
+                </div>
             </form>
         </div>
     </div>

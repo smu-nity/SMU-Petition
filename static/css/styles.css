@@ -345,6 +345,10 @@ body {
       color: black;
   }
 
+  .box_web {
+      width: 40%;
+  }
+
   @keyframes sk-chase {
     100% { transform: rotate(360deg); }
   }
@@ -362,22 +366,23 @@ body {
   }
 
   @media screen and (max-width: 1000px) {
-  #category {
-    display: none;
-  }
+      #category {
+        display: none;
+      }
 
-  @media screen and (max-width: 1000px) {
-  #my_box_wrap {
-      display: block;
-  }
+      #my_box_wrap {
+          display: block;
+      }
 
-  @media screen and (max-width: 1000px) {
-  #my_box {
-    width: 90%;
-  }
+      #my_box {
+          width: 90%;
+      }
 
-  @media screen and (max-width: 1000px) {
-  #my_box_grade {
-        width: 90%;
+      #my_box_grade {
+          width: 90%;
+      }
+
+      #box_mobile {
+        width: 80%;
+    }
   }
-}
