@@ -81,10 +81,6 @@
     font-weight: 300;
 }
 
-.text-center {
-    display: table-row;
-}
-
 .table-sangmyung__body {
     display: table-row;
     background-color: white;
