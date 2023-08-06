@@ -349,6 +349,10 @@ body {
       width: 40%;
   }
 
+  .category {
+      display: none;
+  }
+
   @keyframes sk-chase {
     100% { transform: rotate(360deg); }
   }
@@ -367,7 +371,9 @@ body {
 
   @media screen and (max-width: 1000px) {
       #category {
-        display: none;
+          display: block;
+          width: 100%;
+          margin-bottom: 50px;
       }
 
       #my_box_wrap {
@@ -383,6 +389,10 @@ body {
       }
 
       #box_mobile {
-        width: 80%;
-    }
+          width: 80%;
+      }
+
+      #box_board {
+          display: none;
+      }
   }
