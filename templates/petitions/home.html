@@ -2,23 +2,22 @@
 {% load static %}
 {% block content %}
 <div style="background-color : #ebecf0;">
+    <div class="navbar-img">
+        <img class="navbar-img-image" src="{% static 'img/main2.jpg' %}"
+            style="width: 100%; height: 500px; object-fit:cover" />
 
-<div class="navbar-img">
-    <img class="navbar-img-image" src="{% static 'img/main2.jpg' %}"
-        style="width: 100%; height: 500px; object-fit:cover" />
-
-    <div class="navbar-img__text">
-        <span class="navbar-img__text--title">상명대학교 청원</span>
-        <span class="navbar-img__text--subtitle">상명대학교 학우 여러분들의 의견에</span>
-        <span class="navbar-img__text--subtitle">귀를 기울이는 학생회가 되겠습니다.</span>
+        <div class="navbar-img__text">
+            <span class="navbar-img__text--title">상명대학교 청원</span>
+            <span class="navbar-img__text--subtitle">상명대학교 학우 여러분들의 의견에</span>
+            <span class="navbar-img__text--subtitle">귀를 기울이는 학생회가 되겠습니다.</span>
+        </div>
     </div>
-</div>
     <div id="box_board" >
 
         <!--MarginSide-->
         <div style="height : 40px;"> </div>
 
-        <div class="container my-3 container-home main-div " style="width : 70%;">
+        <div class="container container-home main-div " style="width : 70%;">
 
         <!--보기 옵션-->
         <nav>
@@ -612,7 +611,7 @@
     </div>
     </div>
 
-    <div id="category" class="container my-3 container-home main-div category">
+    <div id="category" class="container container-home main-div category">
         <!--항목 별 분류 버튼 세트 -->
         <div style="display : flex; justify-content: space-between;" >
 
