@@ -371,6 +371,7 @@ body {
 
   @media screen and (max-width: 1000px) {
       #category {
+          margin-top: 2rem;
           display: block;
           width: 100%;
       }
@@ -395,3 +396,9 @@ body {
           display: none;
       }
   }
+
+@media (max-width:768px) {
+    .display-none {
+        display: none !important
+    }
+}
