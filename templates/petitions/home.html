@@ -3,13 +3,21 @@
 {% block content %}
 <div style="background-color : #ebecf0;">
     <div class="navbar-img">
-        <img class="navbar-img-image" src="{% static 'img/bg3.jpg' %}"
-            style="width: 100%; height: 500px; object-fit:cover" />
+        <img class="navbar-img-image" src="{% static 'img/bg.jpeg' %}"
+            style="width: 100%; height: 500px; object-fit:cover; filter: brightness(100%);" />
 
         <div class="navbar-img__text">
-            <span class="navbar-img__text--title">상명대학교 청원</span>
-            <span class="navbar-img__text--subtitle">상명대학교 학우 여러분들의 의견에</span>
-            <span class="navbar-img__text--subtitle">귀를 기울이는 학생회가 되겠습니다.</span>
+            <!--동의하기, 청원하기 버튼-->
+            <div class="col-5 enroll-btn" style="padding-top : 10rem;">
+                <a href="" class="btn btn-primary navbarMain-button">
+                    <i class="fas fa-pen enroll-btn__icon" ></i>
+                    <span >청원하기</span>
+                </a>
+                <a href="" class="btn btn-primary navbarMain-button">
+                    <i class="fas fa-thumbs-up enroll-btn__icon"></i>
+                    <span style="font-size : 23px;">동의하기</span>
+                </a>
+            </div>
         </div>
     </div>
     <div id="box_board" >

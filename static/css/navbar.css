@@ -6,6 +6,7 @@
 
 .navbar-img-image {
     position: relative;
+    filter: brightness(50%);
 }
 
 .navbar-img__text {
@@ -13,6 +14,7 @@
     flex-direction: column;
     align-items: center;
     position: absolute;
+    color: white;
 }
 
 .navbar-img__text--title {
