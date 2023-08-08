@@ -19,8 +19,8 @@
     margin-top: 50px;
 }
 
-.home-margin-60 {
-    margin-top: 60px;
+.home-margin-30 {
+    margin-top: 30px;
 }
 
 .container-home {
@@ -75,8 +75,8 @@
 }
 
 .home__container-remnant-top2 {
+    height : 200px;
     width : 50%;
-    align-items: space-between;
 }
 
 .padding-10-left {
@@ -97,10 +97,9 @@
 
 .main__top1-card-body {
     height : 300px;
-    height: 300px;
     display:flex;
     justify-content:center;
-    overflow: auto
+    overflow: auto;
 }
 
 
@@ -181,13 +180,13 @@
     font-size : 15px;
 }
 
-.main-card-footer-setting {
+.card-footer-setting {
     background-color : #cdd0da;
-    height : 23%;
-    display = flex;
+    height : 45px;
+    display : flex;
     flex-direction : column;
     align-item : center;
-    padding-top : 30px
+    padding-top : 10px
 }
 .main-space__icon {
     margin-right: 5px;
@@ -203,7 +202,7 @@
     display: flex;
     overflow: auto;
     justify-content: center;
-    font-size : 20px;
+    font-size : 18px;
     font-weight : 10;
     width : 700px;
 }
@@ -211,25 +210,26 @@
 .main-hot23-body {
     display:flex;
     height: 130px;
-    overflow : hidden;
+    overflow : auto;
     justify-content : center;
 
 }
 .main-card-title-font {
-    font-size : 27px;
+    font-size : 20px;
     display: flex;
     justify-content: start;
     font-weight: 700;
     width : 400px;
-    height : 100px;
+    color: black;
 }
 
 .main-hot1-title-font {
-    font-size : 27px;
+    font-size : 25px;
     display: flex;
     justify-content: start;
     font-weight: 700;
     padding-top: 5px;
+    color: black;
 }
 
 .main-search-by-category-icon {
