@@ -7,6 +7,7 @@
 .navbar-img-image {
     position: relative;
     filter: brightness(50%);
+    width: 100%;
 }
 
 .navbar-img__text {
@@ -15,6 +16,7 @@
     align-items: center;
     position: absolute;
     color: white;
+    width: 100%;
 }
 
 .navbar-img__text--title {
@@ -35,5 +37,30 @@
 
     .navbar-img__text--title {
         font-size: 35px;
+    }
+}
+
+@media (max-width: 700px) {
+    .navbar-img__text {
+        margin: 70px;
+        text-align: center;
+        font-size: 15px;
+    }
+
+    .navbar-img__text--title {
+        font-size: 35px;
+    }
+}
+
+@media (max-width: 500px) {
+    .main-search-by-category-icon {
+        width: 60px;
+        height: 60px;
+    }
+    .main-search-by-category-icon-div {
+        width: 60px;
+    }
+    .main-search-by-category-icon-font {
+        font-size: 14px;
     }
 }
