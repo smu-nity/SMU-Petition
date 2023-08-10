@@ -70,6 +70,14 @@
     .main-img-image {
         height: 400px;
     }
+    .login-form {
+        width: 100% !important;
+        margin: 0 0 0 0 !important;
+        box-shadow: none !important;
+    }
+    .content {
+        padding: 60px 30px 60px 30px !important;
+    }
 }
 
 @media (max-width: 500px) {
