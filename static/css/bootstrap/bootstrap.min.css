@@ -4172,7 +4172,7 @@ fieldset:disabled .btn {
     padding: var(--bs-nav-link-padding-y) var(--bs-nav-link-padding-x);
     font-size: var(--bs-nav-link-font-size);
     font-weight: var(--bs-nav-link-font-weight);
-    color: var(--bs-nav-link-color);
+    color: #6c757d;
     text-decoration: none;
     transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out
 }
@@ -4199,7 +4199,7 @@ fieldset:disabled .btn {
     --bs-nav-tabs-border-color: #dee2e6;
     --bs-nav-tabs-border-radius: 0.375rem;
     --bs-nav-tabs-link-hover-border-color: #e9ecef #e9ecef #dee2e6;
-    --bs-nav-tabs-link-active-color: #495057;
+    --bs-nav-tabs-link-active-color: var(--sangmyung);
     --bs-nav-tabs-link-active-bg: #fff;
     --bs-nav-tabs-link-active-border-color: #dee2e6 #dee2e6 #fff;
     border-bottom: var(--bs-nav-tabs-border-width) solid var(--bs-nav-tabs-border-color)

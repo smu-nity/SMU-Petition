@@ -275,9 +275,9 @@
     align-items: center;
     background-color: var(--sangmyung);
     font-size: 25px;
-    width: 480px;
     height: 70px;
     color: white;
     border-color: var(--sangmyung);
-    margin: 0px 10px;
+    margin: 0 10px;
+    padding: 0 20px;
 }

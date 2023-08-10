@@ -6,8 +6,10 @@
 
 .navbar-img-image {
     position: relative;
-    filter: brightness(50%);
+    filter: brightness(100%);
     width: 100%;
+    height: 500px;
+    object-fit:cover;
 }
 
 .navbar-img__text {
@@ -52,6 +54,12 @@
     }
 }
 
+@media (max-width: 600px) {
+    .navbar-img-image {
+        height: 400px;
+    }
+}
+
 @media (max-width: 500px) {
     .main-search-by-category-icon {
         width: 60px;
@@ -62,6 +70,9 @@
     }
     .main-search-by-category-icon-font {
         font-size: 14px;
+    }
+    .navbar-img-image {
+        height: 350px;
     }
 }
 
@@ -75,5 +86,8 @@
     }
     .main-search-by-category-icon-font {
         font-size: 12px;
+    }
+    .navbar-img-image {
+        height: 300px;
     }
 }
