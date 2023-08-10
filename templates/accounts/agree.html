@@ -13,66 +13,65 @@
             <span class="navbar-img__text--subtitle">아래 사항을 모두 읽고 약관에 동의해주세요.</span>
         </div>
     </div>
-
-    <div class="white_sec">
-        <div class="container">
-            <!-- 검사 대상 박스 -->
-            <div class="info_title"><center><b>이용약관</b></center></div>
-            <div class="info_box_wrapper">
-                <div class="info_box">
-                    <div class="info_content">
-                        <p>
-                            1. 현재 검사 가능한 학과는 다음과 같습니다. (검사대상에 속하지 않다면 회원가입이 불가능합니다.)</span>
-                        </p>
-                        <p>2. 편입생, 교직이수, 다전공, 외국인유학생 입학자에 해당하는 사용자는 검사 기준이 따로 설정되지 않습니다.</p>
-                        <p>3. 추천 과목 정보는 <b>2023학년도 1학기</b> 정보를 기준으로 합니다.</p>
-                        <p>4. 검사 기준은 <b>2023학년도 1학기</b> 교과과정으로 기준으로 합니다.</p>
-                        <p>5. 사용자의 상명대학교 포털 사이트의 비밀번호는 인증에만 1회 사용되며 <b>저장되지 않습니다.</b></p>
-                        <p>6. 사용자가 업로드하는 성적사항 엑셀파일은 <b>저장되지 않고</b> 평점을 제외한 과목정보만 데이터베이스로 변환하여 저장됩니다.</p>
-                        <p>7. 상명대학교에서 공식적으로 만든 사이트가 아니므로 <b>검사 결과가 정확하지 않을 수 있습니다.</b></p>
-                        <p>8. 졸업요건 기준이 잘못 설정되었거나 오류발생 시 상단 메뉴바로 피드백 부탁드립니다.</p>
+    <div class="login-container" style="display: block;">
+        <div class="white_sec">
+            <div class="container">
+                <!-- 검사 대상 박스 -->
+                <div class="info_title"><center><b>이용약관</b></center></div>
+                <div class="info_box_wrapper">
+                    <div class="info_box">
+                        <div class="info_content">
+                            <p>
+                                1. 현재 검사 가능한 학과는 다음과 같습니다. (검사대상에 속하지 않다면 회원가입이 불가능합니다.)</span>
+                            </p>
+                            <p>2. 편입생, 교직이수, 다전공, 외국인유학생 입학자에 해당하는 사용자는 검사 기준이 따로 설정되지 않습니다.</p>
+                            <p>3. 추천 과목 정보는 <b>2023학년도 1학기</b> 정보를 기준으로 합니다.</p>
+                            <p>4. 검사 기준은 <b>2023학년도 1학기</b> 교과과정으로 기준으로 합니다.</p>
+                            <p>5. 사용자의 상명대학교 포털 사이트의 비밀번호는 인증에만 1회 사용되며 <b>저장되지 않습니다.</b></p>
+                            <p>6. 사용자가 업로드하는 성적사항 엑셀파일은 <b>저장되지 않고</b> 평점을 제외한 과목정보만 데이터베이스로 변환하여 저장됩니다.</p>
+                            <p>7. 상명대학교에서 공식적으로 만든 사이트가 아니므로 <b>검사 결과가 정확하지 않을 수 있습니다.</b></p>
+                            <p>8. 졸업요건 기준이 잘못 설정되었거나 오류발생 시 상단 메뉴바로 피드백 부탁드립니다.</p>
+                        </div>
                     </div>
-                </div>
-                <!-- 동의 체크박스 -->
-                <div class="info_agree">
-                    <label style='cursor: pointer;'>
-                        <input type="checkbox" onclick="agree_func()" id="agree">
-                        <label for='agree'></label>
-                        &nbsp;다음 이용약관에 동의합니다.
-                    </label>
+                    <!-- 동의 체크박스 -->
+                    <div class="info_agree">
+                        <label style='cursor: pointer;'>
+                            <input type="checkbox" onclick="agree_func()" id="agree">
+                            <label for='agree'></label>
+                            &nbsp;다음 이용약관에 동의합니다.
+                        </label>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
 
-    <!-- 로그인 박스 -->
-    <div class="gray_sec">
-        <div class="container">
-            <div class="login_title" style="font-size:2rem;">학생 인증</div>
-            <div style="margin-top:0.5rem; font-size:0.9rem; color:rgb(199, 199, 199)">
-                <center>
-                    이캠퍼스에 로그인하여 인증 후 비밀번호를 변경합니다. (상명대학교 포털 ID/PW와 동일)
-                </center>
-            </div>
-
-            <div class="login_box" style="width: 60%;">
+        <!-- 로그인 박스 -->
+        <div class="login_title" style="font-size:2rem; padding-top:0.5rem;">학생 인증</div>
+        <div style="margin-top:0.5rem; font-size:0.9rem; color:rgb(199, 199, 199)">
+            <center>
+                이캠퍼스에 로그인하여 인증 후 비밀번호를 변경합니다. (상명대학교 포털 ID/PW와 동일)
+            </center>
+        </div>
+        <div style="display: flex; justify-content: center;">
+            <div class="login-form" style="margin-top: 10px;">
                 <!-- 로그인 폼 -->
                 <form onsubmit="return check_up();" method="post" >
                     {% csrf_token %}
-                    <div class="input-group flex-nowrap">
-                        <input type="text" class="form-control" name="username" id="id" placeholder="학번">
-                    </div>
-                    <div class="input-group flex-nowrap" style="margin-top: 1rem;">
-                        <input type="password" class="form-control" name="password" id="pw" placeholder="이캠퍼스 비밀번호">
-                    </div>
-                    <div id="login_btn">
-                        <div class='login_btn_default'>이용약관에 동의해주세요.</div>
+                    <div class="content">
+                        <div class="input-group flex-nowrap">
+                            <input type="text" class="form-control" name="username" id="id" placeholder="학번">
+                        </div>
+                        <div class="input-group flex-nowrap" style="margin-top: 1rem;">
+                            <input type="password" class="form-control" name="password" id="pw" placeholder="이캠퍼스 비밀번호">
+                        </div>
+                        <div id="login_btn">
+                            <div class='login_btn_default'>이용약관에 동의해주세요.</div>
+                        </div>
                     </div>
                 </form>
             </div>
         </div>
     </div>
-
     <!-- 로딩 모달 창 -->
     <div id='m1' class="modal">
         <div class="load-modal-content">
