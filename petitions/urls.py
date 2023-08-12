@@ -4,13 +4,12 @@ from petitions import views
 app_name = 'petitions'
 
 urlpatterns = [
-    path('', views.petition_list, name='petition_list'),
     path('<int:petition_id>/', views.petition_detail, name='petition_detail'),
-
-    path('petition/create/', views.petition_create, name='petition_create'),
-    path('petition/modify/<int:petition_id>/', views.petition_modify, name='petition_modify'),
-    path('petition/delete/<int:petition_id>/', views.petition_delete, name='petition_delete'),
-    path('petition/vote/<int:petition_id>/', views.petition_vote, name='petition_vote'),
+    path('create/', views.petition_create, name='petition_create'),
+    path('modify/<int:petition_id>/', views.petition_modify, name='petition_modify'),
+    path('delete/<int:petition_id>/', views.petition_delete, name='petition_delete'),
+    path('vote/<int:petition_id>/', views.petition_vote, name='petition_vote'),
+    path('status/<str:status>/', views.petition_list, name='petition_list'),
 
     path('comment/create/<int:petition_id>/', views.comment_create, name='comment_create'),
     path('comment/modify/<int:comment_id>/', views.comment_modify, name='comment_modify'),

@@ -108,12 +108,11 @@
 
         <div class="post_detail__body-button my-3">
             <a href="javascript:void(0)" data-uri="{% url 'petitions:petition_vote' petition.id  %}"
-                class="btn btn-primary navbarMain-button">
+                class="btn btn-primary navbarMain-button recommend">
                     <i class="fas fa-thumbs-up enroll-btn__icon"></i>
                     <span>동의하기</span>
                     <span class="badge rounded-pill bg-success" style="margin-left: 10px; background-color: #fff !important; color: rgb(1, 42, 127);">{{petition.voter.count}}</span>
             </a>
-        <div class="progress-bar main_progress-bar-stats" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100" style="width: {{ petition.get_percentage }}%;">{{ petition.get_percentage }} %</div>
         <h5 class="post_detail__body-share--title" style="margin-top: 2rem;">공유하기</h5>
             <div class="container post_detail__body-share--url">
                 <div class="row">

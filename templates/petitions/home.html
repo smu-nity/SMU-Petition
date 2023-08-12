@@ -13,7 +13,7 @@
                     <i class="fas fa-pen enroll-btn__icon" ></i>
                     <span>청원하기</span>
                 </a>
-                <a href="{% url 'petitions:petition_list' %}" class="btn btn-primary navbarMain-button">
+                <a href="{% url 'petitions:petition_list' 'progress'%}" class="btn btn-primary navbarMain-button">
                     <i class="fas fa-thumbs-up enroll-btn__icon"></i>
                     <span>동의하기</span>
                 </a>
@@ -268,7 +268,7 @@
         function changeCategory(category) {
             let params = new URLSearchParams();
             params.set("category", category);
-            window.open({% url 'petitions:petition_list' %} + '?' + params, '_self');
+            window.open("{% url 'petitions:petition_list' 'progress'%}" + '?' + params, '_self');
         }
     </script>
 {% endblock %}

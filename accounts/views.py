@@ -49,7 +49,7 @@ def login(request):
         if user:
             auth_login(request, user)
             LoginHistory.objects.create(user=user)
-            return redirect('petitions:petition_list')
+            return redirect('petitions:petition_list', 'progress')
         if User.objects.filter(username=username):
             messages.error(request, '⚠️ 비밀번호를 확인하세요.')
         else:
@@ -74,7 +74,7 @@ def register(request):
                 Profile.objects.create(user=user, year=year, department=department, name=context['name'])
                 auth_login(request, user)  # 로그인
                 LoginHistory.objects.create(user=user)
-                return redirect('petitions:petition_list')
+                return redirect('petitions:petition_list', 'progress')
             messages.error(request, '⚠️ 서비스에서 지원하지 않는 학과와 학번 입니다.')
             return redirect('accounts:agree')
         messages.error(request, form.errors['password2'][0])
@@ -111,7 +111,7 @@ def update(request):
             if department:
                 Profile.objects.filter(user=request.user).update(name=context['name'], department=department.first())
                 messages.error(request, '회원 정보가 업데이트 되었습니다.')
-                return redirect('petitions:petition_list')
+                return redirect('petitions:petition_list', 'progress')
             messages.error(request, '⚠️ 서비스에서 지원하지 않는 학과와 학번 입니다.')
         messages.error(request, '⚠️ 샘물 포털 ID/PW를 다시 확인하세요! (Caps Lock 확인)')
     return redirect('accounts:mypage')
@@ -141,7 +141,7 @@ def change_dept(request, pk):
         profile.department = department
         profile.save()
         messages.error(request, '전공이 변경되었습니다.')
-        return redirect('petitions:petition_list')
+        return redirect('petitions:petition_list', 'progress')
     messages.error(request, '⚠️ 변경 권한이 없습니다!')
     return redirect('home')
 
