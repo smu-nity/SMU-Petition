@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load petitions_filter %}
 {% block content %}
 <div style="background-color : #ebecf0;">
     <div class="navbar-img">
@@ -19,7 +20,8 @@
             </div>
         </div>
     </div>
-    <div id="box_board" >
+    {% if pl %}
+        <div id="box_board" >
 
         <!--MarginSide-->
         <div style="height : 40px;"> </div>
@@ -56,14 +58,14 @@
 
             <!--TOP 1 개시글-->
             <div class="main-top1-div">
-                <div class="card text-center" style="width :98.5%; ">
+                <div class="card" style="width :98.5%; ">
 
                     <!--TOP 1 Header-->
                     <div class="card-header main__top1-card-header" style="height : 70px;">
 
                         <!--TOP 1 Header-동의기간-->
                         <div>
-                            <span style="font-size : 26px"> 장학금 |</span>
+                            <span style="font-size : 26px"> {{ pl.top1.get_category_display }} |</span>
                             <span style="font-size : 22px; color: orange;"> 진행중  </span>
                             <span style="font-size : 23px"> | D-3 </span>
                         </div>
@@ -79,15 +81,11 @@
                     <div class="card-body main__top1-card-body ">
                         <div>
                              <h5 class="card-title main-hot1-title-font" >
-                                <span>장학금 정책을 바꿔주세요.</span>
+                                <span>{{ pl.top1.subject }}</span>
                             </h5>
                             <div style="padding : 4px;"> </div>
-                            <p class="card-text main-Top1-Body-card-text-box" >
-                                장학금 정책을 바꿔주세요.장학금 정책을 바꿔주세요.장학금 정책을 바꿔주세요.장학금 정책을 바꿔주세요.장학금 정책을 바꿔주세요.장학금 정책을 바꿔주세요.장학금 정책을 바꿔주세요.
-                                장학금 정책을 바꿔주세요.장학금 정책을 바꿔주세요.장학금 정책을 바꿔주세요.장학금 정책을 바꿔주세요.장학금 정책을 바꿔주세요.장학금 정책을 바꿔주세요.장학금 정책을 바꿔주세요.
-                                장학금 정책을 바꿔주세요.장학금 정책을 바꿔주세요.장학금 정책을 바꿔주세요.장학금 정책을 바꿔주세요.장학금 정책을 바꿔주세요.장학금 정책을 바꿔주세요.장학금 정책을 바꿔주세요.
-                                장학금 정책을 바꿔주세요.장학금 정책을 바꿔주세요.장학금 정책을 바꿔주세요.장학금 정책을 바꿔주세요.장학금 정책을 바꿔주세요.장학금 정책을 바꿔주세요.장학금 정책을 바꿔주세요.
-                                장학금 정책을 바꿔주세요.장학금 정책을 바꿔주세요.장학금 정책을 바꿔주세요.장학금 정책을 바꿔주세요.장학금 정책을 바꿔주세요.장학금 정책을 바꿔주세요.장학금 정책을 바꿔주세요.
+                            <p class="card-text main-Top1-Body-card-text-box post_detail__body-text" >
+                                {{ pl.top1.content|mark }}
                             </p>
                         </div>
                     </div>
@@ -96,7 +94,7 @@
                         <!--TOP 1 Header-동의 사람-->
                         <div class="main-card-title-date  ">
                             <i class="fas fa-thumbs-up " style="align-item: center; font-size: 20px; color: #6499E1" ></i>
-                            <span style="font-size: 15px; color: #6499E1 ">120명</span>
+                            <span style="font-size: 15px; color: #6499E1 ">{{ pl.top1.voter.count }} 명</span>
                         </div>
                     </div>
 
@@ -545,8 +543,12 @@
         <div class="home-margin-top"> </div>
     </div>
     </div>
-
+    {% endif %}
+    {% if pl %}
     <div id="category" class="container container-home main-div category">
+    {% else %}
+    <div id="category" class="container container-home main-div" style="margin-top: 2rem;">
+    {% endif %}
         <!--항목 별 분류 버튼 세트 -->
         <div style="display : flex; justify-content: space-between;" >
 

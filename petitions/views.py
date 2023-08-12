@@ -14,18 +14,12 @@ from django.contrib import messages
 
 
 def home(request):
-    petition_list = Petition.objects.filter(status=1).annotate(voter_count=Count('voter'))
-    plist_v = petition_list.order_by('voter_count')[:3]
-    # petition_list = Petition.objects.filter(status=1).order_by('voter_count')
-    # print(petition_list)
-
-    plv = {'top1': None, 'top2_3': [None, None]}
-
-    if plist_v:
-        print(plist_v[0])
-        print(plist_v[1:])
-
-    return render(request, 'petitions/home.html', {'plv': plv})
+    plist = Petition.objects.filter(status=1).order_by('-create_date')
+    if plist:
+        plist_v = plist.annotate(voter_count=Count('voter')).order_by('voter_count')
+        context = {'pl': {'top1': plist[0], 'top2_3': plist[1:3]}, 'plv': {'top1': plist_v[0], 'top2_3': plist_v[1:3]}}
+        return render(request, 'petitions/home.html', context)
+    return render(request, 'petitions/home.html')
 
 
 def petition_list(request):

@@ -235,8 +235,8 @@
 .main-search-by-category-icon {
     display: flex;
     border-radius : 50%;
-    width : 70px;
-    height : 70px;
+    width : 90px;
+    height : 90px;
     background-color : white;
     border-style: none;
     color : black;
@@ -247,19 +247,19 @@
 }
 
 .main-search-by-category-icon-details {
-    font-size : 25px;
+    font-size : 35px;
 }
 
 .main-search-by-category-icon-font {
     display: flex;
     justify-content: center;
     padding-top : 5px;
-    font-size: 16px;
+    font-size: 20px;
 }
 
 .main-search-by-category-icon-div {
-    width : 70px;
-    height: 130px;
+    width : 90px;
+    height: 180px;
     display: flex;
     flex-direction : column;
 }
