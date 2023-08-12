@@ -42,7 +42,7 @@ def petition_list(request):
     paginator = Paginator(pl, 10)  # 페이지당 10개씩 보여주기
     page_obj = paginator.get_page(page)
     all, complete = petition_list.count(), petition_list.filter(status=3).count()
-    return render(request, 'petitions/petition_list.html', {'petition_list': page_obj, 'all': all, 'complete': complete, 'page': '모든 청원'})
+    return render(request, 'petitions/board.html', {'petition_list': page_obj, 'all': all, 'complete': complete, 'page': '모든 청원'})
 
 
 def petition_detail(request, petition_id):
@@ -228,4 +228,4 @@ def answer(request):
     paginator = Paginator(pl, 10)  # 페이지당 10개씩 보여주기
     page_obj = paginator.get_page(page)
     all, complete = petition_list.count(), petition_list.filter(status=3).count()
-    return render(request, 'petitions/petition_list.html', {'petition_list': page_obj, 'all': all, 'complete': complete, 'page': '답변된 청원'})
+    return render(request, 'petitions/petition_done.html', {'petition_list': page_obj, 'page': '답변된 청원'})

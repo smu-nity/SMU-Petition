@@ -71,4 +71,4 @@ class Answer(models.Model):
 
 
 def time_format(time):
-    return time.astimezone(pytz.timezone(TIME_ZONE)).strftime("%m/%d %H:%M")
+    return time.astimezone(pytz.timezone(TIME_ZONE)).strftime("%y-%m-%d")
