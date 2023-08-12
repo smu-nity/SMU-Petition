@@ -69,7 +69,7 @@
 
             <!--TOP 1 개시글-->
             <div class="main-top1-div">
-                <div class="card" style="width :98.5%; ">
+                <div class="card" style="width :98.5%;">
 
                     <!--TOP 1 Header-->
                     <div class="card-header main__top1-card-header" style="height : 70px;">
@@ -89,7 +89,7 @@
 
 
                     <!--TOP 1 Body-->
-                    <div class="card-body main__top1-card-body" style="font-weight: normal;">
+                    <a href="{% url 'petitions:petition_detail' pl.top1.id %}" class="card-body main__top1-card-body" style="font-weight: normal; text-decoration: none; color: black; cursor: pointer;">
                         <div>
                              <h5 class="card-title main-hot1-title-font" >
                                 <span>{{ pl.top1.subject }}</span>
@@ -99,7 +99,7 @@
                                 {{ pl.top1.content|mark }}
                             </p>
                         </div>
-                    </div>
+                    </a>
 
                     <div class="card-header" style="height : 50px; background-color: white; display : flex;">
                         <!--TOP 1 Header-동의 사람-->
@@ -130,7 +130,7 @@
 
                 {% for petition in pl.top2_3 %}
                     {% if petition %}
-                        <div class="card text-right home__container-remnant-top2" style="width: 49%;">
+                    <div class="card text-right home__container-remnant-top2" style="width: 49%; text-decoration: none; color: black;">
 
                     <div class="card text-center">
 
@@ -150,9 +150,9 @@
                     </div>
 
                     <!--HOT 2 Body-->
-                    <div class="card-body main-hot23-body" >
+                    <a href="{% url 'petitions:petition_detail' petition.id %}" class="card-body main-hot23-body" style="text-decoration: none; cursor: pointer;">
                         <h5 class="card-title main-card-title-font">{{ petition.subject }}</h5>
-                    </div>
+                    </a>
 
                     <!--HOT 2 동의 사람 수-->
                     <div class="card-header" style="display : flex; justify-content : space-between; background-color: white;">
