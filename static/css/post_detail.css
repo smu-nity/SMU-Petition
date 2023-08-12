@@ -11,11 +11,12 @@
     justify-content: center;
     align-items: center;
     color: black;
-    padding: 50px 0px;
+    padding: 20px 0px;
 }
 
 .post_detail__title-title {
     font-weight: 600;
+    width: 70%;
 }
 
 .post_detail__body-title {
@@ -32,7 +33,7 @@
 }
 
 .post_detail__body-button {
-    padding: 50px 0px;
+    padding: 30px 0px;
     display: flex;
     flex-direction: column;
     justify-content: center;
