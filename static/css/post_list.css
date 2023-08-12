@@ -122,10 +122,12 @@
 
 .table-body__proceeding {
     color: rgb(42, 80, 135);
+    font-weight: bold;
 }
 
 .table-body__complete {
     color: rgb(191, 72, 84);
+    font-weight: bold;
 }
 
 .text-start {
