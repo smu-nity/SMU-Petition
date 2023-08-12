@@ -54,7 +54,7 @@
             </div>
             <div class="button">
                 <button type="submit" class="btn btn-post_list btn-primary btn-lg rounded-pill" style="background-color: #273295;">작성 완료</button>
-                <button class="btn btn-post_list btn-primary btn-lg rounded-pill" style="background-color: #343a40;" type="button" onclick="location.href='{% url 'petitions:petition_list' %}';">취소 하기</button>
+                <button class="btn btn-post_list btn-primary btn-lg rounded-pill" style="background-color: #343a40;" type="button" onclick="location.href='{% url 'petitions:petition_list' 'progress'%}';">취소 하기</button>
             </div>
         </form>
     </div>

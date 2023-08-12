@@ -65,7 +65,7 @@ def petition_create(request):
             petition = form.save(commit=False)
             petition.author = request.user
             petition.save()
-            return redirect('petitions:petition_list')
+            return redirect('petitions:petition_list', 'progress')
     else:
         form = PetitionForm()
     context = {'form': form}
@@ -98,7 +98,7 @@ def petition_delete(request, petition_id):
         messages.error(request, '삭제권한이 없습니다')
         return redirect('petitions:petition_detail', petition_id=petition.id)
     petition.delete()
-    return redirect('petitions:petition_list')
+    return redirect('petitions:petition_list', 'progress')
 
 
 @login_required
@@ -216,7 +216,7 @@ def answer_delete(request, answer_id):
 
 def answer(request):
     sort_dic = {'0': '-create_date', '1': '-voter_count' , '2': 'create_date'}
-    pl = Petition.objects.filter(status=3).annotate(voter_count=Count('voter'))
+    pl = Petition.objects.filter(status__in=[2, 3]).annotate(voter_count=Count('voter'))
     category = request.GET.get('category', '0')
     sort = request.GET.get('sort', '0')
     page = request.GET.get('page', '1')

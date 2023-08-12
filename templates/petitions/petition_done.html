@@ -49,7 +49,7 @@
 									<div class="b_list category b_list2">
 										<div class="bl_head cb" aria-hidden="true">
 											<div class="bl_wrap">
-												<div class="bl_category">분류</div>
+												<div class="bl_category">상태</div>
 												<div class="bl_subject">제목</div>
 												<div class="bl_date">청원 만료일</div>
 												<div class="bl_agree">참여인원</div>
@@ -61,9 +61,15 @@
                                                     {% for petition in petition_list %}
                                                         <li style="padding:20px 0;">
                                                             <div class="bl_wrap">
-                                                                <div class="bl_category ccategory cs wv_category">
-                                                                    <span class="sound_only">분류 </span>{{ petition.get_category_display }}
-                                                                </div>
+                                                                {% if petition.status == 3 %}
+                                                                    <div class="bl_category ccategory cs wv_category" style="color: rgb(191, 72, 84) !important;">
+                                                                        <span class="sound_only">상태 </span>{{ petition.get_status_display }}
+                                                                    </div>
+                                                                {% else %}
+                                                                    <div class="bl_category ccategory cs wv_category" style="color: rgb(42, 80, 135) !important;">
+                                                                        <span class="sound_only">상태 </span>{{ petition.get_status_display }}
+                                                                    </div>
+                                                                {% endif %}
                                                                 <div class="bl_subject">
                                                                     <a href="{% url 'petitions:petition_detail' petition.id %}" class="cb relpy_w">
                                                                         <span class="sound_only">제목 </span>{{ petition.subject }}

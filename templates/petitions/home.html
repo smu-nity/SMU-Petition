@@ -268,7 +268,7 @@
         function changeCategory(category) {
             let params = new URLSearchParams();
             params.set("category", category);
-            window.open({% url 'petitions:petition_list' 'progress'%} + '?' + params, '_self');
+            window.open("{% url 'petitions:petition_list' 'progress'%}" + '?' + params, '_self');
         }
     </script>
 {% endblock %}
