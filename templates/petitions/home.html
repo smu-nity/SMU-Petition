@@ -105,7 +105,8 @@
                         <!--TOP 1 Header-동의 사람-->
                         <div class="main-card-title-date  ">
                             <i class="fas fa-thumbs-up " style="align-item: center; font-size: 20px; color: #6499E1" ></i>
-                            <span style="font-size: 15px; color: #6499E1 ">{{ pl.top1.voter.count }} 명</span>
+                            <span style="font-size: 15px; color: #6499E1;">{{ pl.top1.voter.count }}명</span>
+                            <span style="font-size: 15px; color: #6499E1; margin-left: 5px;">({{ pl.top1.get_percentage }}%)</span>
                         </div>
                     </div>
 
@@ -113,7 +114,7 @@
                     <div class="card-footer text-muted card-footer-setting" >
                       <div class="progress" style="height:25px">
                           <!--막대기 퍼센트 조절 하고 싶으면 home.css 에 가서 main_progress-bar-stats 에 있는 width 를 변경하면 된다. 니머지들 모두 같은 방식으로 진행   // 이 바로 아래 65%는 막대기 속 숫자를 의미-->
-                        <div class="progress-bar main_progress-bar-stats" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">65%</div>
+                        <div class="progress-bar main_progress-bar-stats" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100" style="width: {{ pl.top1.get_percentage }}%;">{{ pl.top1.get_percentage }} %</div>
                       </div>
                     </div>
                 </div>
@@ -157,7 +158,8 @@
                     <div class="card-header" style="display : flex; justify-content : space-between; background-color: white;">
                         <div>
                             <i class="fas fa-thumbs-up" style=" color : #6499E1;"></i>
-                            <span style="font-size : 15px; color : #6499E1;">{{ petition.voter.count }} 명</span>
+                            <span style="font-size: 15px; color: #6499E1;">{{ petition.voter.count }}명</span>
+                            <span style="font-size: 15px; color: #6499E1; margin-left: 5px;">({{ petition.get_percentage }}%)</span>
                         </div>
                     </div>
 
@@ -166,7 +168,7 @@
                     <div class="card-footer text-muted card-footer-setting" style="background-color : #cdd0da; justify-content: center; ">
                       <div class="progress" style="height: 20px;">
                         <div
-                            class="progress-bar" role="progressbar" style="width: 25%; background-color: #6499E1;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">25%
+                            class="progress-bar" role="progressbar" style="width: {{ petition.get_percentage }}%; background-color: #6499E1;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">{{ petition.get_percentage }}%
                         </div>
                       </div>
                     </div>

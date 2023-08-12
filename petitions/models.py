@@ -3,7 +3,7 @@ from django.db import models
 from django.contrib.auth.models import User
 
 from accounts.models import Profile
-from config.settings import CATEGORY_CHOICES, STATUS_CHOICES, TIME_ZONE
+from config.settings import CATEGORY_CHOICES, STATUS_CHOICES, TIME_ZONE, SUCCESS_VALUE
 
 
 class Petition(models.Model):
@@ -33,6 +33,8 @@ class Petition(models.Model):
     def modify_date_str(self):
         return time_format(self.modify_date)
 
+    def get_percentage(self):
+        return int((self.voter.count() / SUCCESS_VALUE) * 100)
 
 class Comment(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE)
