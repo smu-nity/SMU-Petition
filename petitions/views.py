@@ -13,12 +13,19 @@ from .forms import PetitionForm, CommentForm, AnswerForm
 from django.contrib import messages
 
 
+def preprocess(queryset):
+    q_list = list(queryset)
+    for _ in range(2-len(q_list)):
+        q_list.append(None)
+    return q_list
+
+
 def home(request):
     plist = Petition.objects.filter(status=1).order_by('-create_date')
     if plist:
-        plist_v = plist.annotate(voter_count=Count('voter')).order_by('voter_count')
-        context = {'pl': {'top1': plist[0], 'top2_3': plist[1:3]}, 'plv': {'top1': plist_v[0], 'top2_3': plist_v[1:3]}}
-        return render(request, 'petitions/home.html', context)
+        plist_v = plist.annotate(voter_count=Count('voter')).order_by('-voter_count')
+        petition_list  = [{'top1': plist_v[0], 'top2_3': preprocess(plist_v[1:3])}, {'top1': plist_v[0], 'top2_3': preprocess(plist_v[1:3])}, {'top1': plist[0], 'top2_3': preprocess(plist[1:3])}]
+        return render(request, 'petitions/home.html', {'petition_list': petition_list})
     return render(request, 'petitions/home.html')
 
 
