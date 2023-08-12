@@ -34,7 +34,7 @@ class Petition(models.Model):
         return time_format(self.modify_date)
 
     def get_percentage(self):
-        return int((self.voter.count() / SUCCESS_VALUE) * 100)
+        return int((self.voter.count() / int(SUCCESS_VALUE)) * 100)
 
 class Comment(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE)
