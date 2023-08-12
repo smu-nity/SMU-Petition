@@ -23,7 +23,7 @@ def preprocess(queryset):
 def home(request):
     plist = Petition.objects.filter(status=1).order_by('-create_date')
     if plist:
-        plist_v = plist.annotate(voter_count=Count('voter')).order_by('-voter_count')
+        plist_v = plist.annotate(voter_count=Count('voter')).order_by('-voter_count', '-create_date')
         petition_list  = [{'top1': plist_v[0], 'top2_3': preprocess(plist_v[1:3])}, {'top1': plist_v[0], 'top2_3': preprocess(plist_v[1:3])}, {'top1': plist[0], 'top2_3': preprocess(plist[1:3])}]
         return render(request, 'petitions/home.html', {'petition_list': petition_list})
     return render(request, 'petitions/home.html')

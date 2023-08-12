@@ -98,10 +98,8 @@
 .main__top1-card-body {
     height : 300px;
     display:flex;
-    justify-content:center;
     overflow: auto;
 }
-
 
 .main-div {
     display: flex;
