@@ -143,7 +143,7 @@ LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
 
 # 청원 성공 인원
-SUCCESS_VALUE = os.environ.get('SUCCESS_VALUE', 2)
+SUCCESS_VALUE = os.environ.get('SUCCESS_VALUE', 50)
 
 # 필드 도메인
 CATEGORY_CHOICES = ((1, "학사"), (2, "일반"), (3, "사회봉사"), (4, "등록/장학"), (5, "학생생활"), (6, "채용"), (7, "글로벌"), (8, "진로취업"), (9, "비교과"), (10, "코로나19"), (11, "기타"))
