@@ -76,7 +76,7 @@
                                                                     </a>
                                                                 </div>
                                                                 <div class="bl_date light">
-                                                                    <span class="sound_only">청원 종료일 </span>{{ petition.create_date_str }}</div>
+                                                                    <span class="sound_only">청원 마감일 </span>{{ petition.end_date_str }}</div>
                                                                 <div class="bl_agree cs">
                                                                     <span class="sound_only">참여인원 </span>{{ petition.voter_count }} 명
                                                                 </div>
@@ -157,7 +157,7 @@
         function changeValue() {
             var value = document.getElementById("categorys");
             let params = new URLSearchParams(location.search);
-            params.set("categorys", value.options[value.selectedIndex].value);
+            params.set("category", value.options[value.selectedIndex].value);
             params.set("page", 1);
             window.open(location.pathname + '?' + params, '_self');
         }
@@ -183,7 +183,7 @@
         const category = searchParam("category");
         const sort = searchParam("sort")
         if (category) {
-            $('#category').val(category).prop("selected",true);
+            $('#categorys').val(category).prop("selected",true);
         }
         if (sort) {
             $('#sort').val(sort).prop("selected",true);

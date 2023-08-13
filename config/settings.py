@@ -145,6 +145,9 @@ LOGOUT_REDIRECT_URL = '/'
 # 청원 성공 인원
 SUCCESS_VALUE = os.environ.get('SUCCESS_VALUE', 1)
 
+# 청원 기한
+DEADLINE_VALUE = os.environ.get('DEADLINE_VALUE', 30)
+
 # 필드 도메인
 CATEGORY_CHOICES = ((1, "학사"), (2, "일반"), (3, "사회봉사"), (4, "등록/장학"), (5, "학생생활"), (6, "채용"), (7, "글로벌"), (8, "진로취업"), (9, "비교과"), (10, "코로나19"), (11, "기타"))
 STATUS_CHOICES = ((1, "진행중"), (2, "답변대기"), (3, "답변완료"), (4, "만료"), (5, "반려"))

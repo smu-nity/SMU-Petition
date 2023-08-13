@@ -78,12 +78,12 @@
                         <div>
                             <span style="font-size : 26px"> {{ pl.top1.get_category_display }} |</span>
                             <span style="font-size : 22px; color: orange;"> 진행중  </span>
-                            <span style="font-size : 23px"> | D-3 </span>
+                            <span style="font-size : 23px"> | {{ pl.top1.d_day }} </span>
                         </div>
 
                         <div class="main-card-title-date">
                             <i class="far fa-calendar-check" style="font-size: 20px;"></i>
-                            <span style="font-size: 16px;">동의기간 : 2023.02.17 - 2023.02.19</span>
+                            <span style="font-size: 16px;">청원 기간: {{ pl.top1.period_str }}</span>
                         </div>
                     </div>
 
@@ -139,12 +139,12 @@
                         <div>
                             <span style="font-size : 15px"> {{ petition.get_category_display }} |</span>
                             <span style="font-size : 15px; color: orange;"> 진행중  </span>
-                            <span style="font-size : 15px"> | D-24 </span>
+                            <span style="font-size : 15px"> | {{ petition.d_day }} </span>
                         </div>
 
                           <div>
                             <i class="far fa-calendar-check " style="font-size: 15px;"></i>
-                            <span style="font-size : 13px;"> 동의기간: 02.17 - 02.19</span>
+                            <span style="font-size : 13px;"> 청원 기간: {{ petition.period_str }}</span>
                           </div>
                       </div>
                     </div>

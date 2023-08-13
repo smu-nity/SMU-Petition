@@ -1,10 +1,12 @@
+import datetime
+
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
 from django.db.models import Count
 from django.shortcuts import render, get_object_or_404, redirect, resolve_url
 from django.utils import timezone
 
-from config.settings import SUCCESS_VALUE
+from config.settings import SUCCESS_VALUE, DEADLINE_VALUE
 from petitions.models import Petition, Comment, Answer
 from django.http import HttpResponseNotAllowed
 
@@ -21,18 +23,19 @@ def preprocess(queryset):
 
 
 def home(request):
-    plist = Petition.objects.filter(status=1).order_by('-create_date')
+    plist = Petition.objects.filter(status__in=[1, 2]).order_by('-create_date')
     if plist:
         plist_v = plist.annotate(voter_count=Count('voter')).order_by('-voter_count', '-create_date')
-        petition_list  = [{'top1': plist_v[0], 'top2_3': preprocess(plist_v[1:3])}, {'top1': plist_v[0], 'top2_3': preprocess(plist_v[1:3])}, {'top1': plist[0], 'top2_3': preprocess(plist[1:3])}]
+        plist_d = plist.order_by('end_date')
+        petition_list  = [{'top1': plist_v[0], 'top2_3': preprocess(plist_v[1:3])}, {'top1': plist_d[0], 'top2_3': preprocess(plist_d[1:3])}, {'top1': plist[0], 'top2_3': preprocess(plist[1:3])}]
         return render(request, 'petitions/home.html', {'petition_list': petition_list})
     return render(request, 'petitions/home.html')
 
 
 def petition_list(request, status):
-    status_dic = {'progress': 1, 'expiration': 4, 'companion': 5}
+    status_dic = {'progress': [1, 2], 'expiration': [4], 'companion': [5]}
     sort_dic = {'0': '-create_date', '1': '-voter_count' , '2': 'create_date'}
-    pl = Petition.objects.filter(status=status_dic[status]).annotate(voter_count=Count('voter'))
+    pl = Petition.objects.filter(status__in=status_dic[status]).annotate(voter_count=Count('voter'))
     category = request.GET.get('category', '0')
     sort = request.GET.get('sort', '0')
     page = request.GET.get('page', '1')
@@ -64,6 +67,7 @@ def petition_create(request):
         if form.is_valid():
             petition = form.save(commit=False)
             petition.author = request.user
+            petition.end_date = datetime.datetime.now() + datetime.timedelta(days=DEADLINE_VALUE)
             petition.save()
             return redirect('petitions:petition_list', 'progress')
     else:
