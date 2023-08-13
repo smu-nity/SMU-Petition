@@ -71,7 +71,7 @@
 	.board .b_list .bl_body .bl_category.ccategory{text-align:right;}
 	.tab.div4 li{width:25%;}
 }
-.cs {color:#0098e7 !important;}	/* 서브 */
+.cs {color: rgb(42, 80, 135) !important;}	/* 서브 */
 .cb {color:#201f2d !important;}	/* 어두운 회색 */
 /* 탭 */
 .tab li {
@@ -183,5 +183,8 @@ select {
 	}
 }
 .board {
-	padding: 60px 180px;
+	padding: 60px 180px 40px 180px;
+}
+.board-text {
+	font-weight: normal;
 }

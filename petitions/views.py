@@ -39,7 +39,7 @@ def petition_list(request, status):
     if category != '0':
         pl = pl.filter(category=int(category))
     pl = pl.order_by(sort_dic[sort])
-    paginator = Paginator(pl, 10)  # 페이지당 10개씩 보여주기
+    paginator = Paginator(pl, 5)
     page_obj = paginator.get_page(page)
     return render(request, 'petitions/petition_list.html', {'petition_list': page_obj, 'page': '모든 청원', 'status': status})
 
@@ -48,7 +48,7 @@ def petition_detail(request, petition_id):
     petition = get_object_or_404(Petition, pk=petition_id)
     comment_list = Comment.objects.filter(petition=petition)
     page = request.GET.get('page', '1')
-    paginator = Paginator(comment_list, 5)  # 페이지당 5개씩 보여주기
+    paginator = Paginator(comment_list, 5)
     page_obj = paginator.get_page(page)
     context = {'petition': petition, 'comment_list': page_obj}
     answers = Answer.objects.filter(petition=petition)
@@ -223,6 +223,6 @@ def answer(request):
     if category != '0':
         pl = pl.filter(category=int(category))
     pl = pl.order_by(sort_dic[sort])
-    paginator = Paginator(pl, 10)  # 페이지당 10개씩 보여주기
+    paginator = Paginator(pl, 5)
     page_obj = paginator.get_page(page)
     return render(request, 'petitions/petition_done.html', {'petition_list': page_obj, 'page': '답변된 청원'})
