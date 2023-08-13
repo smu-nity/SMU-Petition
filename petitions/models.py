@@ -40,6 +40,7 @@ class Petition(models.Model):
     def get_percentage(self):
         return int((self.voter.count() / int(SUCCESS_VALUE)) * 100)
 
+
 class Comment(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     petition = models.ForeignKey(Petition, on_delete=models.CASCADE)
