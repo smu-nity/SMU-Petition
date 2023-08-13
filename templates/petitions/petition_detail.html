@@ -26,12 +26,13 @@
             <!-- 질문 -->
             <div class="post_detail__title">
                 {% if petition.status == 3 %}
-                    <h4 class="py-2 post_detail__title-status table-body__complete">[{{ petition.get_status_display }}]</h4>
+                    <h4 class="py-2 post_detail__title-status table-body__complete" style="margin-bottom: 0;">[{{ petition.get_status_display }}]
                 {% else %}
-                    <h4 class="py-2 post_detail__title-status table-body__proceeding">[{{ petition.get_status_display }}]</h4>
+                    <h4 class="py-2 post_detail__title-status table-body__proceeding" style="margin-bottom: 0;">[{{ petition.get_status_display }}]
                 {% endif %}
-                <h3 class="py-2 post_detail__title-title" style="text-align: center;">{{ petition.subject }}</h3>
-                <h4 class="py-2 post_detail__title-agree">총 <b style="color: rgb(1, 42, 127);">{{petition.voter.count}}</b> 명이 동의했습니다.</h4>
+                <h5 class="py-2 post_detail__title-status">({{ petition.period_str }})</h5>
+                <h3 class="py-2 post_detail__title-title" style="text-align: center; margin-top: 16px; margin-bottom: 0;">{{ petition.subject }}</h3>
+                <h4 class="py-2 post_detail__title-agree">총 <b style="color: rgb(1, 42, 127); margin-bottom: 0;">{{petition.voter.count}}</b> 명이 동의했습니다.</h4>
             </div>
         </div>
 

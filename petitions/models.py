@@ -37,6 +37,9 @@ class Petition(models.Model):
     def end_date_str(self):
         return date_format(self.end_date)
 
+    def period_str(self):
+        return f'{date_format(self.create_date)} ~ {date_format(self.end_date)}'
+
     def get_percentage(self):
         return int((self.voter.count() / int(SUCCESS_VALUE)) * 100)
 
