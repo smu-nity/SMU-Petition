@@ -1,3 +1,5 @@
+from datetime import datetime
+
 import pytz
 from django.db import models
 from django.contrib.auth.models import User
@@ -39,6 +41,9 @@ class Petition(models.Model):
 
     def period_str(self):
         return f'{date_format(self.create_date)} ~ {date_format(self.end_date)}'
+
+    def d_day(self):
+        return f'D-{(self.end_date.date() - datetime.now().date()).days}'
 
     def get_percentage(self):
         return int((self.voter.count() / int(SUCCESS_VALUE)) * 100)

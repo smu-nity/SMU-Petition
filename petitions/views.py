@@ -23,7 +23,7 @@ def preprocess(queryset):
 
 
 def home(request):
-    plist = Petition.objects.filter(status=1).order_by('-create_date')
+    plist = Petition.objects.filter(status__in=[1, 2]).order_by('-create_date')
     if plist:
         plist_v = plist.annotate(voter_count=Count('voter')).order_by('-voter_count', '-create_date')
         plist_d = plist.order_by('end_date')
@@ -33,9 +33,9 @@ def home(request):
 
 
 def petition_list(request, status):
-    status_dic = {'progress': 1, 'expiration': 4, 'companion': 5}
+    status_dic = {'progress': [1, 2], 'expiration': [4], 'companion': [5]}
     sort_dic = {'0': '-create_date', '1': '-voter_count' , '2': 'create_date'}
-    pl = Petition.objects.filter(status=status_dic[status]).annotate(voter_count=Count('voter'))
+    pl = Petition.objects.filter(status__in=status_dic[status]).annotate(voter_count=Count('voter'))
     category = request.GET.get('category', '0')
     sort = request.GET.get('sort', '0')
     page = request.GET.get('page', '1')
