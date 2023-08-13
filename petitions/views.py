@@ -6,7 +6,7 @@ from django.db.models import Count
 from django.shortcuts import render, get_object_or_404, redirect, resolve_url
 from django.utils import timezone
 
-from config.settings import SUCCESS_VALUE
+from config.settings import SUCCESS_VALUE, DEADLINE_VALUE
 from petitions.models import Petition, Comment, Answer
 from django.http import HttpResponseNotAllowed
 
@@ -66,7 +66,7 @@ def petition_create(request):
         if form.is_valid():
             petition = form.save(commit=False)
             petition.author = request.user
-            petition.end_date = datetime.date.today() + datetime.timedelta(days=30)
+            petition.end_date = datetime.datetime.now() + datetime.timedelta(days=DEADLINE_VALUE)
             petition.save()
             return redirect('petitions:petition_list', 'progress')
     else:
