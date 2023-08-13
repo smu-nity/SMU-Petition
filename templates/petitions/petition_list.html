@@ -20,7 +20,7 @@
 			<div class="tab div3">
 				<ul>
 					<li class="motion fadeInLeft visible" data-animation="fadeInLeft"><a href="{% url 'petitions:petition_list' 'progress' %}"
-                            {% if status == 'progress' %}class="on" title="현재"{% endif %}>진행중 청원</a></li>
+                            {% if status == 'progress' %}class="on" title="현재"{% endif %}>진행중인 청원</a></li>
 					<li class="motion fadeInLeft visible" data-animation="fadeInLeft"><a href="{% url 'petitions:petition_list' 'expiration' %}"
                             {% if status == 'expiration' %}class="on" title="현재"{% endif %}>만료된 청원</a></li>
 					<li class="motion fadeInLeft visible" data-animation="fadeInLeft"><a href="{% url 'petitions:petition_list' 'companion' %}"
