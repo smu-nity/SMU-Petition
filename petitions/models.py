@@ -14,6 +14,7 @@ class Petition(models.Model):
     anonymous = models.BooleanField(default=False)
     create_date = models.DateTimeField(auto_now_add=True)
     modify_date = models.DateTimeField(null=True, blank=True)
+    end_date = models.DateTimeField(null=True)
     voter = models.ManyToManyField(User, related_name='voter_question')
     status = models.IntegerField(choices=STATUS_CHOICES, default=1)
 
@@ -32,6 +33,9 @@ class Petition(models.Model):
 
     def modify_date_str(self):
         return time_format(self.modify_date)
+
+    def end_date_str(self):
+        return date_format(self.end_date)
 
     def get_percentage(self):
         return int((self.voter.count() / int(SUCCESS_VALUE)) * 100)
@@ -71,4 +75,8 @@ class Answer(models.Model):
 
 
 def time_format(time):
+    return time.astimezone(pytz.timezone(TIME_ZONE)).strftime("%m/%d %H:%M")
+
+
+def date_format(time):
     return time.astimezone(pytz.timezone(TIME_ZONE)).strftime("%y-%m-%d")
