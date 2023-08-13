@@ -182,6 +182,7 @@ def answer_create(request, petition_id, type=None):
             petition.status = 3
             if type == 'reject':
                 petition.status = 5
+            petition.end_date = datetime.datetime.now()
             petition.save()
             return redirect('petitions:petition_detail', petition_id=petition.id)
     else:
