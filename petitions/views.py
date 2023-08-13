@@ -114,7 +114,7 @@ def petition_vote(request, petition_id):
         messages.error(request, '이미 추천한 글 입니다')
     else:
         petition.voter.add(request.user)
-        if petition.voter.count() >= SUCCESS_VALUE:
+        if petition.voter.count() >= int(SUCCESS_VALUE):
             petition.status = 2
             petition.save()
     return redirect('petitions:petition_detail', petition_id=petition.id)
@@ -212,7 +212,7 @@ def answer_delete(request, answer_id):
     answer = get_object_or_404(Answer, pk=answer_id)
     answer.delete()
     answer.petition.status = 1
-    if answer.petition.voter.count() >= SUCCESS_VALUE:
+    if answer.petition.voter.count() >= int(SUCCESS_VALUE):
         answer.petition.status = 2
     answer.petition.save()
     return redirect('petitions:petition_detail', petition_id=answer.petition.id)
