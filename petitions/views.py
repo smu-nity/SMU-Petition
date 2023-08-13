@@ -109,9 +109,9 @@ def petition_delete(request, petition_id):
 def petition_vote(request, petition_id):
     petition = get_object_or_404(Petition, pk=petition_id)
     if request.user == petition.author:
-        messages.error(request, '본인이 작성한 글은 동의할 수 없습니다')
+        messages.error(request, '본인이 작성한 청원에 동의할 수 없습니다.')
     elif request.user in petition.voter.all():
-        messages.error(request, '이미 동의한 글 입니다')
+        messages.error(request, '이미 동의한 청원입니다.')
     else:
         petition.voter.add(request.user)
         if petition.voter.count() >= int(SUCCESS_VALUE):
