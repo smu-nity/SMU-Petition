@@ -1,3 +1,5 @@
+import datetime
+
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
 from django.db.models import Count
@@ -64,6 +66,7 @@ def petition_create(request):
         if form.is_valid():
             petition = form.save(commit=False)
             petition.author = request.user
+            petition.end_date = datetime.date.today() + datetime.timedelta(days=30)
             petition.save()
             return redirect('petitions:petition_list', 'progress')
     else:
