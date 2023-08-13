@@ -157,7 +157,7 @@
         function changeValue() {
             var value = document.getElementById("categorys");
             let params = new URLSearchParams(location.search);
-            params.set("categorys", value.options[value.selectedIndex].value);
+            params.set("category", value.options[value.selectedIndex].value);
             params.set("page", 1);
             window.open(location.pathname + '?' + params, '_self');
         }
@@ -183,7 +183,7 @@
         const category = searchParam("category");
         const sort = searchParam("sort")
         if (category) {
-            $('#category').val(category).prop("selected",true);
+            $('#categorys').val(category).prop("selected",true);
         }
         if (sort) {
             $('#sort').val(sort).prop("selected",true);
