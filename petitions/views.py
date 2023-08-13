@@ -67,7 +67,7 @@ def petition_create(request):
         if form.is_valid():
             petition = form.save(commit=False)
             petition.author = request.user
-            petition.end_date = datetime.datetime.now() + datetime.timedelta(days=DEADLINE_VALUE)
+            petition.end_date = datetime.datetime.now() + datetime.timedelta(days=int(DEADLINE_VALUE))
             petition.save()
             return redirect('petitions:petition_list', 'progress')
     else:
