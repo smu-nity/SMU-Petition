@@ -21,9 +21,9 @@ from petitions import views
 
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    path('', views.home, name='home'),
+    path('admin/', admin.site.urls, name='admin'),
     path('petitions/', include('petitions.urls')),
     path('accounts/', include('accounts.urls')),
-    path('', views.home, name='home'),
     path('robots.txt', TemplateView.as_view(template_name="robots.txt", content_type='text/plain')),
 ]

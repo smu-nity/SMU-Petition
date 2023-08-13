@@ -11,9 +11,11 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarNavDropdown">
             <ul class="navbar-nav ml-auto">
+                {% if not user.is_superuser %}
                 <li class="nav-item">
                     <a class="nav-link fs-5 a_tag" href="{% url 'petitions:petition_create' %}">청원하기</a>
                 </li>
+                {% endif %}
                 <li class="nav-item">
                     <a class="nav-link fs-5 a_tag" href="{% url 'petitions:petition_list' 'progress'%}">모든 청원</a>
                 </li>
@@ -21,9 +23,15 @@
                     <a class="nav-link fs-5 a_tag" href="{% url 'petitions:answer' %}">답변된 청원</a>
                 </li>
                 {% if user.is_authenticated %}
-                <li class="nav-item">
-                    <a class="nav-link fs-5 a_tag" href="{% url 'accounts:mypage' %}">마이페이지</a>
-                </li>
+                    {% if user.is_superuser %}
+                        <li class="nav-item">
+                            <a class="nav-link fs-5 a_tag" href="/admin/">관리자 페이지</a>
+                        </li>
+                    {% else %}
+                        <li class="nav-item">
+                            <a class="nav-link fs-5 a_tag" href="{% url 'accounts:mypage' %}">마이페이지</a>
+                        </li>
+                    {% endif %}
                 <li class="nav-item">
                     <a class="nav-link fs-5 a_tag" href="{% url 'accounts:logout' %}">로그아웃</a>
                 </li>
