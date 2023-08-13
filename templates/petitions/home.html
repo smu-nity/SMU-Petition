@@ -76,9 +76,9 @@
 
                         <!--TOP 1 Header-동의기간-->
                         <div>
-                            <span style="font-size : 26px"> {{ pl.top1.get_category_display }} |</span>
-                            <span style="font-size : 22px; color: orange;"> 진행중  </span>
-                            <span style="font-size : 23px"> | {{ pl.top1.d_day }} </span>
+                            <span style="font-size : 23px"> {{ pl.top1.get_category_display }} |</span>
+                            <span style="font-size : 23px; color: orange;"> {{ pl.top1.get_status_display }}</span>
+                            <span style="font-size : 23px">| {{ pl.top1.d_day }} </span>
                         </div>
 
                         <div class="main-card-title-date">
@@ -138,7 +138,7 @@
                       <div class="card-header main__top1-card-header" style="display : flex; justify-content : space-between;">
                         <div>
                             <span style="font-size : 15px"> {{ petition.get_category_display }} |</span>
-                            <span style="font-size : 15px; color: orange;"> 진행중  </span>
+                            <span style="font-size : 15px; color: orange;"> {{ petition.get_status_display }} </span>
                             <span style="font-size : 15px"> | {{ petition.d_day }} </span>
                         </div>
 
