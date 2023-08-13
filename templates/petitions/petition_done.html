@@ -46,13 +46,13 @@
 										</select>
 									</div>
 
-									<div class="b_list category b_list2">
+									<div class="b_list category b_list2 board-text">
 										<div class="bl_head cb" aria-hidden="true">
 											<div class="bl_wrap">
 												<div class="bl_category">상태</div>
 												<div class="bl_subject">제목</div>
-												<div class="bl_date">청원 만료일</div>
-												<div class="bl_agree">참여인원</div>
+												<div class="bl_date">청원 마감일</div>
+												<div class="bl_agree">참여 인원</div>
 											</div>
 										</div>
 										<div class="bl_body">
@@ -111,6 +111,44 @@
 					</div>
 				</div>
 			</div>
+            <!-- 페이징처리 시작 -->
+            <ul class="pagination justify-content-center" style="margin-bottom: 60px;">
+                <!-- 이전페이지 -->
+                {% if petition_list.has_previous %}
+                <li class="page-item">
+                    <a class="page-link" href="javascript:void(0);" onclick="changePage({{ petition_list.previous_page_number }});">이전</a>
+                </li>
+                {% else %}
+                <li class="page-item disabled">
+                    <a class="page-link" tabindex="-1" aria-disabled="true" href="#">이전</a>
+                </li>
+                {% endif %}
+                <!-- 페이지리스트 -->
+                {% for page_number in petition_list.paginator.page_range %}
+                    {% if page_number >= petition_list.number|add:-3 and page_number <= petition_list.number|add:3 %}
+                        {% if page_number == petition_list.number %}
+                        <li class="page-item active" aria-current="page">
+                            <a class="page-link" href="javascript:void(0);" onclick="changePage({{ page_number }});">{{ page_number }}</a>
+                        </li>
+                        {% else %}
+                        <li class="page-item">
+                            <a class="page-link" href="javascript:void(0);" onclick="changePage({{ page_number }});">{{ page_number }}</a>
+                        </li>
+                        {% endif %}
+                    {% endif %}
+                {% endfor %}
+                <!-- 다음페이지 -->
+                {% if petition_list.has_next %}
+                <li class="page-item">
+                    <a class="page-link" href="javascript:void(0);" onclick="changePage({{ petition_list.next_page_number }});">다음</a>
+                </li>
+                {% else %}
+                <li class="page-item disabled">
+                    <a class="page-link" tabindex="-1" aria-disabled="true" href="#">다음</a>
+                </li>
+                {% endif %}
+            </ul>
+            <!-- 페이징처리 끝 -->
 		</div>
 	</section>
 {% endblock %}
