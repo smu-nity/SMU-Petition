@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django_crontab',
     'accounts',
     'petitions',
 ]
@@ -227,3 +228,9 @@ LOGGING = {
         },
     }
 }
+
+
+# crontab 설정
+CRONJOBS = [
+    ('0 0 * * *', 'petitions.cron.crontab_every_day', '>> '+os.path.join(BASE_DIR, 'cron.log')+' 2>&1 ')
+]
