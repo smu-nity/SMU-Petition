@@ -108,15 +108,20 @@ def petition_delete(request, petition_id):
 @login_required
 def petition_vote(request, petition_id):
     petition = get_object_or_404(Petition, pk=petition_id)
-    if request.user == petition.author:
-        messages.error(request, '본인이 작성한 글은 추천할 수 없습니다')
+    if petition.status == 4:
+        messages.error(request, '만료된 청원입니다.')
+    if petition.status == 5:
+        messages.error(request, '반려된 청원입니다.')
+    elif request.user == petition.author:
+        messages.error(request, '본인이 작성한 청원에 동의할 수 없습니다.')
     elif request.user in petition.voter.all():
-        messages.error(request, '이미 추천한 글 입니다')
+        messages.error(request, '이미 동의한 청원입니다.')
     else:
         petition.voter.add(request.user)
         if petition.voter.count() >= int(SUCCESS_VALUE):
             petition.status = 2
             petition.save()
+            messages.success(request, '해당 청원에 대한 동의 처리가 완료되었습니다.')
     return redirect('petitions:petition_detail', petition_id=petition.id)
 
 
@@ -170,7 +175,7 @@ def comment_delete(request, comment_id):
 def answer_create(request, petition_id, type=None):
     petition = get_object_or_404(Petition, pk=petition_id)
     if Answer.objects.filter(petition=petition):
-        messages.error(request, '이미 답변한 청원입니다')
+        messages.error(request, '이미 답변한 청원입니다.')
         return redirect('petitions:petition_detail', petition_id=petition.id)
     if request.method == "POST":
         form = AnswerForm(request.POST)
