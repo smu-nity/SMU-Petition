@@ -1,7 +1,11 @@
 version: '3'
 
 services:
+  _build_image:
+    image: main_image
+    build: .
   nginx:
+    image: main_image
     build: ./nginx/nginx
     volumes:
       - static_volume:/usr/src/app/static
@@ -19,6 +23,7 @@ services:
       - ./data/certbot/conf:/etc/letsencrypt
       - ./data/certbot/www:/var/www/certbot
   web:
+    image: main_image
     build: .
     command: gunicorn config.wsgi:application --bind 0.0.0.0:8000
     volumes:
@@ -29,6 +34,7 @@ services:
     env_file:
       - ./.env
   cron:
+    image: main_image
     restart: always
     command: bash -c "service cron start && python manage.py crontab add && tail -f /dev/null"
     env_file:
