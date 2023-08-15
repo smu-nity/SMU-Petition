@@ -232,5 +232,5 @@ LOGGING = {
 
 # crontab 설정
 CRONJOBS = [
-    ('* * * * *', 'petitions.cron.my_scheduled_job', '>> ./cron.log'),
+    ('* * * * *', 'petitions.cron.hello_every_minute', '>> ./cron.log'),
 ]
