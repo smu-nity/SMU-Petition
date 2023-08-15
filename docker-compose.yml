@@ -29,7 +29,6 @@ services:
     env_file:
       - ./.env
   cron:
-    restart: always
     command: bash -c "service cron start && python manage.py crontab add && tail -f /dev/null"
     env_file:
       - ./.env
