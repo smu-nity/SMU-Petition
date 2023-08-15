@@ -16,6 +16,3 @@ RUN pip install -r requirements.txt
 # for django-crontab
 RUN apt-get update
 RUN apt-get -y install cron
-ADD scripts/crontab-script /etc/cron.d/task-cron
-RUN chmod 0644 /etc/cron.d/task-cron
-CMD start.sh
