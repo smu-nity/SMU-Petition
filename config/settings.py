@@ -232,5 +232,5 @@ LOGGING = {
 
 # crontab 설정
 CRONJOBS = [
-    ('* * * * *', 'petitions.cron.hello_every_minute', '>> ./cron.log'),
+    ('*/1 * * * *', 'petitions.cron.crontab_every_minute', '>> '+os.path.join(BASE_DIR, 'cron.log')+' 2>&1 ')
 ]
