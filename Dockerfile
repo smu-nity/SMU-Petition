@@ -14,6 +14,4 @@ RUN pip install --upgrade pip
 RUN pip install -r requirements.txt
 
 # for django-crontab
-RUN service cron start
-RUN service cron status
 RUN python manage.py crontab add
