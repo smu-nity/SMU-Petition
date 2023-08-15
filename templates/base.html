@@ -30,7 +30,7 @@
     <!-- 예외처리 -->
     {% if messages %}
     {% for m in messages %}
-    {% if m.tags == 'error' %}
+    {% if m.tags == 'error' or m.tags == 'success' %}
     <script>
         alert('{{ m }}');
     </script>

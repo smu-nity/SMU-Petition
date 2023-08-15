@@ -16,14 +16,16 @@
         <div class="post_detail__title_container container my-3">
             <!-- message 표시 -->
             {% if messages %}
-            <div class="alert alert-danger my-3" role="alert">
             {% for message in messages %}
-                <strong>{{ message.tags }}</strong>
-                <ul><li>{{ message.message }}</li></ul>
+                {% if message.tags == 'error' %}
+                <div class="alert alert-danger my-3" role="alert">
+                    <strong>{{ message.tags }}</strong>
+                    <ul><li>{{ message.message }}</li></ul>
+                </div>
+                {% endif %}
             {% endfor %}
-            </div>
             {% endif %}
-            <!-- 질문 -->
+            <!-- 청원 -->
             <div class="post_detail__title">
                 {% if petition.status == 3 %}
                     <h4 class="py-2 post_detail__title-status table-body__complete" style="margin-bottom: 0;">[{{ petition.get_status_display }}]
