@@ -1,14 +1,13 @@
-import os
-import sys
-from datetime import datetime
-from django.core.wsgi import get_wsgi_application
-sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)) + '/app')))
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "config.settings")
-application = get_wsgi_application()
+from datetime import date
 from petitions.models import Petition
 
 
-def crontab_every_minute():
-    print(datetime.now())
-    for petition in Petition.objects.all():
-        print(petition.end_date)
+def crontab_every_day():
+    today = date.today()
+    petitions = Petition.objects.filter(end_date__lte=today, status=1)
+
+    print(today)
+    for petition in petitions:
+        petition.status = 4
+        petition.save()
+        print(petition)
