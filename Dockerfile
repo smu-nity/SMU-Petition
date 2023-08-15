@@ -16,6 +16,7 @@ RUN pip install -r requirements.txt
 # for django-crontab
 RUN chmod -R 777 /usr/src/app
 RUN apt-get update
-RUN apt-get install -y cron && touch /usr/src/app/cron.log
-RUN service cron start
+RUN apt-get install -y cron
+RUN touch /var/log/cron.log && touch /usr/src/app/cron.log
 RUN python manage.py crontab add
+RUN service cron start
