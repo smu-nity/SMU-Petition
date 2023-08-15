@@ -35,6 +35,8 @@ services:
     command: bash -c "service cron start && python manage.py crontab add && tail -f /dev/null"
     env_file:
       - ./.env
+    expose:
+      - 8000
     depends_on:
       - web
 volumes:
