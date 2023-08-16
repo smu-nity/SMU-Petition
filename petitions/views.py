@@ -6,6 +6,7 @@ from django.db.models import Count
 from django.shortcuts import render, get_object_or_404, redirect, resolve_url
 from django.utils import timezone
 
+from accounts.models import Statistics2
 from config.settings import SUCCESS_VALUE, DEADLINE_VALUE
 from petitions.models import Petition, Comment, Answer
 from django.http import HttpResponseNotAllowed
@@ -23,13 +24,19 @@ def preprocess(queryset):
 
 
 def home(request):
-    plist = Petition.objects.filter(status__in=[1, 2]).order_by('-create_date')
+    plist, context = Petition.objects.filter(status__in=[1, 2]).order_by('-create_date'), {}
     if plist:
         plist_v = plist.annotate(voter_count=Count('voter')).order_by('-voter_count', '-create_date')
         plist_d = plist.order_by('end_date')
         petition_list  = [{'top1': plist_v[0], 'top2_3': preprocess(plist_v[1:3])}, {'top1': plist_d[0], 'top2_3': preprocess(plist_d[1:3])}, {'top1': plist[0], 'top2_3': preprocess(plist[1:3])}]
-        return render(request, 'petitions/home.html', {'petition_list': petition_list})
-    return render(request, 'petitions/home.html')
+        context['petition_list'] = petition_list
+    response = render(request, 'petitions/home.html', context)
+    if request.COOKIES.get('is_visit') is None:
+        response.set_cookie('is_visit', 'visited', 60*30)
+        st, _ = Statistics2.objects.get_or_create(date=datetime.date.today())
+        st.visit_count += 1
+        st.save()
+    return response
 
 
 def petition_list(request, status):
@@ -44,8 +51,13 @@ def petition_list(request, status):
     pl = pl.order_by(sort_dic[sort])
     paginator = Paginator(pl, 5)
     page_obj = paginator.get_page(page)
-    return render(request, 'petitions/petition_list.html', {'petition_list': page_obj, 'page': '모든 청원', 'status': status})
-
+    response = render(request, 'petitions/petition_list.html', {'petition_list': page_obj, 'page': '모든 청원', 'status': status})
+    if request.COOKIES.get('is_visit') is None:
+        response.set_cookie('is_visit', 'visited', 60 * 30)
+        st, _ = Statistics2.objects.get_or_create(date=datetime.date.today())
+        st.visit_count += 1
+        st.save()
+    return response
 
 def petition_detail(request, petition_id):
     petition = get_object_or_404(Petition, pk=petition_id)
@@ -57,7 +69,13 @@ def petition_detail(request, petition_id):
     answers = Answer.objects.filter(petition=petition)
     if answers:
         context['answer'] = answers.first()
-    return render(request, 'petitions/petition_detail.html', context)
+    response = render(request, 'petitions/petition_detail.html', context)
+    if request.COOKIES.get('is_visit') is None:
+        response.set_cookie('is_visit', 'visited', 60 * 30)
+        st, _ = Statistics2.objects.get_or_create(date=datetime.date.today())
+        st.visit_count += 1
+        st.save()
+    return response
 
 
 @login_required
