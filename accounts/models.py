@@ -37,56 +37,6 @@ class Profile(models.Model):    # 사용자 프로필
     def tostring(self):
         return f'{self.user.username} {self.name}'
 
-    def subjects_all(self):
-        from core.models import Course
-        return Course.objects.filter(user=self.user).aggregate(Sum('credit'))['credit__sum']
-
-    def subjects_major_i(self):
-        from core.models import Course
-        return Course.objects.filter(user=self.user, type='1전심').aggregate(Sum('credit'))['credit__sum']
-
-    def subjects_major_s(self):
-        from core.models import Course
-        return Course.objects.filter(user=self.user, type='1전선').aggregate(Sum('credit'))['credit__sum']
-
-    def subjects_culture(self):
-        from core.models import Course
-        return Course.objects.filter(user=self.user, type__in=['교필', '교선']).aggregate(Sum('credit'))['credit__sum']
-
-    def subjects_culture_e(self):
-        from core.models import Course
-        cnt = 0
-        cultures, subs = [], []
-        types = list(map((lambda x: x[0]), SUBTYPE_CHOICES_E))
-
-        for type in types:
-            subjects = Course.objects.filter(Q(user=self.user) & Q(domain__contains=type))
-            cultures.append({'type': type, 'subjects': subjects})
-            if subjects:
-                cnt += 1
-            else:
-                from graduations.models import Culture
-                subs.append({'type': type, 'cultures': Culture.objects.filter(subdomain=type)})
-        context = {'cnt': cnt, 'cultures': cultures, 'subjects': subs}
-        return context
-
-    def subjects_culture_s(self):
-        from core.models import Course
-        cnt = 0
-        cultures, subs = [], []
-        types = list(map((lambda x: x[0]), SUBTYPE_CHOICES_S))
-        types.remove(self.department.type)
-
-        for type in types:
-            subjects = Course.objects.filter(Q(user=self.user)&Q(domain__contains=type)&Q(domain__contains='균형'))
-            cultures.append({'type': type, 'subjects': subjects})
-            if subjects:
-                cnt += 1
-            else:
-                from graduations.models import Culture
-                subs.append({'type': type, 'cultures': Culture.objects.filter(subdomain=type)})
-        context = {'cnt': cnt, 'cultures': cultures, 'subjects': subs}
-        return context
 
 class LoginHistory(models.Model):
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)  # 장고 유저
@@ -102,4 +52,3 @@ class Statistics(models.Model):
 
     def __str__(self):
         return f'{self.date} : {self.visit_count}'
-        
