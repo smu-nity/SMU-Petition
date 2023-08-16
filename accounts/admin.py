@@ -1,5 +1,5 @@
 from django.contrib import admin
-from accounts.models import Department, Year, Profile, LoginHistory, Statistics
+from accounts.models import Department, Year, Profile, LoginHistory, Statistics, Statistics2
 
 
 class YearAdmin(admin.ModelAdmin):
@@ -27,3 +27,4 @@ admin.site.register(Department, DepartmentAdmin)
 admin.site.register(Profile, ProfileAdmin)
 admin.site.register(LoginHistory, LoginHistoryAdmin)
 admin.site.register(Statistics, StatisticsAdmin)
+admin.site.register(Statistics2, StatisticsAdmin)
