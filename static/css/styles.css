@@ -402,3 +402,14 @@ body {
         display: none !important
     }
 }
+
+.card-body-top {
+    text-decoration: none;
+    color: black;
+}
+.card-body-top:hover {
+    background-color:#F7F7F7;
+}
+.card-body-top:hover span {
+    text-decoration:underline;
+}

@@ -89,7 +89,7 @@
 
 
                     <!--TOP 1 Body-->
-                    <a href="{% url 'petitions:petition_detail' pl.top1.id %}" class="card-body main__top1-card-body" style="font-weight: normal; text-decoration: none; color: black; cursor: pointer;">
+                    <a href="{% url 'petitions:petition_detail' pl.top1.id %}" class="card-body main__top1-card-body card-body-top" style="font-weight: normal; cursor: pointer;">
                         <div>
                              <h5 class="card-title main-hot1-title-font" >
                                 <span>{{ pl.top1.subject }}</span>
@@ -150,8 +150,8 @@
                     </div>
 
                     <!--HOT 2 Body-->
-                    <a href="{% url 'petitions:petition_detail' petition.id %}" class="card-body main-hot23-body" style="text-decoration: none; cursor: pointer;">
-                        <h5 class="card-title main-card-title-font">{{ petition.subject }}</h5>
+                    <a href="{% url 'petitions:petition_detail' petition.id %}" class="card-body main-hot23-body card-body-top" style="cursor: pointer;">
+                        <span class="card-title main-card-title-font">{{ petition.subject }}</span>
                     </a>
 
                     <!--HOT 2 동의 사람 수-->
