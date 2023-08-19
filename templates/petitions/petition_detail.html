@@ -220,7 +220,7 @@
 {% endblock %}
 {% block script %}
 <script type='text/javascript'>
-    var url = window.document.location.href;
+    var url = "{{ url }}";
     document.getElementById("url").innerHTML = url;
 
     const delete_elements = document.getElementsByClassName("delete");
@@ -251,7 +251,7 @@
         var url = '';
         var textarea = document.createElement("textarea");
         document.body.appendChild(textarea);
-        url = window.document.location.href;
+        url = "{{ url }}";
         textarea.value = url;
         textarea.select();
         document.execCommand("copy");
