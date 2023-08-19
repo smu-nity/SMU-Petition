@@ -156,6 +156,9 @@ def comment_create(request, petition_id):
             comment.save()
             return redirect('{}#comment_{}'.format(
                 resolve_url('petitions:petition_detail', petition_id=petition.id), comment.id))
+        else:
+            messages.error(request, '댓글을 입력해주세요.')
+            return redirect('petitions:petition_detail', petition_id=petition.id)
     else:
         return HttpResponseNotAllowed('Only POST is possible.')
     return render(request, 'petitions/petition_detail.html', {'petition': petition, 'form': form})
