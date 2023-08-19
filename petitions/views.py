@@ -7,7 +7,7 @@ from django.shortcuts import render, get_object_or_404, redirect, resolve_url
 from django.utils import timezone
 
 from accounts.models import Statistics2
-from config.settings import SUCCESS_VALUE, DEADLINE_VALUE
+from config.settings import SUCCESS_VALUE, DEADLINE_VALUE, CSRF_TRUSTED_ORIGINS
 from petitions.models import Petition, Comment, Answer
 from django.http import HttpResponseNotAllowed
 
@@ -65,7 +65,8 @@ def petition_detail(request, petition_id):
     page = request.GET.get('page', '1')
     paginator = Paginator(comment_list, 5)
     page_obj = paginator.get_page(page)
-    context = {'petition': petition, 'comment_list': page_obj}
+    url = f'{CSRF_TRUSTED_ORIGINS[0]}/petitions/{petition.pk}/'
+    context = {'petition': petition, 'comment_list': page_obj, 'url': url}
     answers = Answer.objects.filter(petition=petition)
     if answers:
         context['answer'] = answers.first()
@@ -155,6 +156,9 @@ def comment_create(request, petition_id):
             comment.save()
             return redirect('{}#comment_{}'.format(
                 resolve_url('petitions:petition_detail', petition_id=petition.id), comment.id))
+        else:
+            messages.error(request, '댓글을 입력해주세요.')
+            return redirect('petitions:petition_detail', petition_id=petition.id)
     else:
         return HttpResponseNotAllowed('Only POST is possible.')
     return render(request, 'petitions/petition_detail.html', {'petition': petition, 'form': form})
