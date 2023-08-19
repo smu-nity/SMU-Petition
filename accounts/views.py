@@ -166,7 +166,7 @@ def mypage(request):
     profile = get_object_or_404(Profile, user=user)
     page = request.GET.get('page', '1')
     petition_list = Petition.objects.filter(author=user).annotate(voter_count=Count('voter')).order_by('-create_date')
-    paginator = Paginator(petition_list, 4)
+    paginator = Paginator(petition_list, 3)
     page_obj = paginator.get_page(page)
     return render(request, 'accounts/mypage.html', {'user': user, 'profile': profile, 'petition_list': page_obj})
 
