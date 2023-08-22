@@ -401,6 +401,12 @@ body {
     .display-none {
         display: none !important
     }
+    .post_detail__body_container {
+        width: 100%;
+        padding: 0px 30px;
+        border: none;
+        max-width: 100% !important;
+    }
 }
 
 .card-body-top {
