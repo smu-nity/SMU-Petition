@@ -237,6 +237,33 @@ body {
     position: fixed;
 }
 
+.card-body-top {
+    text-decoration: none;
+    color: black;
+}
+.card-body-top:hover {
+    background-color:#F7F7F7;
+}
+.card-body-top:hover span {
+    text-decoration:underline;
+}
+.modal-expl {
+    margin-top:1.8rem;
+    font-size:0.9rem;
+    color:rgb(199, 199, 199);
+    line-height:normal;
+}
+.modal-title {
+    text-align: center;
+    padding-top:2rem;
+    padding-left:0.5rem;
+    font-weight: bold;
+    font-size:2rem;
+    margin-top:1.7rem;
+    margin-bottom: 2rem;
+    line-height:normal;
+}
+
 /* ---------------------------------( loading )---------------------------------------- */
 
 .modal_loadcontainer{
@@ -407,15 +434,14 @@ body {
         border: none;
         max-width: 100% !important;
     }
-}
-
-.card-body-top {
-    text-decoration: none;
-    color: black;
-}
-.card-body-top:hover {
-    background-color:#F7F7F7;
-}
-.card-body-top:hover span {
-    text-decoration:underline;
+    .update_modal_content {
+        max-width: 95%;
+        width: 95%;
+    }
+    .modal-expl {
+        font-size:0.7rem;
+    }
+    .modal-title {
+        font-size:1.6rem;
+    }
 }
