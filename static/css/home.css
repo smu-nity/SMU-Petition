@@ -209,7 +209,7 @@
     height: 130px;
     overflow : auto;
     justify-content : center;
-
+    padding: 8px 16px;
 }
 .main-card-title-font {
     font-size : 20px;
