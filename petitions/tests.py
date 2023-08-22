@@ -1,12 +1,10 @@
-import os
-from django.core.wsgi import get_wsgi_application
+from datetime import date, datetime
 
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "config.settings")
-application = get_wsgi_application()
-from petitions.models import Petition
-from django.contrib.auth.models import User
 
-user = User.objects.get(pk=1)
-for i in range(300):
-    q = Petition(author=user, subject='테스트 데이터입니다:[%03d]' % i, content='내용무')
-    q.save()
+def crontab_every_day():
+    today = date.today()
+
+    print(today)
+    print(datetime.now())
+
+crontab_every_day()
