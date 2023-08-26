@@ -122,6 +122,10 @@
     padding: 0 100px 30px 100px;
     text-align: center;
   }
+  .login-form .agree {
+    padding: 75px 100px;
+    text-align: center;
+  }
   .login-form .input-field {
     padding: 12px 5px;
   }
