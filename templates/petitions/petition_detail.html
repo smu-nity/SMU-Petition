@@ -93,10 +93,7 @@
                         {{ answer.content|mark }}
                     </div>
                 </div>
-                <div class="d-flex justify-content-end">
-                    <div class="badge bg-light text-dark p-2 text-start mx-3">
-                        {{ answer.author.username }}
-                    </div>
+                <div class="d-flex justify-content-end" style="margin-bottom: 0.5rem;">
                     <div class="badge bg-light text-dark p-2 text-start mx-3">
                         {% if answer.modify_date %}
                             {{ answer.modify_date_str }} (수정)
