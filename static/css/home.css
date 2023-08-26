@@ -271,3 +271,7 @@
     margin: 0 10px;
     padding: 0 20px;
 }
+.button-sm {
+    background-color: var(--sangmyung);
+    border-color: var(--sangmyung);
+}

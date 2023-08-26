@@ -31,13 +31,13 @@
 
                     <label style="margin-top: 1rem;">비밀번호</label>
                     <input class="form-control" id="pw1" type="password" name="password1" value="{{ form.password1.value|default_if_none:'' }}">
-                    <div class='regi_guide'>
+                    <div class='regi_guide' style="color: rgb(1, 42, 127);">
                         - 스뮤니티 사이트의 고유 비밀번호를 설정해주세요.
                     </div>
                     <label style="margin-top: 1rem;">비밀번호 재확인</label>
                     <input class="form-control" id="pw2" type="password" name="password2" value="{{ form.password2.value|default_if_none:'' }}">
                     <div style="text-align: center;">
-                        <input type='submit' class='btn btn-primary' style="margin-top:2.5rem; margin-bottom: 3rem;" value='가입하기'>
+                        <input type='submit' class='btn btn-primary button-sm' style="margin-top:2.5rem; margin-bottom: 3rem;" value='가입하기'>
                     </div>
             </form>
         </div>
