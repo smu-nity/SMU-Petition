@@ -275,3 +275,7 @@
     background-color: var(--sangmyung);
     border-color: var(--sangmyung);
 }
+.active>.page-link, .page-link.active {
+    background-color: var(--sangmyung);
+    border-color: var(--sangmyung);
+}
