@@ -16,7 +16,6 @@
 
 .post_detail__title-title {
     font-weight: 600;
-    width: 70%;
 }
 
 .post_detail__body-title {
@@ -30,6 +29,7 @@
 .post_detail__body-text {
     color: black;
     font-weight: 300;
+    font-size: 1rem;
 }
 
 .post_detail__body-button {
@@ -67,4 +67,10 @@
 .post_detail__body-share--button--copy {
     background-color: black;
     color: white;
+}
+
+.comment_data-agree {
+    color: black;
+    font-weight: 300;
+    font-size: 1rem;
 }
