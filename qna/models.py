@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 from django.db import models
 
 from accounts.models import Profile
-from config.settings import TIME_ZONE, STATUS_CHOICES
+from config.settings import TIME_ZONE
 
 
 # Create your models here.
@@ -14,7 +14,6 @@ class qna(models.Model):
     anonymous = models.BooleanField(default=False)
     create_date = models.DateTimeField(auto_now_add=True)
     modify_date = models.DateTimeField(null=True, blank=True)
-    status = models.IntegerField(choices=STATUS_CHOICES, default=1)
 
     def __str__(self):
         return f'[{self.author}] {self.subject} ({self.create_date})'
@@ -25,23 +24,6 @@ class qna(models.Model):
         if profile:
             return profile.first().name
         return '익명'
-
-    def create_date_str(self):
-        return time_format(self.create_date)
-
-    def modify_date_str(self):
-        return time_format(self.modify_date)
-
-
-class QnA_Comment(models.Model):
-    author = models.ForeignKey(User, on_delete=models.CASCADE)
-    QnA = models.ForeignKey(qna, on_delete=models.CASCADE)
-    content = models.TextField()
-    create_date = models.DateTimeField(auto_now_add=True)
-    modify_date = models.DateTimeField(null=True, blank=True)
-
-    def __str__(self):
-        return f'[{self.petition.subject}] {self.content} ({self.create_date})'
 
     def create_date_str(self):
         return time_format(self.create_date)
