@@ -12,9 +12,9 @@
 }
 
 #login_logo {
-    margin-top: 40px;
-    width: 180px;
-    height: 180px;
+    margin: 10px 0;
+    width: 150px;
+    height: 150px;
 }
 
 .login_gray {
@@ -103,7 +103,7 @@
 .login-form {
     background: #fff;
     width: 600px;
-    margin: 65px;
+    margin: 35px 65px;
     display: -webkit-box;
     display: flex;
     -webkit-box-orient: vertical;
@@ -119,7 +119,7 @@
     text-align: center;
   }
   .login-form .content {
-    padding: 75px 45px 75px 45px;
+    padding: 0 100px 30px 100px;
     text-align: center;
   }
   .login-form .input-field {

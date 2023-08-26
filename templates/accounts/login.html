@@ -5,9 +5,7 @@
 {% endblock %}
 {% block content %}
     <div class="navbar-img">
-        <img class="navbar-img-image" src="{% static 'img/main.jpg' %}"
-            style="width: 100%; height: 300px; object-fit:cover" />
-
+        <img class="navbar-img-image" src="{% static 'img/main.jpg' %}"/>
         <div class="navbar-img__text">
             <span class="navbar-img__text--title">로그인</span>
             <span class="navbar-img__text--subtitle">학번과 스뮤니티 비밀번호를 입력해 주세요.</span>
@@ -16,6 +14,9 @@
    <!-- 로그인 박스 -->
     <div class="login-container">
         <div class="login-form">
+            <div class="login_logo">
+                <img id="login_logo" src="{% static 'img/logo2.png' %}" >
+            </div>
             <form onsubmit="return check_up1();" method="post" action="{% url 'accounts:login' %}">
                 {% csrf_token %}
 

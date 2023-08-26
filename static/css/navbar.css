@@ -16,7 +16,8 @@
     position: relative;
     filter: brightness(50%);
     width: 100%;
-    height: 500px;
+    height: 300px;
+    object-fit:cover;
 }
 
 .navbar-img__text {
@@ -104,6 +105,9 @@
         width: 100% !important;
         margin: 0 0 0 0 !important;
         box-shadow: none !important;
+    }
+    .login_logo {
+        display: none !important;
     }
     .content {
         padding: 60px 30px 60px 30px !important;
