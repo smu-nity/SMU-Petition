@@ -40,13 +40,15 @@
 
 @media (max-width: 990px) {
     .navbar-img__text {
-        margin: 70px;
-        text-align: center;
-        font-size: 15px;
+        font-size: 17px;
     }
 
     .navbar-img__text--title {
-        font-size: 35px;
+        font-size: 45px;
+    }
+
+    .navbar-img-image {
+        height: 280px;
     }
 }
 
@@ -66,8 +68,6 @@
         font-size : 35px;
     }
     .navbar-img__text {
-        margin: 70px;
-        text-align: center;
         font-size: 15px;
     }
     .navbar-img__text--title {
