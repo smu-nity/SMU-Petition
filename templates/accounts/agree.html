@@ -53,11 +53,11 @@
             </p>
         </div>
         <div style="display: flex; justify-content: center;">
-            <div class="login-form" style="margin-top: 10px;">
+            <div class="login-form" style="margin-top: 10px; border:0.001px solid rgb(216, 216, 216); box-shadow: none;">
                 <!-- 로그인 폼 -->
                 <form onsubmit="return check_up();" method="post" >
                     {% csrf_token %}
-                    <div class="content">
+                    <div class="agree">
                         <div class="input-group flex-nowrap">
                             <input type="text" class="form-control" name="username" id="id" placeholder="학번">
                         </div>
