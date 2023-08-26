@@ -121,13 +121,6 @@
 
 }
 
-
-
-.main-card-title-date{
-    justify-content: flex;
-    align-items: left;
-}
-
 .main__top1-card-header-HOT01{
     display : flex;
     align-items : center;
@@ -216,7 +209,7 @@
     display: flex;
     justify-content: start;
     font-weight: 700;
-    width : 400px;
+    width : 100%;
     color: black;
 }
 
