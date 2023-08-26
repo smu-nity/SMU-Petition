@@ -182,3 +182,7 @@ def member_del(request):
             return redirect('home')
     messages.error(request, '⚠️ 비밀번호가 일치하지 않습니다.')
     return redirect('accounts:mypage')
+
+
+def terms(request):
+    return render(request, 'accounts/terms.html')
