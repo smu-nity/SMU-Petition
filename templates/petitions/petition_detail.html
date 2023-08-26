@@ -42,7 +42,9 @@
             <h4 class="post_detail__title-title my-3 py-2">청원내용</h4>
             <div class="post_detail__body-title--button">
                 {% if request.user.is_superuser and not answer %}
-                    <a href="{% url 'petitions:answer_create' petition.id %}" class="btn btn-sm btn-outline-secondary">답변 등록</a>
+                    {% if petition.status == 2 %}
+                        <a href="{% url 'petitions:answer_create' petition.id %}" class="btn btn-sm btn-outline-secondary">답변 등록</a>
+                    {% endif %}
                     <a href="{% url 'petitions:answer_create' petition.id 'reject' %}" class="btn btn-sm btn-outline-secondary">청원 반려</a>
                 {% endif %}
                 {% if request.user == petition.author %}
