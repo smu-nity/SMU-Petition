@@ -290,6 +290,12 @@ body {
 .top23-date {
     font-size : 13px;
 }
+.footer_link {
+    text-decoration: none;
+}
+.footer_link:hover {
+    text-decoration: underline;
+}
 @media (max-width:1200px) {
     .top23-header {
         font-size : 14px;
