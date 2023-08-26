@@ -13,8 +13,8 @@
 
 #login_logo {
     margin: 10px 0;
-    width: 150px;
-    height: 150px;
+    width: 125px;
+    height: 125px;
 }
 
 .login_gray {
@@ -103,7 +103,7 @@
 .login-form {
     background: #fff;
     width: 600px;
-    margin: 35px 65px;
+    margin: 45px 65px;
     display: -webkit-box;
     display: flex;
     -webkit-box-orient: vertical;
