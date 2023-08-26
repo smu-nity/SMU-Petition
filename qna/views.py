@@ -41,7 +41,7 @@ def QnA_detail(request, QnA_id):
     QnA = get_object_or_404(qna, pk=QnA_id)
     url = f'{CSRF_TRUSTED_ORIGINS[0]}/qna/{QnA.pk}/'
     context = {'qna': QnA, 'url': url}
-    answers = QnA_Answer.objects.filter(qna=QnA)
+    answers = QnA_Answer.objects.filter(QnA=QnA)
     if answers:
         context['answer'] = answers.first()
     response = render(request, 'qna/QnA_detail.html', context)
@@ -59,9 +59,9 @@ def QnA_create(request):
         form = QnAForm(request.POST)
         if form.is_valid():
             QnA = form.save(commit=False)
-            QnA.author = request.user
+            # QnA.author = request.user
             QnA.save()
-            return redirect('qna:QnA_list', 'progress')
+            return redirect('qna:QnA_list')
     else:
         form = QnAForm()
     context = {'form': form}
@@ -71,9 +71,9 @@ def QnA_create(request):
 # @login_required
 def QnA_modify(request, QnA_id):
     QnA = get_object_or_404(qna, pk=QnA_id)
-    if request.user != QnA.author:
-        messages.error(request, '수정권한이 없습니다')
-        return redirect('qna:QnA_detail', QnA_id=QnA.id)
+    # if request.user != QnA.author:
+    #     messages.error(request, '수정권한이 없습니다')
+    #     return redirect('qna:QnA_detail', QnA_id=QnA.id)
     if request.method == "POST":
         form = QnAForm(request.POST, instance=QnA)
         if form.is_valid():
@@ -90,11 +90,11 @@ def QnA_modify(request, QnA_id):
 # @login_required
 def QnA_delete(request, QnA_id):
     QnA = get_object_or_404(qna, pk=QnA_id)
-    if request.user != QnA.author:
-        messages.error(request, '삭제권한이 없습니다')
-        return redirect('qna:QnA_detail', qna_id=QnA.id)
+    # if request.user != QnA.author:
+    #     messages.error(request, '삭제권한이 없습니다')
+    #     return redirect('qna:QnA_detail', qna_id=QnA.id)
     QnA.delete()
-    return redirect('qna:QnA_detail', 'progress')
+    return redirect('qna:QnA_detail')
 
 
 @superuser_required

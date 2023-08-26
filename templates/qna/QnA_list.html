@@ -38,7 +38,7 @@
                                                         <li style="padding:20px 0;">
                                                             <div class="bl_wrap">
                                                                 <div class="bl_subject">
-                                                                    <a href="{% url 'petitions:petition_detail' petition.id %}" class="cb relpy_w">
+                                                                    <a href="{% url 'qna:QnA_detail' qna.id %}" class="cb relpy_w">
                                                                         <span class="sound_only">제목 </span>{{ qna.subject }}
                                                                     </a>
                                                                 </div>
@@ -56,7 +56,7 @@
                                                         </div>
                                                     </li>
                                                 {% endif %}
-                                                <a class="nav-link fs-5 a_tag" href="{% url 'petitions:petition_create' %}">질문하기</a>
+                                                <a class="nav-link fs-5 a_tag" href="{% url 'qna:QnA_create' %}">질문하기</a>
                                             </ul>
 										</div>
 									</div>

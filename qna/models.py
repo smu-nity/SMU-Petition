@@ -8,7 +8,7 @@ from config.settings import TIME_ZONE
 
 # Create your models here.
 class qna(models.Model):
-    author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='author_qna')
+    # author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='author_qna')
     subject = models.CharField(max_length=200)
     content = models.TextField()
     anonymous = models.BooleanField(default=False)
@@ -33,7 +33,7 @@ class qna(models.Model):
 
 
 class QnA_Answer(models.Model):
-    author = models.ForeignKey(User, on_delete=models.CASCADE)
+    # author = models.ForeignKey(User, on_delete=models.CASCADE)
     QnA = models.ForeignKey(qna, on_delete=models.CASCADE)
     content = models.TextField()
     create_date = models.DateTimeField(auto_now_add=True)

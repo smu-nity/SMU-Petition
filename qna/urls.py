@@ -4,10 +4,10 @@ from qna import views
 app_name = 'qna'
 
 urlpatterns = [
-    path('<int:qna_id>/', views.QnA_detail, name='QnA_detail'),
+    path('<int:QnA_id>/', views.QnA_detail, name='QnA_detail'),
     path('create/', views.QnA_create, name='QnA_create'),
-    path('modify/<int:petition_id>/', views.QnA_modify, name='QnA_modify'),
-    path('delete/<int:petition_id>/', views.QnA_delete, name='QnA_delete'),
+    path('modify/<int:QnA_id>/', views.QnA_modify, name='QnA_modify'),
+    path('delete/<int:QnA_id>/', views.QnA_delete, name='QnA_delete'),
     path('QnA_list', views.QnA_list, name='QnA_list'),
 
     path('answer/create/<int:qna_id>/', views.QnA_answer_create, name='answer_create'),
