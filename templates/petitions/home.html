@@ -32,19 +32,19 @@
         <nav>
           <div class="nav nav-tabs main-search-option " style="width: 99.3%;" id="nav-tab" role="tablist">
             <!--최다 동의 순 버튼-->
-            <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">
+            <a class="nav-item nav-link nav-tab active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">
                 <i class="fas fa-thumbs-up "></i>
                 최다 동의 순
             </a>
 
             <!--만료 임박 순 버튼-->
-            <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">
+            <a class="nav-item nav-link nav-tab" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">
                 <i class="far fa-calendar-times"></i>
                 만료 임박 순
             </a>
 
             <!--최근 공개 순 버튼-->
-            <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab" aria-controls="nav-contact" aria-selected="false">
+            <a class="nav-item nav-link nav-tab" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab" aria-controls="nav-contact" aria-selected="false">
                 <i class="fas fa-calendar-plus"></i>
                 최근 공개 순
             </a>
@@ -75,15 +75,15 @@
                     <div class="card-header main__top1-card-header" style="height : 70px;">
 
                         <!--TOP 1 Header-동의기간-->
-                        <div>
-                            <span style="font-size : 23px"> {{ pl.top1.get_category_display }} |</span>
-                            <span style="font-size : 23px; color: orange;"> {{ pl.top1.get_status_display }}</span>
-                            <span style="font-size : 23px">| {{ pl.top1.d_day }} </span>
+                        <div class="card-info">
+                            <span class="top1-header"> {{ pl.top1.get_category_display }} |</span>
+                            <span class="top1-header" style="color: orange;"> {{ pl.top1.get_status_display }}</span>
+                            <span class="top1-header">| {{ pl.top1.d_day }} </span>
                         </div>
 
-                        <div class="main-card-title-date">
+                        <div class="card-date">
                             <i class="far fa-calendar-check" style="font-size: 20px;"></i>
-                            <span style="font-size: 16px;">청원 기간: {{ pl.top1.period_str }}</span>
+                            <span class="top1-date">청원 기간: {{ pl.top1.period_str }}</span>
                         </div>
                     </div>
 
@@ -103,7 +103,7 @@
 
                     <div class="card-header" style="height : 50px; background-color: white; display : flex;">
                         <!--TOP 1 Header-동의 사람-->
-                        <div class="main-card-title-date  ">
+                        <div class="card-agree">
                             <i class="fas fa-thumbs-up " style="align-item: center; font-size: 20px; color: #6499E1" ></i>
                             <span style="font-size: 15px; color: #6499E1;">{{ pl.top1.voter.count }}명</span>
                             <span style="font-size: 15px; color: #6499E1; margin-left: 5px;">({{ pl.top1.get_percentage }}%)</span>
@@ -140,15 +140,15 @@
 
                     <!--HOT 2 Head-->
                       <div class="card-header main__top1-card-header" style="display : flex; justify-content : space-between;">
-                        <div>
-                            <span style="font-size : 15px"> {{ petition.get_category_display }} |</span>
-                            <span style="font-size : 15px; color: orange;"> {{ petition.get_status_display }} </span>
-                            <span style="font-size : 15px"> | {{ petition.d_day }} </span>
+                        <div class="card-info">
+                            <span class="top23-header"> {{ petition.get_category_display }} |</span>
+                            <span class="top23-header" style="color: orange;"> {{ petition.get_status_display }} </span>
+                            <span class="top23-header"> | {{ petition.d_day }} </span>
                         </div>
 
-                          <div>
+                          <div class="card-date">
                             <i class="far fa-calendar-check " style="font-size: 15px;"></i>
-                            <span style="font-size : 13px;"> 청원 기간: {{ petition.period_str }}</span>
+                            <span class="top23-date"> 청원 기간: {{ petition.period_str }}</span>
                           </div>
                       </div>
                     </div>
@@ -160,7 +160,7 @@
 
                     <!--HOT 2 동의 사람 수-->
                     <div class="card-header" style="display : flex; justify-content : space-between; background-color: white;">
-                        <div>
+                        <div class="card-agree">
                             <i class="fas fa-thumbs-up" style=" color : #6499E1;"></i>
                             <span style="font-size: 15px; color: #6499E1;">{{ petition.voter.count }}명</span>
                             <span style="font-size: 15px; color: #6499E1; margin-left: 5px;">({{ petition.get_percentage }}%)</span>
