@@ -25,5 +25,6 @@ urlpatterns = [
     path('admin/', admin.site.urls, name='admin'),
     path('petitions/', include('petitions.urls')),
     path('accounts/', include('accounts.urls')),
+    path('qna/', include('qna.urls')),
     path('robots.txt', TemplateView.as_view(template_name="robots.txt", content_type='text/plain')),
 ]

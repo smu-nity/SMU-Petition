@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django_crontab',
     'accounts',
     'petitions',
+    'qna',
 ]
 
 MIDDLEWARE = [

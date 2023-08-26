@@ -18,7 +18,7 @@ from django.contrib import messages
 
 def preprocess(queryset):
     q_list = list(queryset)
-    for _ in range(2-len(q_list)):
+    for _ in range(2 - len(q_list)):
         q_list.append(None)
     return q_list
 
@@ -28,11 +28,13 @@ def home(request):
     if plist:
         plist_v = plist.annotate(voter_count=Count('voter')).order_by('-voter_count', '-create_date')
         plist_d = plist.order_by('end_date')
-        petition_list  = [{'top1': plist_v[0], 'top2_3': preprocess(plist_v[1:3])}, {'top1': plist_d[0], 'top2_3': preprocess(plist_d[1:3])}, {'top1': plist[0], 'top2_3': preprocess(plist[1:3])}]
+        petition_list = [{'top1': plist_v[0], 'top2_3': preprocess(plist_v[1:3])},
+                         {'top1': plist_d[0], 'top2_3': preprocess(plist_d[1:3])},
+                         {'top1': plist[0], 'top2_3': preprocess(plist[1:3])}]
         context['petition_list'] = petition_list
     response = render(request, 'petitions/home.html', context)
     if request.COOKIES.get('is_visit') is None:
-        response.set_cookie('is_visit', 'visited', 60*30)
+        response.set_cookie('is_visit', 'visited', 60 * 30)
         st, _ = Statistics2.objects.get_or_create(date=datetime.date.today())
         st.visit_count += 1
         st.save()
@@ -41,7 +43,7 @@ def home(request):
 
 def petition_list(request, status):
     status_dic = {'progress': [1, 2], 'expiration': [4], 'companion': [5]}
-    sort_dic = {'0': '-create_date', '1': '-voter_count' , '2': 'create_date'}
+    sort_dic = {'0': '-create_date', '1': '-voter_count', '2': 'create_date'}
     pl = Petition.objects.filter(status__in=status_dic[status]).annotate(voter_count=Count('voter'))
     category = request.GET.get('category', '0')
     sort = request.GET.get('sort', '0')
@@ -51,13 +53,15 @@ def petition_list(request, status):
     pl = pl.order_by(sort_dic[sort])
     paginator = Paginator(pl, 5)
     page_obj = paginator.get_page(page)
-    response = render(request, 'petitions/petition_list.html', {'petition_list': page_obj, 'page': '모든 청원', 'status': status})
+    response = render(request, 'petitions/petition_list.html',
+                      {'petition_list': page_obj, 'page': '모든 청원', 'status': status})
     if request.COOKIES.get('is_visit') is None:
         response.set_cookie('is_visit', 'visited', 60 * 30)
         st, _ = Statistics2.objects.get_or_create(date=datetime.date.today())
         st.visit_count += 1
         st.save()
     return response
+
 
 def petition_detail(request, petition_id):
     petition = get_object_or_404(Petition, pk=petition_id)
@@ -180,7 +184,8 @@ def comment_modify(request, comment_id):
                 resolve_url('petitions:petition_detail', petition_id=comment.petition.id), comment.id))
     else:
         form = CommentForm(instance=comment)
-    return render(request, 'petitions/form.html', {'form': form, 'content': '댓글 수정', 'petition_id': comment.petition.id})
+    return render(request, 'petitions/form.html',
+                  {'form': form, 'content': '댓글 수정', 'petition_id': comment.petition.id})
 
 
 @login_required
@@ -247,7 +252,7 @@ def answer_delete(request, answer_id):
 
 
 def answer(request):
-    sort_dic = {'0': '-create_date', '1': '-voter_count' , '2': 'create_date'}
+    sort_dic = {'0': '-create_date', '1': '-voter_count', '2': 'create_date'}
     pl = Petition.objects.filter(status__in=[2, 3]).annotate(voter_count=Count('voter'))
     category = request.GET.get('category', '0')
     sort = request.GET.get('sort', '0')
