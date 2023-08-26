@@ -15,4 +15,5 @@ urlpatterns = [
     path('find/', views.find_pw, name='find'),
     path('mypage/', views.mypage, name='mypage'),
     path('member_del/', views.member_del, name='member_del'),
+    path('terms/', views.terms, name='terms'),
 ]
