@@ -62,7 +62,11 @@
             </div>
             <div class="d-flex justify-content-end" style="margin-bottom: 0.5rem;">
                 <div class="badge bg-light text-dark p-2 text-start">
-                    {{ petition.author_name }}
+                    {% if petition.anonymous %}
+                        익명
+                    {% else %}
+                        {{ petition.author_name }}
+                    {% endif %}
                 </div>
                 <div class="badge bg-light text-dark p-2 text-start mx-3">
                     {% if petition.modify_date %}
@@ -104,7 +108,7 @@
         {% endif %}
 
         <div class="post_detail__body-button my-3">
-            <a href="javascript:void(0)" data-uri="{% url 'petitions:petition_vote' petition.id  %}"
+            <a href="javascript:void(0)" data-uri="#"
                 class="btn btn-primary navbarMain-button recommend">
                     <i class="fas fa-thumbs-up enroll-btn__icon"></i>
                     <span>동의하기</span>
@@ -123,7 +127,7 @@
             </div>
         </div>
 
-        <form action="{% url 'petitions:comment_create' petition.id %}" method="post" class="my-3">
+        <form action="#" method="post" class="my-3">
             {% csrf_token %}
             <div class="mb-3">
                 <div class="post_detail__body-title border-bottom">

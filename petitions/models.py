@@ -24,11 +24,10 @@ class Petition(models.Model):
         return f'[{self.author}] {self.subject} ({self.create_date})'
 
     def author_name(self):
-        user = self.author
-        profile = Profile.objects.filter(user=user)
-        if profile:
-            return profile.first().name
-        return '익명'
+        if self.anonymous:
+            return '익명'
+        profile = Profile.objects.filter(user=self.author)
+        return profile.first().name
 
     def create_date_str(self):
         return time_format(self.create_date)

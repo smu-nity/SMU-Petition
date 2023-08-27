@@ -6,11 +6,10 @@
 {% endblock %}
 {% block content %}
     <div class="navbar-img">
-        <img class="navbar-img-image" src="{% static 'img/main.jpg' %}"
-            style="width: 100%; height: 300px; object-fit:cover" />
+        <img class="navbar-img-image" src="{% static 'img/main.jpg' %}"/>
 
         <div class="navbar-img__text">
-            <span class="navbar-img__text--title">{{ page }}</span>
+            <span class="navbar-img__text--title">QnA 게시판</span>
             <span class="navbar-img__text--subtitle">상명대학교 학우 여러분들의 의견에</span>
             <span class="navbar-img__text--subtitle">귀를 기울이는 학생회가 되겠습니다.</span>
         </div>
@@ -45,34 +44,29 @@
 											<div class="bl_wrap">
 												<div class="bl_category">상태</div>
 												<div class="bl_subject">제목</div>
-												<div class="bl_date">청원 마감일</div>
-												<div class="bl_agree">참여 인원</div>
+												<div class="bl_date">작성자</div>
+												<div class="bl_agree">작성일</div>
 											</div>
 										</div>
 										<div class="bl_body">
 											<ul class="petition_list">
-                                                {% if petition_list %}
-                                                    {% for petition in petition_list %}
+                                                {% if question_list %}
+                                                    {% for question in question_list %}
                                                         <li style="padding:20px 0;">
                                                             <div class="bl_wrap">
-                                                                {% if petition.status == 3 %}
-                                                                    <div class="bl_category ccategory cs wv_category" style="color: rgb(191, 72, 84) !important;">
-                                                                        <span class="sound_only">상태 </span>{{ petition.get_status_display }}
-                                                                    </div>
-                                                                {% else %}
-                                                                    <div class="bl_category ccategory cs wv_category" style="color: rgb(42, 80, 135) !important;">
-                                                                        <span class="sound_only">상태 </span>{{ petition.get_status_display }}
-                                                                    </div>
-                                                                {% endif %}
+                                                                <div class="bl_category ccategory cs wv_category">
+                                                                    <span class="sound_only">상태 </span>접수, 답변완료
+                                                                </div>
                                                                 <div class="bl_subject">
-                                                                    <a href="{% url 'petitions:petition_detail' petition.id %}" class="cb relpy_w">
-                                                                        <span class="sound_only">제목 </span>{{ petition.subject }}
+                                                                    <a href="#" class="cb relpy_w">
+                                                                        <span class="sound_only">제목 </span>{{ question.subject }}
                                                                     </a>
                                                                 </div>
                                                                 <div class="bl_date light">
-                                                                    <span class="sound_only">청원 마감일 </span>{{ petition.end_date_str }}</div>
+                                                                    <span class="sound_only">작성자 </span>{{ question.author_name }}
+                                                                </div>
                                                                 <div class="bl_agree cs">
-                                                                    <span class="sound_only">참여인원 </span>{{ petition.voter_count }} 명
+                                                                    <span class="sound_only">작성일 </span>{{ question.create_date_str }}
                                                                 </div>
                                                             </div>
                                                         </li>
@@ -81,7 +75,7 @@
                                                     <li style="padding:20px 0;">
                                                         <div class="bl_wrap">
                                                             <div class="bl_category ccategory cs wv_category">
-                                                                <span class="sound_only">분류 </span>
+                                                                <span class="sound_only">상태 </span>
                                                             </div>
                                                             <div class="bl_subject">
                                                                 <a href="#" class="cb relpy_w">
@@ -89,9 +83,9 @@
                                                                 </a>
                                                             </div>
                                                             <div class="bl_date light">
-                                                                <span class="sound_only">청원 종료일 </span></div>
+                                                                <span class="sound_only">작성자 </span></div>
                                                             <div class="bl_agree cs">
-                                                                <span class="sound_only">참여인원 </span>
+                                                                <span class="sound_only">작성일 </span>
                                                             </div>
                                                         </div>
                                                     </li>
