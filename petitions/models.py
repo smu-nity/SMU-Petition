@@ -9,7 +9,7 @@ from config.settings import CATEGORY_CHOICES, STATUS_CHOICES, TIME_ZONE, SUCCESS
 
 
 class Petition(models.Model):
-    author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='author_question')
+    author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='author_petition')
     subject = models.CharField(max_length=200)
     content = models.TextField()
     category = models.IntegerField(choices=CATEGORY_CHOICES, default=1)
@@ -67,7 +67,7 @@ class Comment(models.Model):
 
 
 class Answer(models.Model):
-    author = models.ForeignKey(User, on_delete=models.CASCADE)
+    author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='petition_answer')
     petition = models.ForeignKey(Petition, on_delete=models.CASCADE)
     content = models.TextField()
     create_date = models.DateTimeField(auto_now_add=True)
