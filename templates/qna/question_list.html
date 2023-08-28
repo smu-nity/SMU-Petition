@@ -44,8 +44,8 @@
 											<div class="bl_wrap">
 												<div class="bl_category">상태</div>
 												<div class="bl_subject">제목</div>
-												<div class="bl_date">작성자</div>
-												<div class="bl_agree">작성일</div>
+												<div class="bl_date">작성일</div>
+												<div class="bl_agree">작성자</div>
 											</div>
 										</div>
 										<div class="bl_body">
@@ -55,7 +55,12 @@
                                                         <li style="padding:20px 0;">
                                                             <div class="bl_wrap">
                                                                 <div class="bl_category ccategory cs wv_category">
-                                                                    <span class="sound_only">상태 </span>접수, 답변완료
+                                                                    <span class="sound_only">상태 </span>
+                                                                    {% if question.answer_set.count == 0 %}
+                                                                        <p class="table-body__proceeding" style="margin: 0;">접수</p>
+                                                                    {% else %}
+                                                                        <p class="table-body__complete" style="margin: 0;">답변완료</p>
+                                                                    {% endif %}
                                                                 </div>
                                                                 <div class="bl_subject">
                                                                     <a href="#" class="cb relpy_w">
@@ -63,10 +68,10 @@
                                                                     </a>
                                                                 </div>
                                                                 <div class="bl_date light">
-                                                                    <span class="sound_only">작성자 </span>{{ question.author_name }}
+                                                                    <span class="sound_only">작성일 </span>{{ question.date_str }}
                                                                 </div>
                                                                 <div class="bl_agree cs">
-                                                                    <span class="sound_only">작성일 </span>{{ question.create_date_str }}
+                                                                    <span class="sound_only">작성자 </span>{{ question.author_name }}
                                                                 </div>
                                                             </div>
                                                         </li>
@@ -102,9 +107,9 @@
             <!-- 페이징처리 시작 -->
             <ul class="pagination justify-content-center" style="margin-bottom: 60px;">
                 <!-- 이전페이지 -->
-                {% if petition_list.has_previous %}
+                {% if question_list.has_previous %}
                 <li class="page-item">
-                    <a class="page-link" href="javascript:void(0);" onclick="changePage({{ petition_list.previous_page_number }});">이전</a>
+                    <a class="page-link" href="javascript:void(0);" onclick="changePage({{ question_list.previous_page_number }});">이전</a>
                 </li>
                 {% else %}
                 <li class="page-item disabled">
@@ -112,9 +117,9 @@
                 </li>
                 {% endif %}
                 <!-- 페이지리스트 -->
-                {% for page_number in petition_list.paginator.page_range %}
-                    {% if page_number >= petition_list.number|add:-3 and page_number <= petition_list.number|add:3 %}
-                        {% if page_number == petition_list.number %}
+                {% for page_number in question_list.paginator.page_range %}
+                    {% if page_number >= question_list.number|add:-3 and page_number <= question_list.number|add:3 %}
+                        {% if page_number == question_list.number %}
                         <li class="page-item active" aria-current="page">
                             <a class="page-link" href="javascript:void(0);" onclick="changePage({{ page_number }});">{{ page_number }}</a>
                         </li>
@@ -126,9 +131,9 @@
                     {% endif %}
                 {% endfor %}
                 <!-- 다음페이지 -->
-                {% if petition_list.has_next %}
+                {% if question_list.has_next %}
                 <li class="page-item">
-                    <a class="page-link" href="javascript:void(0);" onclick="changePage({{ petition_list.next_page_number }});">다음</a>
+                    <a class="page-link" href="javascript:void(0);" onclick="changePage({{ question_list.next_page_number }});">다음</a>
                 </li>
                 {% else %}
                 <li class="page-item disabled">

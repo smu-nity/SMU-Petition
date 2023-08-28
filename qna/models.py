@@ -22,6 +22,9 @@ class Question(models.Model):
         profile = Profile.objects.filter(user=self.author)
         return profile.first().name
 
+    def date_str(self):
+        return date_format(self.create_date)
+
     def create_date_str(self):
         return time_format(self.create_date)
 
@@ -54,3 +57,7 @@ class Answer(models.Model):
 
 def time_format(time):
     return time.astimezone(pytz.timezone(TIME_ZONE)).strftime("%m/%d %H:%M")
+
+
+def date_format(time):
+    return time.astimezone(pytz.timezone(TIME_ZONE)).strftime("%y-%m-%d")
