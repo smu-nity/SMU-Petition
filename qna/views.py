@@ -5,7 +5,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.utils import timezone
 
 from petitions.decorators import superuser_required
-from qna.forms import QuestionForm
+from qna.forms import QuestionForm, AnswerForm
 from qna.models import Question, Answer
 
 
@@ -70,24 +70,20 @@ def question_delete(request, question_id):
     return redirect('qna:question_list')
 
 
-
-# @superuser_required
-# def answer_create(request, question_id):
-#     question = get_object_or_404(Question, pk=question_id)
-#     if Answer.objects.filter(question=question):
-#         messages.error(request, '이미 답변한 질문 입니다.')
-#         return redirect('qna:question_detail', question_id=question.pk)
-#     if request.method == "POST":
-#         form = AnswerForm(request.POST)
-#         if form.is_valid():
-#             answer = form.save(commit=False)
-#             answer.author = request.user
-#             answer.question = question
-#             answer.save()
-#             return redirect('qna:question_detail', question_id=question.pk)
-#     else:
-#         form = AnswerForm()
-#     content = '답변 등록'
-#     if type == 'reject':
-#         content = '반려 이유'
-#     return render(request, 'petitions/form.html', {'form': form, 'content': content, 'petition_id': petition_id})
+@superuser_required
+def answer_create(request, question_id):
+    question = get_object_or_404(Question, pk=question_id)
+    if Answer.objects.filter(question=question):
+        messages.error(request, '이미 답변한 질문 입니다.')
+        return redirect('qna:question_detail', question_id=question.pk)
+    if request.method == "POST":
+        form = AnswerForm(request.POST)
+        if form.is_valid():
+            answer = form.save(commit=False)
+            answer.author = request.user
+            answer.question = question
+            answer.save()
+            return redirect('qna:question_detail', question_id=question.pk)
+    else:
+        form = AnswerForm()
+    return render(request, 'qna/form.html', {'form': form, 'question_id': question_id})

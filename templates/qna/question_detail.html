@@ -40,7 +40,7 @@
             <h4 class="post_detail__title-title my-3 py-2">청원내용</h4>
             <div class="post_detail__body-title--button">
                 {% if request.user.is_superuser and not answer %}
-                    <a href="#" class="btn btn-sm btn-primary">답변 등록</a>
+                    <a href="{% url 'qna:answer_create' question.pk %}" class="btn btn-sm btn-primary">답변 등록</a>
                 {% endif %}
                 {% if request.user == question.author %}
                     <a href="{% url 'qna:question_modify' question.pk %}" class="btn btn-sm btn btn-warning">수정</a>
