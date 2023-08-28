@@ -63,7 +63,7 @@
                                                                     {% endif %}
                                                                 </div>
                                                                 <div class="bl_subject">
-                                                                    <a href="#" class="cb relpy_w">
+                                                                    <a href="{% url 'qna:question_detail' question.pk %}" class="cb relpy_w">
                                                                         <span class="sound_only">제목 </span>{{ question.subject }}
                                                                     </a>
                                                                 </div>

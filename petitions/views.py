@@ -59,6 +59,7 @@ def petition_list(request, status):
         st.save()
     return response
 
+
 def petition_detail(request, petition_id):
     petition = get_object_or_404(Petition, pk=petition_id)
     comment_list = Comment.objects.filter(petition=petition)

@@ -1,5 +1,5 @@
 from django.core.paginator import Paginator
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from qna.models import Question
 
 
@@ -12,5 +12,5 @@ def question_list(request):
 
 
 def question_detail(request, question_id):
-    print(question_id)
-    return render(request, 'qna/question_detail.html')
+    question = get_object_or_404(Question, pk=question_id)
+    return render(request, 'qna/question_detail.html', {'question': question})
