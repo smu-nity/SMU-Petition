@@ -6,11 +6,10 @@
 {% endblock %}
 {% block content %}
     <div class="navbar-img">
-        <img class="navbar-img-image" src="{% static 'img/main.jpg' %}"
-            style="width: 100%; height: 300px; object-fit:cover" />
+        <img class="navbar-img-image" src="{% static 'img/main.jpg' %}"/>
 
         <div class="navbar-img__text">
-            <span class="navbar-img__text--title">{{ page }}</span>
+            <span class="navbar-img__text--title">QnA 게시판</span>
             <span class="navbar-img__text--subtitle">상명대학교 학우 여러분들의 의견에</span>
             <span class="navbar-img__text--subtitle">귀를 기울이는 학생회가 되겠습니다.</span>
         </div>
@@ -25,19 +24,7 @@
 							<div class="ct_list1">
 								<div class="board text">
 									<div class="b_title">
-                                        <select name="sort" id="sort" class="fr" title="보기 순서 선택" onchange="changeSort()">
-											<option value="0">최신순</option>
-                                            <option value="1">동의순</option>
-                                            <option value="2">만료임박순</option>
-										</select>
-										<select name="categorys" id="categorys" class="fr" title="보기 순서 선택" onchange="changeValue()">
-                                            <option value="0">전체</option>
-                                            <option value="1">학사</option>
-                                            <option value="2">등록/장학</option>
-                                            <option value="3">학생생활</option>
-                                            <option value="4">진로취업</option>
-                                            <option value="5">기타</option>
-										</select>
+                                        <a href="{% url 'qna:question_create' %}" class="btn btn-primary button-sm" style="float: right; margin-bottom: 5px;">질문 등록</a>
 									</div>
 
 									<div class="b_list category b_list2 board-text">
@@ -45,34 +32,34 @@
 											<div class="bl_wrap">
 												<div class="bl_category">상태</div>
 												<div class="bl_subject">제목</div>
-												<div class="bl_date">청원 마감일</div>
-												<div class="bl_agree">참여 인원</div>
+												<div class="bl_date">작성일</div>
+												<div class="bl_agree">작성자</div>
 											</div>
 										</div>
 										<div class="bl_body">
 											<ul class="petition_list">
-                                                {% if petition_list %}
-                                                    {% for petition in petition_list %}
+                                                {% if question_list %}
+                                                    {% for question in question_list %}
                                                         <li style="padding:20px 0;">
                                                             <div class="bl_wrap">
-                                                                {% if petition.status == 3 %}
-                                                                    <div class="bl_category ccategory cs wv_category" style="color: rgb(191, 72, 84) !important;">
-                                                                        <span class="sound_only">상태 </span>{{ petition.get_status_display }}
-                                                                    </div>
-                                                                {% else %}
-                                                                    <div class="bl_category ccategory cs wv_category" style="color: rgb(42, 80, 135) !important;">
-                                                                        <span class="sound_only">상태 </span>{{ petition.get_status_display }}
-                                                                    </div>
-                                                                {% endif %}
+                                                                <div class="bl_category ccategory cs wv_category">
+                                                                    <span class="sound_only">상태 </span>
+                                                                    {% if question.answer_set.count == 0 %}
+                                                                        <p class="table-body__proceeding" style="margin: 0;">접수</p>
+                                                                    {% else %}
+                                                                        <p class="table-body__complete" style="margin: 0;">답변완료</p>
+                                                                    {% endif %}
+                                                                </div>
                                                                 <div class="bl_subject">
-                                                                    <a href="{% url 'petitions:petition_detail' petition.id %}" class="cb relpy_w">
-                                                                        <span class="sound_only">제목 </span>{{ petition.subject }}
+                                                                    <a href="{% url 'qna:question_detail' question.pk %}" class="cb relpy_w">
+                                                                        <span class="sound_only">제목 </span>{{ question.subject }}
                                                                     </a>
                                                                 </div>
                                                                 <div class="bl_date light">
-                                                                    <span class="sound_only">청원 마감일 </span>{{ petition.end_date_str }}</div>
+                                                                    <span class="sound_only">작성일 </span>{{ question.date_str }}
+                                                                </div>
                                                                 <div class="bl_agree cs">
-                                                                    <span class="sound_only">참여인원 </span>{{ petition.voter_count }} 명
+                                                                    <span class="sound_only">작성자 </span>{{ question.author_name }}
                                                                 </div>
                                                             </div>
                                                         </li>
@@ -81,7 +68,7 @@
                                                     <li style="padding:20px 0;">
                                                         <div class="bl_wrap">
                                                             <div class="bl_category ccategory cs wv_category">
-                                                                <span class="sound_only">분류 </span>
+                                                                <span class="sound_only">상태 </span>
                                                             </div>
                                                             <div class="bl_subject">
                                                                 <a href="#" class="cb relpy_w">
@@ -89,9 +76,9 @@
                                                                 </a>
                                                             </div>
                                                             <div class="bl_date light">
-                                                                <span class="sound_only">청원 종료일 </span></div>
+                                                                <span class="sound_only">작성자 </span></div>
                                                             <div class="bl_agree cs">
-                                                                <span class="sound_only">참여인원 </span>
+                                                                <span class="sound_only">작성일 </span>
                                                             </div>
                                                         </div>
                                                     </li>
@@ -108,9 +95,9 @@
             <!-- 페이징처리 시작 -->
             <ul class="pagination justify-content-center" style="margin-bottom: 60px;">
                 <!-- 이전페이지 -->
-                {% if petition_list.has_previous %}
+                {% if question_list.has_previous %}
                 <li class="page-item">
-                    <a class="page-link" href="javascript:void(0);" onclick="changePage({{ petition_list.previous_page_number }});">이전</a>
+                    <a class="page-link" href="javascript:void(0);" onclick="changePage({{ question_list.previous_page_number }});">이전</a>
                 </li>
                 {% else %}
                 <li class="page-item disabled">
@@ -118,9 +105,9 @@
                 </li>
                 {% endif %}
                 <!-- 페이지리스트 -->
-                {% for page_number in petition_list.paginator.page_range %}
-                    {% if page_number >= petition_list.number|add:-3 and page_number <= petition_list.number|add:3 %}
-                        {% if page_number == petition_list.number %}
+                {% for page_number in question_list.paginator.page_range %}
+                    {% if page_number >= question_list.number|add:-3 and page_number <= question_list.number|add:3 %}
+                        {% if page_number == question_list.number %}
                         <li class="page-item active" aria-current="page">
                             <a class="page-link" href="javascript:void(0);" onclick="changePage({{ page_number }});">{{ page_number }}</a>
                         </li>
@@ -132,9 +119,9 @@
                     {% endif %}
                 {% endfor %}
                 <!-- 다음페이지 -->
-                {% if petition_list.has_next %}
+                {% if question_list.has_next %}
                 <li class="page-item">
-                    <a class="page-link" href="javascript:void(0);" onclick="changePage({{ petition_list.next_page_number }});">다음</a>
+                    <a class="page-link" href="javascript:void(0);" onclick="changePage({{ question_list.next_page_number }});">다음</a>
                 </li>
                 {% else %}
                 <li class="page-item disabled">
