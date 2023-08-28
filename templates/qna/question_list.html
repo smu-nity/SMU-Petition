@@ -24,19 +24,7 @@
 							<div class="ct_list1">
 								<div class="board text">
 									<div class="b_title">
-                                        <select name="sort" id="sort" class="fr" title="보기 순서 선택" onchange="changeSort()">
-											<option value="0">최신순</option>
-                                            <option value="1">동의순</option>
-                                            <option value="2">만료임박순</option>
-										</select>
-										<select name="categorys" id="categorys" class="fr" title="보기 순서 선택" onchange="changeValue()">
-                                            <option value="0">전체</option>
-                                            <option value="1">학사</option>
-                                            <option value="2">등록/장학</option>
-                                            <option value="3">학생생활</option>
-                                            <option value="4">진로취업</option>
-                                            <option value="5">기타</option>
-										</select>
+                                        <a href="{% url 'qna:question_create' %}" class="btn btn-primary button-sm" style="float: right; margin-bottom: 5px;">질문 등록</a>
 									</div>
 
 									<div class="b_list category b_list2 board-text">
