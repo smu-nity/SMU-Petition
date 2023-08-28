@@ -74,9 +74,9 @@
                 <h4 class="post_detail__title-title my-3 py-2">답변내용</h4>
                 <div class="post_detail__body-title--button">
                     {% if request.user.is_superuser %}
-                        <a href="{% url 'petitions:answer_modify' answer.id  %}" class="btn btn-sm btn btn-warning">수정</a>
+                        <a href="{% url 'qna:answer_modify' answer.id  %}" class="btn btn-sm btn btn-warning">수정</a>
                         <a href="javascript:void(0)" class="delete btn btn-sm btn-danger"
-                            data-uri="{% url 'petitions:answer_delete' answer.id  %}">삭제</a>
+                            data-uri="{% url 'qna:answer_delete' answer.id  %}">삭제</a>
                     {% endif %}
                 </div>
             </div>

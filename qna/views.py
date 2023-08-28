@@ -87,3 +87,25 @@ def answer_create(request, question_id):
     else:
         form = AnswerForm()
     return render(request, 'qna/form.html', {'form': form, 'question_id': question_id})
+
+
+@superuser_required
+def answer_modify(request, answer_id):
+    answer = get_object_or_404(Answer, pk=answer_id)
+    if request.method == "POST":
+        form = AnswerForm(request.POST, instance=answer)
+        if form.is_valid():
+            answer = form.save(commit=False)
+            answer.modify_date = timezone.now()
+            answer.save()
+            return redirect('qna:question_detail', question_id=answer.question.id)
+    else:
+        form = AnswerForm(instance=answer)
+    return render(request, 'qna/form.html', {'form': form, 'question_id': answer.question.id})
+
+
+@superuser_required
+def answer_delete(request, answer_id):
+    answer = get_object_or_404(Answer, pk=answer_id)
+    answer.delete()
+    return redirect('qna:question_detail', question_id=answer.question.id)
