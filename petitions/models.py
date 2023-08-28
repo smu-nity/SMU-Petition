@@ -27,7 +27,9 @@ class Petition(models.Model):
         if self.anonymous:
             return '익명'
         profile = Profile.objects.filter(user=self.author)
-        return profile.first().name
+        if profile:
+            return profile.first().name
+        return self.author.username
 
     def create_date_str(self):
         return time_format(self.create_date)

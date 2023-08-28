@@ -44,14 +44,6 @@ class Answer(models.Model):
     def __str__(self):
         return f'[{self.question.subject}] {self.content} ({self.create_date})'
 
-    def author_name(self):
-        if self.anonymous:
-            return '익명'
-        profile = Profile.objects.filter(user=self.author)
-        if profile:
-            return profile.first().name
-        return self.author.username
-
     def create_date_str(self):
         return time_format(self.create_date)
 
