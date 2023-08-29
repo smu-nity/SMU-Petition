@@ -292,7 +292,7 @@ body {
 }
 .footer_link {
     text-decoration: none;
-    font-size: 0.9rem;
+    font-size: 1rem;
 }
 .footer_link:hover {
     text-decoration: underline;
@@ -484,15 +484,20 @@ body {
 .display {
     display: none;
 }
+@media (max-width:1200px) {
+    .footer_link {
+        font-size: 0.9rem;
+    }
+}
 @media (max-width:768px) {
     .display-none {
         display: none !important
     }
-    .display {
-        display: block !important;
-    }
     .footer_link {
         font-size: 0.8rem;
+    }
+    .display {
+        display: block !important;
     }
     .post_detail__body_container {
         width: 100%;
