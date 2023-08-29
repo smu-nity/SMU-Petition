@@ -86,7 +86,7 @@ def answer_create(request, question_id):
             return redirect('qna:question_detail', question_id=question.pk)
     else:
         form = AnswerForm()
-    return render(request, 'qna/form.html', {'form': form, 'question_id': question_id})
+    return render(request, 'qna/answer_form.html', {'form': form, 'question_id': question_id})
 
 
 @superuser_required
@@ -101,7 +101,7 @@ def answer_modify(request, answer_id):
             return redirect('qna:question_detail', question_id=answer.question.id)
     else:
         form = AnswerForm(instance=answer)
-    return render(request, 'qna/form.html', {'form': form, 'question_id': answer.question.id})
+    return render(request, 'qna/answer_form.html', {'form': form, 'question_id': answer.question.id})
 
 
 @superuser_required

@@ -27,9 +27,9 @@
             <!-- 청원 -->
             <div class="post_detail__title">
                 {% if petition.status == 3 %}
-                    <h4 class="py-2 post_detail__title-status table-body__complete" style="margin-bottom: 0;">[{{ petition.get_status_display }}]
+                    <h4 class="py-2 post_detail__title-status table-body__complete" style="margin-bottom: 0;">[{{ petition.get_status_display }}]</h4>
                 {% else %}
-                    <h4 class="py-2 post_detail__title-status table-body__proceeding" style="margin-bottom: 0;">[{{ petition.get_status_display }}]
+                    <h4 class="py-2 post_detail__title-status table-body__proceeding" style="margin-bottom: 0;">[{{ petition.get_status_display }}]</h4>
                 {% endif %}
                 <h5 class="py-2 post_detail__title-status">({{ petition.period_str }})</h5>
                 <h3 class="py-2 post_detail__title-title" style="text-align: center; margin-top: 16px; margin-bottom: 0;">{{ petition.subject }}</h3>
