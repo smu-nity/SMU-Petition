@@ -62,7 +62,7 @@ def login(request):
             messages.error(request, '⚠️ 비밀번호를 확인하세요.')
         else:
             messages.error(request, '⚠️ 가입되지 않은 학번입니다.')
-        redirect('accounts:login')
+        return redirect('accounts:login')
     response = render(request, 'accounts/login.html')
     st, _ = Statistics2.objects.get_or_create(date=datetime.date.today())
     if request.COOKIES.get('is_visit') is None:
@@ -89,7 +89,7 @@ def register(request):
                 auth_login(request, user)  # 로그인
                 LoginHistory.objects.create(user=user)
                 return redirect('petitions:petition_list', 'progress')
-            messages.error(request, '⚠️ 서비스에서 지원하지 않는 학과와 학번 입니다.')
+            messages.error(request, '⚠️ 서비스에서 지원하지 않는 학과 입니다.')
             return redirect('accounts:agree')
         messages.error(request, form.errors['password2'][0])
         return redirect('accounts:register')
@@ -126,7 +126,7 @@ def update(request):
                 Profile.objects.filter(user=request.user).update(name=context['name'], department=department.first())
                 messages.error(request, '회원 정보가 업데이트 되었습니다.')
                 return redirect('petitions:petition_list', 'progress')
-            messages.error(request, '⚠️ 서비스에서 지원하지 않는 학과와 학번 입니다.')
+            messages.error(request, '⚠️ 서비스에서 지원하지 않는 학과 입니다.')
         messages.error(request, '⚠️ 샘물 포털 ID/PW를 다시 확인하세요! (Caps Lock 확인)')
     return redirect('accounts:mypage')
 
