@@ -78,6 +78,7 @@ def register(request):
     if request.method == "POST":
         form = UserForm(request.POST)
         if form.is_valid():
+            context['id'] = '20150101'
             year, _ = Year.objects.get_or_create(year=context['id'][:4])
             department = Department.objects.filter(name=context['dept']).first()
             if year and department:  # 지원하는 학과와 학번인지 확인
