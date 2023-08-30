@@ -29,7 +29,7 @@ def agree(request):
             name = context['department']
             if name in DEPT_DIC.keys():
                 name = DEPT_DIC[name]
-            if Year.objects.filter(year=username[:4]) and Department.objects.filter(name=name):
+            if Department.objects.filter(name=name):
                 context['id'], context['dept'] = username, name
                 request.session['context'] = context
                 return redirect('accounts:register')
@@ -78,7 +78,7 @@ def register(request):
     if request.method == "POST":
         form = UserForm(request.POST)
         if form.is_valid():
-            year = Year.objects.filter(year=context['id'][:4]).first()
+            year, _ = Year.objects.get_or_create(year=context['id'][:4])
             department = Department.objects.filter(name=context['dept']).first()
             if year and department:  # 지원하는 학과와 학번인지 확인
                 form.save()
