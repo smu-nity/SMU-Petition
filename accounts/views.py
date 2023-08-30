@@ -34,7 +34,7 @@ def agree(request):
                 request.session['context'] = context
                 return redirect('accounts:register')
 
-            messages.error(request, '⚠️ 서비스에서 지원하지 않는 학과와 학번 입니다.')
+            messages.error(request, '⚠️ 서비스에서 지원하지 않는 학과 입니다.')
             return redirect('accounts:agree')
         messages.error(request, '⚠️ 샘물 포털 ID/PW를 다시 확인하세요! (Caps Lock 확인)')
         return redirect('accounts:agree')
@@ -78,7 +78,6 @@ def register(request):
     if request.method == "POST":
         form = UserForm(request.POST)
         if form.is_valid():
-            context['id'] = '20150101'
             year, _ = Year.objects.get_or_create(year=context['id'][:4])
             department = Department.objects.filter(name=context['dept']).first()
             if year and department:  # 지원하는 학과와 학번인지 확인
