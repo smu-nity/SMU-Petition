@@ -1,5 +1,4 @@
 import datetime
-
 from django.contrib import messages
 from django.contrib.auth import login as auth_login, authenticate
 from django.contrib.auth.decorators import login_required
@@ -8,12 +7,14 @@ from django.contrib.auth.models import User
 from django.core.paginator import Paginator
 from django.db.models import Count
 from django.shortcuts import render, redirect, get_object_or_404
-
 from accounts.ecampus import ecampus, information
 from accounts.forms import UserForm
 from accounts.models import Year, Department, Profile, LoginHistory, Statistics2
 from config.settings import DEPT_DIC
 from petitions.models import Petition
+import logging
+
+logger = logging.getLogger('smu')
 
 
 def agree(request):
@@ -33,8 +34,8 @@ def agree(request):
                 context['id'], context['dept'] = username, name
                 request.session['context'] = context
                 return redirect('accounts:register')
-
             messages.error(request, '⚠️ 서비스에서 지원하지 않는 학과 입니다.')
+            logger.error(f'서비스에서 지원하지 않는 학과와 학번\n학과: {name}\n학번: {username[:4]}')
             return redirect('accounts:agree')
         messages.error(request, '⚠️ 샘물 포털 ID/PW를 다시 확인하세요! (Caps Lock 확인)')
         return redirect('accounts:agree')
