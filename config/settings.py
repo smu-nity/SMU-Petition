@@ -41,6 +41,8 @@ INSTALLED_APPS = [
     'accounts',
     'petitions',
     'qna',
+    'core',
+    'graduations'
 ]
 
 MIDDLEWARE = [
