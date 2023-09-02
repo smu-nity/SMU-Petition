@@ -4,7 +4,7 @@
     width: 100%;
     height: 550px;
     object-fit:cover;
-    content: url("/static/img/bg.png");
+    content: url("/static/img/home.png");
 }
 .navbar-img {
     display: flex;
