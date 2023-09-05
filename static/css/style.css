@@ -6,20 +6,19 @@
 /* Screens */
 @import "home.css";
 @import "login.css";
-@import "signup.css";
 @import "post_detail.css";
 @import "post_form.css";
 @import "post_list.css";
-@import "comment_form.css";
-
-/* Variables */
-@import "variables.css";
 
 /* Components */
 @import "navbar.css";
 
 /* Sample */
 @import "comment_data.css";
+
+:root {
+    --sangmyung: rgb(1, 42, 127);
+}
 
 body {
     font-family: 'Nanum Gothic', sans-serif;
