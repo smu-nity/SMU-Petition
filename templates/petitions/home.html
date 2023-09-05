@@ -127,92 +127,78 @@
 
 
             <!--TOP1 TOP 2 사이 공간-->
-            <div class="home-margin-30"></div>
+            {% if top2_3 %}
+                <div class="home-margin-30"></div>
+                <div class="home__container-remnant" style="display: flex; justify-content : space-evenly;">
+                    {% for petition in pl.top2_3 %}
+                        {% if petition %}
+                        <div class="card text-right home__container-remnant-top2" style="width: 49%; text-decoration: none; color: black;">
+                            <div class="card text-center">
+                            <!--HOT 2 Head-->
+                              <div class="card-header main__top1-card-header" style="display : flex; justify-content : space-between;">
+                                <div class="card-info">
+                                    <span class="top23-header"> {{ petition.get_category_display }} |</span>
+                                    <span class="top23-header" style="color: orange;"> {{ petition.get_status_display }} </span>
+                                    <span class="top23-header"> | {{ petition.d_day }} </span>
+                                </div>
 
-
-            <div class="home__container-remnant" style="display: flex; justify-content : space-evenly;">
-
-                {% for petition in pl.top2_3 %}
-                    {% if petition %}
-                    <div class="card text-right home__container-remnant-top2" style="width: 49%; text-decoration: none; color: black;">
-
-                    <div class="card text-center">
-
-                    <!--HOT 2 Head-->
-                      <div class="card-header main__top1-card-header" style="display : flex; justify-content : space-between;">
-                        <div class="card-info">
-                            <span class="top23-header"> {{ petition.get_category_display }} |</span>
-                            <span class="top23-header" style="color: orange;"> {{ petition.get_status_display }} </span>
-                            <span class="top23-header"> | {{ petition.d_day }} </span>
+                                  <div class="card-date">
+                                    <i class="far fa-calendar-check " style="font-size: 15px;"></i>
+                                    <span class="top23-date"> 청원 기간: {{ petition.period_str }}</span>
+                                  </div>
+                              </div>
+                            </div>
+                            <!--HOT 2 Body-->
+                            <a href="{% url 'petitions:petition_detail' petition.id %}" class="card-body main-hot23-body card-body-top" style="cursor: pointer;">
+                                <span class="card-title main-card-title-font">{{ petition.subject }}</span>
+                            </a>
+                            <!--HOT 2 동의 사람 수-->
+                            <div class="card-header" style="display : flex; justify-content : space-between; background-color: white;">
+                                <div class="card-agree">
+                                    <i class="fas fa-thumbs-up" style=" color : #6499E1;"></i>
+                                    <span style="font-size: 15px; color: #6499E1;">{{ petition.voter.count }}명</span>
+                                    <span style="font-size: 15px; color: #6499E1; margin-left: 5px;">({{ petition.get_percentage }}%)</span>
+                                </div>
+                            </div>
+                            <!--HOT 2 Foot-->
+                            <div class="card-footer text-muted card-footer-setting" style="background-color : #cdd0da; justify-content: center; padding: 8px 12px 6px 12px;">
+                              <div class="progress" style="height: 20px;">
+                                <div class="progress-bar" role="progressbar" style="width: {{ petition.get_percentage }}%; background-color: #6499E1;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
+                                    {% if petition.get_percentage >= 5 %}
+                                        {{ petition.get_percentage }} %
+                                    {% endif %}
+                                </div>
+                              </div>
+                            </div>
                         </div>
-
-                          <div class="card-date">
-                            <i class="far fa-calendar-check " style="font-size: 15px;"></i>
-                            <span class="top23-date"> 청원 기간: {{ petition.period_str }}</span>
-                          </div>
-                      </div>
-                    </div>
-
-                    <!--HOT 2 Body-->
-                    <a href="{% url 'petitions:petition_detail' petition.id %}" class="card-body main-hot23-body card-body-top" style="cursor: pointer;">
-                        <span class="card-title main-card-title-font">{{ petition.subject }}</span>
-                    </a>
-
-                    <!--HOT 2 동의 사람 수-->
-                    <div class="card-header" style="display : flex; justify-content : space-between; background-color: white;">
-                        <div class="card-agree">
-                            <i class="fas fa-thumbs-up" style=" color : #6499E1;"></i>
-                            <span style="font-size: 15px; color: #6499E1;">{{ petition.voter.count }}명</span>
-                            <span style="font-size: 15px; color: #6499E1; margin-left: 5px;">({{ petition.get_percentage }}%)</span>
-                        </div>
-                    </div>
-
-
-                    <!--HOT 2 Foot-->
-                    <div class="card-footer text-muted card-footer-setting" style="background-color : #cdd0da; justify-content: center; padding: 8px 12px 6px 12px;">
-                      <div class="progress" style="height: 20px;">
-                        <div class="progress-bar" role="progressbar" style="width: {{ petition.get_percentage }}%; background-color: #6499E1;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
-                            {% if petition.get_percentage >= 5 %}
-                                {{ petition.get_percentage }} %
-                            {% endif %}
-                        </div>
-                      </div>
-                    </div>
-
-
-                </div>
-                    {% else %}
+                        {% else %}
                         <div class="card text-right home__container-remnant-top2" style="width: 49%;">
-
-                    <div class="card text-center">
-
-                    <!--HOT 2 Head-->
-                      <div class="card-header main__top1-card-header" style="display : flex; justify-content : space-between;">
-                        <div>
-                            <span style="font-size : 15px">진행중인 청원 없음</span>
+                            <div class="card text-center">
+                            <!--HOT 2 Head-->
+                              <div class="card-header main__top1-card-header" style="display : flex; justify-content : space-between;">
+                                <div>
+                                    <span style="font-size : 15px">진행중인 청원 없음</span>
+                                </div>
+                              </div>
+                            </div>
+                            <!--HOT 2 Body-->
+                            <div class="card-body main-hot23-body" ></div>
+                            <!--HOT 2 동의 사람 수-->
+                            <div class="card-header" style="display : flex; justify-content : space-between; background-color: white;"></div>
+                            <!--HOT 2 Foot-->
+                            <div class="card-footer text-muted card-footer-setting" style="background-color : #cdd0da; justify-content: center; ">
+                              <div class="progress" style="height: 20px;">
+                                <div class="progress-bar" role="progressbar" style="width: 0%; background-color: #6499E1;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                              </div>
+                            </div>
                         </div>
-                      </div>
-                    </div>
-
-                    <!--HOT 2 Body-->
-                    <div class="card-body main-hot23-body" ></div>
-
-                    <!--HOT 2 동의 사람 수-->
-                    <div class="card-header" style="display : flex; justify-content : space-between; background-color: white;"></div>
-
-                    <!--HOT 2 Foot-->
-                    <div class="card-footer text-muted card-footer-setting" style="background-color : #cdd0da; justify-content: center; ">
-                      <div class="progress" style="height: 20px;">
-                        <div class="progress-bar" role="progressbar" style="width: 0%; background-color: #6499E1;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
-                      </div>
-                    </div>
+                        {% endif %}
+                    {% endfor %}
                 </div>
-                    {% endif %}
-                {% endfor %}
-          </div>
-          </div>
-            {% endfor %}
-        </div>
+            {% endif %}
+            </div>
+        {% endfor %}
+    </div>
 
         <div class="home-margin-top"> </div>
     </div>
