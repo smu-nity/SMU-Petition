@@ -47,7 +47,7 @@
     display: flex;
     position : relative;
     align-content: center;
-    margin-top:1.5rem;
+    margin:1rem 0;
     padding-left : 12%;
     padding-right : 12%;
 }
