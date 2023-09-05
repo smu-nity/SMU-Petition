@@ -188,3 +188,20 @@ select {
 .board-text {
 	font-weight: normal;
 }
+
+.sound_date {
+	display: block !important;
+	color: gray;
+}
+.sound_period {
+	display: none !important;
+	color: gray;
+}
+@media (max-width:1000px) {
+	.sound_date {
+		display: none !important;
+	}
+	.sound_period {
+		display: block !important;
+	}
+}
