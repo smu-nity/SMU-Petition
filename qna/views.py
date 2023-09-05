@@ -109,3 +109,8 @@ def answer_delete(request, answer_id):
     answer = get_object_or_404(Answer, pk=answer_id)
     answer.delete()
     return redirect('qna:question_detail', question_id=answer.question.id)
+
+
+def terms(request):
+    return render(request, 'qna/terms.html')
+

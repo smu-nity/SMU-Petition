@@ -15,6 +15,15 @@
         </div>
     </div>
     <section id="cont_view" class="cs_wrap">
+        <div class="cs_tab">
+            <div class="tab div3">
+                <ul>
+                    <li class="motion fadeInLeft visible" data-animation="fadeInLeft"><a href="{% url 'qna:terms' %}">이용안내</a></li>
+                    <li class="motion fadeInLeft visible" data-animation="fadeInLeft"><a href="{% url 'petitions:petition_list' 'expiration' %}">개인정보처리방침</a></li>
+                    <li class="motion fadeInLeft visible" data-animation="fadeInLeft"><a href="{% url 'qna:question_list' %}" class="on" title="현재">QnA 게시판</a></li>
+                </ul>
+            </div>
+        </div>
 		<div class="cs_area">
 			<div class="cs_body ">
 				<div class="wrap">
