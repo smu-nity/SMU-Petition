@@ -29,7 +29,7 @@ def home(request):
         plist_v = plist.annotate(voter_count=Count('voter')).order_by('-voter_count', '-create_date')
         plist_d = plist.order_by('end_date')
         petition_list  = [{'top1': plist_v[0], 'top2_3': preprocess(plist_v[1:3])}, {'top1': plist_d[0], 'top2_3': preprocess(plist_d[1:3])}, {'top1': plist[0], 'top2_3': preprocess(plist[1:3])}]
-        context['petition_list'] = petition_list
+        context = {'petition_list': petition_list, 'top2_3': plist_v[1:3]}
     response = render(request, 'petitions/home.html', context)
     if request.COOKIES.get('is_visit') is None:
         response.set_cookie('is_visit', 'visited', 60*30)
