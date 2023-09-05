@@ -6,6 +6,7 @@ app_name = 'qna'
 
 urlpatterns = [
     path('terms/', views.terms, name='terms'),
+    path('privacy/', views.privacy, name='privacy'),
     path('questions/', views.question_list, name='question_list'),
     path('questions/<int:question_id>/', views.question_detail, name='question_detail'),
     path('questions/create/', views.question_create, name='question_create'),

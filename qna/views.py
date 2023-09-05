@@ -114,3 +114,6 @@ def answer_delete(request, answer_id):
 def terms(request):
     return render(request, 'qna/terms.html')
 
+
+def privacy(request):
+    return render(request, 'qna/privacy.html')
