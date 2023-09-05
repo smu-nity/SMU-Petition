@@ -56,4 +56,4 @@ def time_format(time):
 
 
 def date_format(time):
-    return time.astimezone(pytz.timezone(TIME_ZONE)).strftime("%y-%m-%d")
+    return time.astimezone(pytz.timezone(TIME_ZONE)).strftime("%y.%m.%d")

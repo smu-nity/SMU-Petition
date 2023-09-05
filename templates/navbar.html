@@ -11,10 +11,14 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarNavDropdown">
             <ul class="navbar-nav ml-auto">
+                {% if user.is_superuser %}
                 <li class="nav-item">
                     <a class="nav-link fs-5 a_tag" href="{% url 'qna:question_list' %}">QnA</a>
                 </li>
-                {% if not user.is_superuser %}
+                {% else %}
+                <li class="nav-item">
+                    <a class="nav-link fs-5 a_tag" href="{% url 'qna:terms' %}">이용안내</a>
+                </li>
                 <li class="nav-item">
                     <a class="nav-link fs-5 a_tag" href="{% url 'petitions:petition_create' %}">청원하기</a>
                 </li>

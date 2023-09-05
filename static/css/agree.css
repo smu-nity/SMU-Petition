@@ -9,7 +9,6 @@
     margin: 0 auto; 
     width: 100%;
     max-width: 1280px;
-    margin-top:1rem;
     border:0.001px solid rgb(216, 216, 216);
     background-color: white; 
 }
@@ -26,9 +25,24 @@
     margin-left:2rem;
     margin:2rem;
     font-weight:normal;
-    font-size:0.85rem;
+    font-size:1rem;
     text-align:left;
 }
+
+.info_text{
+    margin-left:1rem;
+    font-size:0.9rem;
+}
+
+@media screen and (max-width: 1000px) {
+    .info_content {
+        font-size:0.85rem !important;
+    }
+    .info_text{
+        font-size:0.75rem !important;
+    }
+}
+
 
 .confirm_btn {
     background: rgb(164, 26, 55);
