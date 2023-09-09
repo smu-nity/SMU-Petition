@@ -4,17 +4,17 @@ from accounts.models import Department, Year, Profile, Statistics2, LoginHistory
 
 class YearAdmin(admin.ModelAdmin):
     search_fields = ['year']
-    list_display = ['year', 'major_i', 'major_s', 'culture', 'culture_cnt', 'all']
+    list_display = ['year']
 
 
 class DepartmentAdmin(admin.ModelAdmin):
     search_fields = ['college', 'name', 'type']
-    list_display = ['college', 'name', 'type', 'url']
+    list_display = ['college', 'name', 'type']
 
 
 class ProfileAdmin(admin.ModelAdmin):
     search_fields = ['name', 'user__username', 'year__year', 'department__name']
-    list_display = ['user', 'year', 'department', 'name']
+    list_display = ['user', 'name', 'department']
 
 
 class LoginHistoryAdmin(admin.ModelAdmin):
