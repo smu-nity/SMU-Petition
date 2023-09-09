@@ -9,7 +9,7 @@ from django.db.models import Count
 from django.shortcuts import render, redirect, get_object_or_404
 from accounts.ecampus import ecampus, information
 from accounts.forms import UserForm
-from accounts.models import Year, Department, Profile, LoginHistory, Statistics2
+from accounts.models import Year, Department, Profile, LoginHistory2, Statistics2
 from config.settings import DEPT_DIC
 from petitions.models import Petition
 import logging
@@ -57,7 +57,7 @@ def login(request):
         user = authenticate(request, username=username, password=password)
         if user:
             auth_login(request, user)
-            LoginHistory.objects.create(user=user)
+            LoginHistory2.objects.create(user=user)
             return redirect('petitions:petition_list', 'progress')
         if User.objects.filter(username=username):
             messages.error(request, '⚠️ 비밀번호를 확인하세요.')
@@ -88,7 +88,7 @@ def register(request):
                 user = authenticate(username=username, password=raw_password)
                 Profile.objects.create(user=user, year=year, department=department, name=context['name'])
                 auth_login(request, user)  # 로그인
-                LoginHistory.objects.create(user=user)
+                LoginHistory2.objects.create(user=user)
                 return redirect('petitions:petition_list', 'progress')
             messages.error(request, '⚠️ 서비스에서 지원하지 않는 학과 입니다.')
             return redirect('accounts:agree')

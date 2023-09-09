@@ -1,6 +1,5 @@
 from django.contrib.auth.models import User
 from django.db import models
-from django.db.models import Sum, Q
 from config.settings import YEAR_CHOICES, SUBTYPE_CHOICES_S, COLLEGE_CHOICES, SUBTYPE_CHOICES_E
 
 
@@ -41,6 +40,14 @@ class Profile(models.Model):    # 사용자 프로필
 class LoginHistory(models.Model):
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)  # 장고 유저
     login_datetime = models.DateTimeField(auto_now_add=True)
+
+
+class LoginHistory2(models.Model):
+    user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)  # 장고 유저
+    login_datetime = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        verbose_name = 'LoginHistory'
 
     def __str__(self):
         return f'{self.user} - {self.login_datetime}'
