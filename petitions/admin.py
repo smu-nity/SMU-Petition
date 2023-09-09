@@ -4,7 +4,7 @@ from petitions.models import Petition, Comment, Answer
 
 class PetitionAdmin(admin.ModelAdmin):
     search_fields = ['subject', 'content']
-    list_display = ['status', 'anonymous', 'author', 'subject', 'content', 'category', 'create_date', 'modify_date', 'end_date']
+    list_display = ['subject', 'status', 'category', 'content', 'author', 'anonymous', 'create_date', 'modify_date', 'end_date']
 
 
 class CommentAdmin(admin.ModelAdmin):
