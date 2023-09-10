@@ -147,10 +147,10 @@ LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
 
 # 청원 성공 인원
-SUCCESS_VALUE = os.environ.get('SUCCESS_VALUE', 1)
+SUCCESS_VALUE = os.environ.get('SUCCESS_VALUE', 100)
 
 # 청원 기한
-DEADLINE_VALUE = os.environ.get('DEADLINE_VALUE', 30)
+DEADLINE_VALUE = os.environ.get('DEADLINE_VALUE', 14)
 
 # 필드 도메인
 CATEGORY_CHOICES = ((1, "학사"), (2, "등록/장학"), (3, "학생생활"), (4, "진로취업"), (5, "기타"))
