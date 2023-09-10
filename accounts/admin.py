@@ -8,8 +8,8 @@ class YearAdmin(admin.ModelAdmin):
 
 
 class DepartmentAdmin(admin.ModelAdmin):
-    search_fields = ['college', 'name', 'type']
-    list_display = ['college', 'name', 'type']
+    search_fields = ['name', 'college', 'type']
+    list_display = ['name', 'college', 'type']
 
 
 class ProfileAdmin(admin.ModelAdmin):
