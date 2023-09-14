@@ -44,7 +44,9 @@ class Petition(models.Model):
         return f'{date_format(self.create_date)} ~ {date_format(self.end_date)}'
 
     def d_day(self):
-        return f'D-{(self.end_date.date() - datetime.now().date()).days}'
+        if self.status == 1:
+            return f'| D-{(self.end_date.date() - datetime.now().date()).days}'
+        return ''
 
     def get_percentage(self):
         return 100 if self.voter.count() >= int(SUCCESS_VALUE) else (self.voter.count() * 100) // int(SUCCESS_VALUE)
