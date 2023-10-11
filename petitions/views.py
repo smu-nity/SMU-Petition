@@ -248,17 +248,3 @@ def answer_delete(request, answer_id):
         answer.petition.status = 2
     answer.petition.save()
     return redirect('petitions:petition_detail', petition_id=answer.petition.id)
-
-
-def answer(request):
-    sort_dic = {'0': '-create_date', '1': '-voter_count' , '2': 'create_date'}
-    pl = Petition.objects.filter(status__in=[2, 3]).annotate(voter_count=Count('voter'))
-    category = request.GET.get('category', '0')
-    sort = request.GET.get('sort', '0')
-    page = request.GET.get('page', '1')
-    if category != '0':
-        pl = pl.filter(category=int(category))
-    pl = pl.order_by(sort_dic[sort])
-    paginator = Paginator(pl, 5)
-    page_obj = paginator.get_page(page)
-    return render(request, 'petitions/petition_done.html', {'petition_list': page_obj, 'page': '답변된 청원'})
