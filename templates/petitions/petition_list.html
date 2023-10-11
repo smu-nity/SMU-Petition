@@ -19,15 +19,11 @@
 			<div class="tab div3">
 				<ul>
 					<li class="motion fadeInLeft visible" data-animation="fadeInLeft"><a href="{% url 'petitions:petition_list' 'progress' %}"
-                            {% if status == 'progress' %}class="on" title="현재"{% endif %}>진행중인 청원</a></li>
-					<li class="motion fadeInLeft visible" data-animation="fadeInLeft"><a href="{% url 'petitions:petition_list' 'wait' %}"
-                            {% if status == 'wait' %}class="on" title="현재"{% endif %}>답변대기 청원</a></li>
-					<li class="motion fadeInLeft visible" data-animation="fadeInLeft"><a href="{% url 'petitions:petition_list' 'done' %}"
-                            {% if status == 'done' %}class="on" title="현재"{% endif %}>답변완료 청원</a></li>
-					<li class="motion fadeInLeft visible" data-animation="fadeInLeft"><a href="{% url 'petitions:petition_list' 'expiration' %}"
-                            {% if status == 'expiration' %}class="on" title="현재"{% endif %}>만료된 청원</a></li>
-					<li class="motion fadeInLeft visible" data-animation="fadeInLeft"><a href="{% url 'petitions:petition_list' 'reject' %}"
-                            {% if status == 'companion' %}class="on" title="현재"{% endif %}>반려된 청원</a></li>
+                            {% if status == 'progress' %}class="on" title="현재"{% endif %}>동의진행 청원</a></li>
+					<li class="motion fadeInLeft visible" data-animation="fadeInLeft"><a href="{% url 'petitions:petition_list' 'established' %}"
+                            {% if status == 'established' %}class="on" title="현재"{% endif %}>성립된 청원</a></li>
+					<li class="motion fadeInLeft visible" data-animation="fadeInLeft"><a href="{% url 'petitions:petition_list' 'unestablished' %}"
+                            {% if status == 'unestablished' %}class="on" title="현재"{% endif %}>미성립된 청원</a></li>
 				</ul>
 			</div>
 		</div>
@@ -59,7 +55,11 @@
 									<div class="b_list category b_list2 board-text">
 										<div class="bl_head cb" aria-hidden="true">
 											<div class="bl_wrap">
-												<div class="bl_category">분류</div>
+                                                {% if status == 'progress' %}
+                                                    <div class="bl_category">분류</div>
+                                                {% else %}
+                                                    <div class="bl_category">상태</div>
+                                                {% endif %}
 												<div class="bl_subject">제목</div>
 												<div class="bl_date">청원 만료일</div>
 												<div class="bl_agree">참여 인원</div>
@@ -72,7 +72,19 @@
                                                         <li style="padding:20px 0;">
                                                             <div class="bl_wrap">
                                                                 <div class="bl_category ccategory cs wv_category">
+                                                                {% if status == 'progress' %}
                                                                     <span class="sound_only">분류 </span>{{ petition.get_category_display }}
+                                                                {% else %}
+                                                                        <div class="bl_category ccategory cs wv_category" style="
+                                                                        {% if petition.status == 3 or petition.status == 5 %}
+                                                                            color: rgb(191, 72, 84)
+                                                                        {% else %}
+                                                                            color: rgb(42, 80, 135)
+                                                                        {% endif %}
+                                                                        !important;">
+                                                                            <span class="sound_only">상태 </span>{{ petition.get_status_display }}
+                                                                        </div>
+                                                                {% endif %}
                                                                 </div>
                                                                 <div class="bl_subject">
                                                                     <a href="{% url 'petitions:petition_detail' petition.id %}" class="cb relpy_w">
