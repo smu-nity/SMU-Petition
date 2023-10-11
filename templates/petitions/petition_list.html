@@ -42,6 +42,7 @@
                                             <option value="1">동의순</option>
                                             <option value="2">만료임박순</option>
 										</select>
+                                        {% if status == 'progress' %}
 										<select name="categorys" id="categorys" class="fr" title="보기 순서 선택" onchange="changeValue()">
                                             <option value="0">전체</option>
                                             <option value="1">학사</option>
@@ -50,6 +51,19 @@
                                             <option value="4">진로취업</option>
                                             <option value="5">기타</option>
 										</select>
+                                        {% elif status == 'established' %}
+                                        <select name="status" id="status" class="fr" title="보기 순서 선택" onchange="changeValue()">
+                                            <option value="0">전체</option>
+                                            <option value="2">답변대기</option>
+                                            <option value="3">답변완료</option>
+										</select>
+                                        {% else %}
+                                        <select name="status" id="status" class="fr" title="보기 순서 선택" onchange="changeValue()">
+                                            <option value="0">전체</option>
+                                            <option value="4">만료</option>
+                                            <option value="5">반려</option>
+										</select>
+                                        {% endif %}
 									</div>
 
 									<div class="b_list category b_list2 board-text">
@@ -173,9 +187,13 @@
 {% block script %}
     <script>
         function changeValue() {
-            var value = document.getElementById("categorys");
+            var category = document.getElementById("categorys");
+            var status = document.getElementById("status");
             let params = new URLSearchParams(location.search);
-            params.set("category", value.options[value.selectedIndex].value);
+            if (category != null)
+                params.set("category", category.options[category.selectedIndex].value);
+            if (status != null)
+                params.set("status", status.options[status.selectedIndex].value);
             params.set("page", 1);
             window.open(location.pathname + '?' + params, '_self');
         }
@@ -199,12 +217,13 @@
         }
 
         const category = searchParam("category");
+        const status = searchParam("status");
         const sort = searchParam("sort")
-        if (category) {
+        if (category)
             $('#categorys').val(category).prop("selected",true);
-        }
-        if (sort) {
+        if (status)
+            $('#status').val(status).prop("selected",true);
+        if (sort)
             $('#sort').val(sort).prop("selected",true);
-        }
     </script>
 {% endblock %}

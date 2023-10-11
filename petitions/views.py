@@ -44,10 +44,13 @@ def petition_list(request, status):
     sort_dic = {'0': '-create_date', '1': '-voter_count', '2': 'create_date'}
     pl = Petition.objects.filter(status__in=status_dic[status]).annotate(voter_count=Count('voter'))
     category = request.GET.get('category', '0')
+    stats = request.GET.get('status', '0')
     sort = request.GET.get('sort', '0')
     page = request.GET.get('page', '1')
     if category != '0':
         pl = pl.filter(category=int(category))
+    if stats != '0':
+        pl = pl.filter(status=int(stats))
     pl = pl.order_by(sort_dic[sort])
     paginator = Paginator(pl, 5)
     page_obj = paginator.get_page(page)
