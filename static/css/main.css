@@ -66,6 +66,7 @@ body {
     max-width: 1280px;
     height: auto;
     display: block !important;
+    font-weight: normal;
 }
 
 .load-modal-content {
