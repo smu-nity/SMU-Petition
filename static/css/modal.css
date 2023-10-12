@@ -1,0 +1,36 @@
+.popup_content{
+    margin:0 auto;
+    text-align: center;
+    width:80%;
+}
+.popup_title{
+    margin-top:2rem;
+    font-size:2.5rem;
+    font-weight:bold;
+    color : #003D91;
+}
+.popup_box{
+    margin:0 auto;
+    font-size:1.1rem;
+    margin-top:2rem;
+    margin-bottom:1rem;
+    text-align:left;
+    padding:1.5rem 2rem 1.5rem 2rem;
+    border: 1px solid rgb(216, 216, 216);
+}
+.popup_box li{
+    line-height: 2.5rem;
+}
+.popup_check{
+    font-size:1.2rem;
+    text-align: right;
+    color:gray;
+}
+.link_site{
+    font-size:0.8rem;
+    padding:0.3rem;
+    color:white;
+    border-radius: 3px;
+    background-color: #6188E8;
+    text-decoration: none;
+}

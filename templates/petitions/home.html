@@ -2,260 +2,310 @@
 {% load static %}
 {% load petitions_filter %}
 {% block content %}
-<div style="background-color : #ebecf0;">
-    <div class="navbar-img">
-        <img class="main-img-image"/>
+    <div style="background-color : #ebecf0;">
+        <div class="navbar-img">
+            <img class="main-img-image"/>
 
-        <div class="navbar-img__text">
-            <!--동의하기, 청원하기 버튼-->
-            <div class="col-5 enroll-btn display-none" style="padding-top : 10rem;">
-                <a href="{% url 'petitions:petition_create' %}" class="btn btn-primary navbarMain-button">
-                    <i class="fas fa-pen enroll-btn__icon" ></i>
-                    <span>청원하기</span>
-                </a>
-                <a href="{% url 'petitions:petition_list' 'progress'%}" class="btn btn-primary navbarMain-button">
-                    <i class="fas fa-thumbs-up enroll-btn__icon"></i>
-                    <span>동의하기</span>
-                </a>
-            </div>
-        </div>
-    </div>
-    {% if petition_list %}
-        <div id="box_board" >
-
-        <!--MarginSide-->
-        <div style="height : 40px;"> </div>
-
-        <div class="container container-home main-div " style="width : 70%;">
-
-        <!--보기 옵션-->
-        <nav>
-          <div class="nav nav-tabs main-search-option " style="width: 99.3%;" id="nav-tab" role="tablist">
-            <!--최다 동의 순 버튼-->
-            <a class="nav-item nav-link nav-tab active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">
-                <i class="fas fa-thumbs-up "></i>
-                최다 동의 순
-            </a>
-
-            <!--만료 임박 순 버튼-->
-            <a class="nav-item nav-link nav-tab" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">
-                <i class="far fa-calendar-times"></i>
-                만료 임박 순
-            </a>
-
-            <!--최근 공개 순 버튼-->
-            <a class="nav-item nav-link nav-tab" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab" aria-controls="nav-contact" aria-selected="false">
-                <i class="fas fa-calendar-plus"></i>
-                최근 공개 순
-            </a>
-          </div>
-        </nav>
-
-        <!--옵션 링크-->
-        <div class="tab-content" id="nav-tabContent">
-            {% for pl in petition_list %}
-                <div
-                     {% if forloop.counter == 1 %}
-                        class="tab-pane fade show active"
-                        id="nav-home" aria-labelledby="nav-home-tab"
-                     {% elif forloop.counter == 2 %}
-                        class="tab-pane fade show"
-                        id="nav-profile" aria-labelledby="nav-profile-tab"
-                     {% else %}
-                        class="tab-pane fade show"
-                        id="nav-contact" aria-labelledby="nav-contact-tab"
-                     {% endif %}
-                     role="tabpanel">
-
-            <!--TOP 1 개시글-->
-            <div class="main-top1-div">
-                <div class="card" style="width :98.5%;">
-
-                    <!--TOP 1 Header-->
-                    <div class="card-header main__top1-card-header" style="height : 70px;">
-
-                        <!--TOP 1 Header-동의기간-->
-                        <div class="card-info">
-                            <span class="top1-header">{{ pl.top1.get_category_display }} |</span>
-                            <span class="top1-header" style="color: orange;">{{ pl.top1.get_status_display }}</span>
-                            <span class="top1-header">{{ pl.top1.d_day }}</span>
-                        </div>
-
-                        <div class="card-date">
-                            <i class="far fa-calendar-check" style="font-size: 20px;"></i>
-                            <span class="top1-date">청원 기간: {{ pl.top1.period_str }}</span>
-                        </div>
-                    </div>
-
-
-                    <!--TOP 1 Body-->
-                    <a href="{% url 'petitions:petition_detail' pl.top1.id %}" class="card-body main__top1-card-body card-body-top" style="font-weight: normal; cursor: pointer;">
-                        <div>
-                             <h5 class="card-title main-hot1-title-font" >
-                                <span>{{ pl.top1.subject }}</span>
-                            </h5>
-                            <div style="padding : 4px;"> </div>
-                            <p class="card-text main-Top1-Body-card-text-box post_detail__body-text">
-                                {{ pl.top1.content|mark }}
-                            </p>
-                        </div>
+            <div class="navbar-img__text">
+                <!--동의하기, 청원하기 버튼-->
+                <div class="col-5 enroll-btn display-none" style="padding-top : 10rem;">
+                    <a href="{% url 'petitions:petition_create' %}" class="btn btn-primary navbarMain-button">
+                        <i class="fas fa-pen enroll-btn__icon" ></i>
+                        <span>청원하기</span>
                     </a>
-
-                    <div class="card-header" style="height : 50px; background-color: white; display : flex;">
-                        <!--TOP 1 Header-동의 사람-->
-                        <div class="card-agree">
-                            <i class="fas fa-thumbs-up " style="align-item: center; font-size: 20px; color: #6499E1" ></i>
-                            <span style="font-size: 15px; color: #6499E1;">{{ pl.top1.voter.count }}명</span>
-                            <span style="font-size: 15px; color: #6499E1; margin-left: 5px;">({{ pl.top1.get_percentage }}%)</span>
-                        </div>
-                    </div>
-
-                    <!--TOP 1 Foot-->
-                    <div class="card-footer text-muted card-footer-setting" >
-                      <div class="progress" style="height:25px">
-                          <!--막대기 퍼센트 조절 하고 싶으면 home.css 에 가서 main_progress-bar-stats 에 있는 width 를 변경하면 된다. 니머지들 모두 같은 방식으로 진행   // 이 바로 아래 65%는 막대기 속 숫자를 의미-->
-                        <div class="progress-bar main_progress-bar-stats" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100" style="width: {{ pl.top1.get_percentage }}%;">
-                            {% if pl.top1.get_percentage >= 5 %}
-                                {{ pl.top1.get_percentage }} %
-                            {% endif %}
-                        </div>
-                      </div>
-                    </div>
+                    <a href="{% url 'petitions:petition_list' 'progress'%}" class="btn btn-primary navbarMain-button">
+                        <i class="fas fa-thumbs-up enroll-btn__icon"></i>
+                        <span>동의하기</span>
+                    </a>
                 </div>
             </div>
+        </div>
+        {% if petition_list %}
+            <div id="box_board" >
+
+            <!--MarginSide-->
+            <div style="height : 40px;"> </div>
+
+            <div class="container container-home main-div " style="width : 70%;">
+
+            <!--보기 옵션-->
+            <nav>
+              <div class="nav nav-tabs main-search-option " style="width: 99.3%;" id="nav-tab" role="tablist">
+                <!--최다 동의 순 버튼-->
+                <a class="nav-item nav-link nav-tab active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">
+                    <i class="fas fa-thumbs-up "></i>
+                    최다 동의 순
+                </a>
+
+                <!--만료 임박 순 버튼-->
+                <a class="nav-item nav-link nav-tab" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">
+                    <i class="far fa-calendar-times"></i>
+                    만료 임박 순
+                </a>
+
+                <!--최근 공개 순 버튼-->
+                <a class="nav-item nav-link nav-tab" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab" aria-controls="nav-contact" aria-selected="false">
+                    <i class="fas fa-calendar-plus"></i>
+                    최근 공개 순
+                </a>
+              </div>
+            </nav>
+
+            <!--옵션 링크-->
+            <div class="tab-content" id="nav-tabContent">
+                {% for pl in petition_list %}
+                    <div
+                         {% if forloop.counter == 1 %}
+                            class="tab-pane fade show active"
+                            id="nav-home" aria-labelledby="nav-home-tab"
+                         {% elif forloop.counter == 2 %}
+                            class="tab-pane fade show"
+                            id="nav-profile" aria-labelledby="nav-profile-tab"
+                         {% else %}
+                            class="tab-pane fade show"
+                            id="nav-contact" aria-labelledby="nav-contact-tab"
+                         {% endif %}
+                         role="tabpanel">
+
+                <!--TOP 1 개시글-->
+                <div class="main-top1-div">
+                    <div class="card" style="width :98.5%;">
+
+                        <!--TOP 1 Header-->
+                        <div class="card-header main__top1-card-header" style="height : 70px;">
+
+                            <!--TOP 1 Header-동의기간-->
+                            <div class="card-info">
+                                <span class="top1-header">{{ pl.top1.get_category_display }} |</span>
+                                <span class="top1-header" style="color: orange;">{{ pl.top1.get_status_display }}</span>
+                                <span class="top1-header">{{ pl.top1.d_day }}</span>
+                            </div>
+
+                            <div class="card-date">
+                                <i class="far fa-calendar-check" style="font-size: 20px;"></i>
+                                <span class="top1-date">청원 기간: {{ pl.top1.period_str }}</span>
+                            </div>
+                        </div>
+
+
+                        <!--TOP 1 Body-->
+                        <a href="{% url 'petitions:petition_detail' pl.top1.id %}" class="card-body main__top1-card-body card-body-top" style="font-weight: normal; cursor: pointer;">
+                            <div>
+                                 <h5 class="card-title main-hot1-title-font" >
+                                    <span>{{ pl.top1.subject }}</span>
+                                </h5>
+                                <div style="padding : 4px;"> </div>
+                                <p class="card-text main-Top1-Body-card-text-box post_detail__body-text">
+                                    {{ pl.top1.content|mark }}
+                                </p>
+                            </div>
+                        </a>
+
+                        <div class="card-header" style="height : 50px; background-color: white; display : flex;">
+                            <!--TOP 1 Header-동의 사람-->
+                            <div class="card-agree">
+                                <i class="fas fa-thumbs-up " style="align-item: center; font-size: 20px; color: #6499E1" ></i>
+                                <span style="font-size: 15px; color: #6499E1;">{{ pl.top1.voter.count }}명</span>
+                                <span style="font-size: 15px; color: #6499E1; margin-left: 5px;">({{ pl.top1.get_percentage }}%)</span>
+                            </div>
+                        </div>
+
+                        <!--TOP 1 Foot-->
+                        <div class="card-footer text-muted card-footer-setting" >
+                          <div class="progress" style="height:25px">
+                              <!--막대기 퍼센트 조절 하고 싶으면 home.css 에 가서 main_progress-bar-stats 에 있는 width 를 변경하면 된다. 니머지들 모두 같은 방식으로 진행   // 이 바로 아래 65%는 막대기 속 숫자를 의미-->
+                            <div class="progress-bar main_progress-bar-stats" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100" style="width: {{ pl.top1.get_percentage }}%;">
+                                {% if pl.top1.get_percentage >= 5 %}
+                                    {{ pl.top1.get_percentage }} %
+                                {% endif %}
+                            </div>
+                          </div>
+                        </div>
+                    </div>
+                </div>
 
 
 
-            <!--TOP1 TOP 2 사이 공간-->
-            {% if top2_3 %}
-                <div class="home-margin-30"></div>
-                <div class="home__container-remnant" style="display: flex; justify-content : space-evenly;">
-                    {% for petition in pl.top2_3 %}
-                        {% if petition %}
-                        <div class="card text-right home__container-remnant-top2" style="width: 49%; text-decoration: none; color: black;">
-                            <div class="card text-center">
-                            <!--HOT 2 Head-->
-                              <div class="card-header main__top1-card-header" style="display : flex; justify-content : space-between;">
-                                <div class="card-info">
-                                    <span class="top23-header">{{ petition.get_category_display }} |</span>
-                                    <span class="top23-header" style="color: orange;">{{ petition.get_status_display }}</span>
-                                    <span class="top23-header">{{ petition.d_day }}</span>
-                                </div>
+                <!--TOP1 TOP 2 사이 공간-->
+                {% if top2_3 %}
+                    <div class="home-margin-30"></div>
+                    <div class="home__container-remnant" style="display: flex; justify-content : space-evenly;">
+                        {% for petition in pl.top2_3 %}
+                            {% if petition %}
+                            <div class="card text-right home__container-remnant-top2" style="width: 49%; text-decoration: none; color: black;">
+                                <div class="card text-center">
+                                <!--HOT 2 Head-->
+                                  <div class="card-header main__top1-card-header" style="display : flex; justify-content : space-between;">
+                                    <div class="card-info">
+                                        <span class="top23-header">{{ petition.get_category_display }} |</span>
+                                        <span class="top23-header" style="color: orange;">{{ petition.get_status_display }}</span>
+                                        <span class="top23-header">{{ petition.d_day }}</span>
+                                    </div>
 
-                                  <div class="card-date">
-                                    <i class="far fa-calendar-check " style="font-size: 15px;"></i>
-                                    <span class="top23-date"> 청원 기간: {{ petition.period_str }}</span>
+                                      <div class="card-date">
+                                        <i class="far fa-calendar-check " style="font-size: 15px;"></i>
+                                        <span class="top23-date"> 청원 기간: {{ petition.period_str }}</span>
+                                      </div>
                                   </div>
-                              </div>
-                            </div>
-                            <!--HOT 2 Body-->
-                            <a href="{% url 'petitions:petition_detail' petition.id %}" class="card-body main-hot23-body card-body-top" style="cursor: pointer;">
-                                <span class="card-title main-card-title-font">{{ petition.subject }}</span>
-                            </a>
-                            <!--HOT 2 동의 사람 수-->
-                            <div class="card-header" style="display : flex; justify-content : space-between; background-color: white;">
-                                <div class="card-agree">
-                                    <i class="fas fa-thumbs-up" style=" color : #6499E1;"></i>
-                                    <span style="font-size: 15px; color: #6499E1;">{{ petition.voter.count }}명</span>
-                                    <span style="font-size: 15px; color: #6499E1; margin-left: 5px;">({{ petition.get_percentage }}%)</span>
+                                </div>
+                                <!--HOT 2 Body-->
+                                <a href="{% url 'petitions:petition_detail' petition.id %}" class="card-body main-hot23-body card-body-top" style="cursor: pointer;">
+                                    <span class="card-title main-card-title-font">{{ petition.subject }}</span>
+                                </a>
+                                <!--HOT 2 동의 사람 수-->
+                                <div class="card-header" style="display : flex; justify-content : space-between; background-color: white;">
+                                    <div class="card-agree">
+                                        <i class="fas fa-thumbs-up" style=" color : #6499E1;"></i>
+                                        <span style="font-size: 15px; color: #6499E1;">{{ petition.voter.count }}명</span>
+                                        <span style="font-size: 15px; color: #6499E1; margin-left: 5px;">({{ petition.get_percentage }}%)</span>
+                                    </div>
+                                </div>
+                                <!--HOT 2 Foot-->
+                                <div class="card-footer text-muted card-footer-setting" style="background-color : #cdd0da; justify-content: center; padding: 8px 12px 6px 12px;">
+                                  <div class="progress" style="height: 20px;">
+                                    <div class="progress-bar" role="progressbar" style="width: {{ petition.get_percentage }}%; background-color: #6499E1;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
+                                        {% if petition.get_percentage >= 5 %}
+                                            {{ petition.get_percentage }} %
+                                        {% endif %}
+                                    </div>
+                                  </div>
                                 </div>
                             </div>
-                            <!--HOT 2 Foot-->
-                            <div class="card-footer text-muted card-footer-setting" style="background-color : #cdd0da; justify-content: center; padding: 8px 12px 6px 12px;">
-                              <div class="progress" style="height: 20px;">
-                                <div class="progress-bar" role="progressbar" style="width: {{ petition.get_percentage }}%; background-color: #6499E1;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
-                                    {% if petition.get_percentage >= 5 %}
-                                        {{ petition.get_percentage }} %
-                                    {% endif %}
+                            {% else %}
+                            <div class="card text-right home__container-remnant-top2" style="width: 49%;">
+                                <div class="card text-center">
+                                <!--HOT 2 Head-->
+                                  <div class="card-header main__top1-card-header" style="display : flex; justify-content : space-between;">
+                                    <div>
+                                        <span style="font-size : 15px">진행중인 청원 없음</span>
+                                    </div>
+                                  </div>
                                 </div>
-                              </div>
-                            </div>
-                        </div>
-                        {% else %}
-                        <div class="card text-right home__container-remnant-top2" style="width: 49%;">
-                            <div class="card text-center">
-                            <!--HOT 2 Head-->
-                              <div class="card-header main__top1-card-header" style="display : flex; justify-content : space-between;">
-                                <div>
-                                    <span style="font-size : 15px">진행중인 청원 없음</span>
+                                <!--HOT 2 Body-->
+                                <div class="card-body main-hot23-body" ></div>
+                                <!--HOT 2 동의 사람 수-->
+                                <div class="card-header" style="display : flex; justify-content : space-between; background-color: white;"></div>
+                                <!--HOT 2 Foot-->
+                                <div class="card-footer text-muted card-footer-setting" style="background-color : #cdd0da; justify-content: center; ">
+                                  <div class="progress" style="height: 20px;">
+                                    <div class="progress-bar" role="progressbar" style="width: 0%; background-color: #6499E1;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                                  </div>
                                 </div>
-                              </div>
                             </div>
-                            <!--HOT 2 Body-->
-                            <div class="card-body main-hot23-body" ></div>
-                            <!--HOT 2 동의 사람 수-->
-                            <div class="card-header" style="display : flex; justify-content : space-between; background-color: white;"></div>
-                            <!--HOT 2 Foot-->
-                            <div class="card-footer text-muted card-footer-setting" style="background-color : #cdd0da; justify-content: center; ">
-                              <div class="progress" style="height: 20px;">
-                                <div class="progress-bar" role="progressbar" style="width: 0%; background-color: #6499E1;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
-                              </div>
-                            </div>
-                        </div>
-                        {% endif %}
-                    {% endfor %}
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                {% endif %}
                 </div>
-            {% endif %}
+            {% endfor %}
+        </div>
+
+            <div class="home-margin-top"> </div>
+        </div>
+        </div>
+        {% endif %}
+        {% if petition_list %}
+        <div id="category" class="container container-home main-div category">
+        {% else %}
+        <div id="category" class="container container-home main-div" style="margin-top: 2rem;">
+        {% endif %}
+            <!--항목 별 분류 버튼 세트 -->
+            <div style="display : flex; justify-content: space-between;" >
+
+                    <!--학사 버튼-->
+                    <div class="main-search-by-category-icon-div">
+                        <a class="btn-primary main-search-by-category-icon" href="javascript:void(0);" onclick="changeCategory(1);" role="button">
+                            <i class="fas fa-user-graduate main-search-by-category-icon-details"></i>
+                        </a>
+                        <span class="main-search-by-category-icon-font">학사</span>
+                    </div>
+
+                    <!--등록/장학 버튼 -->
+                    <div class="main-search-by-category-icon-div">
+                        <a class="btn-primary main-search-by-category-icon " href="javascript:void(0);" onclick="changeCategory(2);" role="button">
+                            <i class="fas fa-won-sign main-search-by-category-icon-details" ></i>
+                        </a>
+                        <span class="main-search-by-category-icon-font">등록/장학</span>
+                    </div>
+
+                    <!--학생 생활 버튼 -->
+                    <div class="main-search-by-category-icon-div">
+                        <a class="btn-primary main-search-by-category-icon " href="javascript:void(0);" onclick="changeCategory(3);" role="button">
+                            <i class="fas fa-university main-search-by-category-icon-details"></i>
+                        </a>
+                        <span class="main-search-by-category-icon-font">학생생활</span>
+                    </div>
+
+                    <!--진로취업 버튼 -->
+                    <div class="main-search-by-category-icon-div">
+                        <a class="btn-primary main-search-by-category-icon " href="javascript:void(0);" onclick="changeCategory(4);" role="button">
+                            <i class="fas fa-briefcase main-search-by-category-icon-details"></i>
+                        </a>
+                        <span class="main-search-by-category-icon-font">진로취업</span>
+                    </div>
+
+                    <!--기타 버튼 -->
+                    <div class="main-search-by-category-icon-div">
+                        <a class="btn-primary main-search-by-category-icon " href="javascript:void(0);" onclick="changeCategory(5);" role="button">
+                            <i class="fas fa-question-circle main-search-by-category-icon-details"></i>
+                        </a>
+                        <span class="main-search-by-category-icon-font">기타</span>
+                    </div>
+                </div>
             </div>
-        {% endfor %}
-    </div>
-
-        <div class="home-margin-top"> </div>
-    </div>
-    </div>
-    {% endif %}
-    {% if petition_list %}
-    <div id="category" class="container container-home main-div category">
-    {% else %}
-    <div id="category" class="container container-home main-div" style="margin-top: 2rem;">
-    {% endif %}
-        <!--항목 별 분류 버튼 세트 -->
-        <div style="display : flex; justify-content: space-between;" >
-
-                <!--학사 버튼-->
-                <div class="main-search-by-category-icon-div">
-                    <a class="btn-primary main-search-by-category-icon" href="javascript:void(0);" onclick="changeCategory(1);" role="button">
-                        <i class="fas fa-user-graduate main-search-by-category-icon-details"></i>
-                    </a>
-                    <span class="main-search-by-category-icon-font">학사</span>
-                </div>
-
-                <!--등록/장학 버튼 -->
-                <div class="main-search-by-category-icon-div">
-                    <a class="btn-primary main-search-by-category-icon " href="javascript:void(0);" onclick="changeCategory(2);" role="button">
-                        <i class="fas fa-won-sign main-search-by-category-icon-details" ></i>
-                    </a>
-                    <span class="main-search-by-category-icon-font">등록/장학</span>
-                </div>
-
-                <!--학생 생활 버튼 -->
-                <div class="main-search-by-category-icon-div">
-                    <a class="btn-primary main-search-by-category-icon " href="javascript:void(0);" onclick="changeCategory(3);" role="button">
-                        <i class="fas fa-university main-search-by-category-icon-details"></i>
-                    </a>
-                    <span class="main-search-by-category-icon-font">학생생활</span>
-                </div>
-
-                <!--진로취업 버튼 -->
-                <div class="main-search-by-category-icon-div">
-                    <a class="btn-primary main-search-by-category-icon " href="javascript:void(0);" onclick="changeCategory(4);" role="button">
-                        <i class="fas fa-briefcase main-search-by-category-icon-details"></i>
-                    </a>
-                    <span class="main-search-by-category-icon-font">진로취업</span>
-                </div>
-
-                <!--기타 버튼 -->
-                <div class="main-search-by-category-icon-div">
-                    <a class="btn-primary main-search-by-category-icon " href="javascript:void(0);" onclick="changeCategory(5);" role="button">
-                        <i class="fas fa-question-circle main-search-by-category-icon-details"></i>
-                    </a>
-                    <span class="main-search-by-category-icon-font">기타</span>
-                </div>
         </div>
     </div>
-</div>
+
+    <!-- 공지사항 -->
+    <div id='myModal' class="modal" style="display: none;">
+        <div class="modal-content">
+            <span id='dd' class="close" style="font-size:3rem;">&times;</span>
+            <div class='popup_content'>
+                <div class='popup_title'>
+                    공지사항
+                </div>
+                <div class='popup_box'>
+                    <ul style="padding-left: 0;">
+                        상명대학교 서울캠퍼스 학우 여러분, 안녕하십니까. 제46대 총학생회 선[先] 입니다.<br><br>
+
+                        본 총학생회에서는 학우 여러분께 다양한 사업 정보의 전달 및 편의기능 제공을 목적으로 하는 소통창구, 총학생회 메인 홈페이지와 학생 건의/청원 게시판을 운영하고 있습니다.<br><br>
+
+                        본 건의/청원 게시판을 통해 학우 여러분과 함께 변화하는 학교로의 도약을 실현할 수 있도록 노력하겠습니다.<br>
+                        자세한 내용은 건의/청원 페이지 내 이용약관을 참고해주시면 감사하겠습니다.<br><br>
+
+                        학우 여러분이 전해주시는 목소리에 항상 귀 기울이고, 변화하는 학교를 만들기 위해 끊임없이 노력하겠습니다.<br>
+                        감사합니다.<br><br>
+
+                        🫧 그대 외침 닿을 때까지, 한 걸음 앞에 먼저 선[先] 🫧
+                        <hr style='border: 0.001px solid rgb(230, 230, 230); margin:1rem 0 1rem 0; width:100%; opacity: inherit'>
+                        <li class="modal-li">
+                            <b>이용약관 및 개인정보처리방침</b>&nbsp;&nbsp;
+                            <a class="link_site" href="{% url 'qna:terms' %}">이용안내</a>
+                        </li>
+                        <li class="modal-li">
+                            <b>상명대학교 서울캠퍼스 제46대 총학생회 선[先]</b>&nbsp;&nbsp;
+                            <a class="link_site" target="_blank" href="https://www.student-smu.com">상명대학교 총학생회</a>
+                        </li>
+                        <li class="modal-li">
+                            <b>상명대학교 졸업요건 검사</b>&nbsp;&nbsp;
+                            <a class="link_site" target="_blank" href="https://smunity.co.kr/">스뮤니티</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="popup_check">
+                    <label style='cursor:pointer'>
+                        <input id='unlook' type="checkbox" style='width:1rem; height:1rem;'>
+                        <label for='unlook'></label>
+                        &nbsp;일주일간 팝업 보지 않기
+                    </label>
+
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}
 {% block script %}
+    <script src="{% static 'js/modal.js' %}"></script>
     <script>
         function changeCategory(category) {
             let params = new URLSearchParams();
