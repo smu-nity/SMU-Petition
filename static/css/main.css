@@ -9,6 +9,7 @@
 @import "post_detail.css";
 @import "post_form.css";
 @import "post_list.css";
+@import "modal.css";
 
 /* Components */
 @import "navbar.css";
@@ -64,6 +65,7 @@ body {
     width: 80%;
     max-width: 1280px;
     height: auto;
+    display: block !important;
 }
 
 .load-modal-content {
