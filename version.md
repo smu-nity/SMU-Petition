@@ -1,5 +1,13 @@
 # 버전 기록
 
+### 1.0.4
+* **22.10.13**
+* 탭 이름 변경 ([더 보기](https://github.com/smu-nity/SMU-Petition/issues/277))
+  - 진행 중인 청원
+  - 답변 대기/완료 청원
+  - 만료/반려된 청원
+---
+
 ### 1.0.3
 * **22.10.12**
 * 탭 종류 변경 ([더 보기](https://github.com/smu-nity/SMU-Petition/issues/272))

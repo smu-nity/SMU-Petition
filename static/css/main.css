@@ -131,7 +131,7 @@ body {
 .close {
     color: #aaa;
     float: right;
-    font-size: 2.5rem;
+    font-size: 3rem;
     font-weight: bold;
 }
 
@@ -443,6 +443,11 @@ body {
       display: none;
   }
 
+  .checkbox {
+      width: 1rem;
+      height: 1rem;
+  }
+
   @keyframes sk-chase {
     100% { transform: rotate(360deg); }
   }
@@ -507,6 +512,10 @@ body {
       .popup_check {
           font-size: 1rem;
       }
+      .checkbox {
+          width: 0.9rem;
+          height: 0.9rem;
+      }
   }
 
 .display {
@@ -564,5 +573,75 @@ body {
     }
     .modal-li {
         margin-left: 1rem;
+    }
+    .close {
+        font-size: 2.4rem;
+    }
+    .checkbox {
+        width: 0.8rem;
+        height: 0.8rem;
+    }
+}
+@media (max-width:500px) {
+    .popup_title {
+        font-size: 1.6rem;
+    }
+    .popup_box {
+        font-size: 0.8rem;
+    }
+    .link_site {
+        font-size: 0.7rem;
+    }
+    .close {
+        font-size: 2.4rem;
+    }
+    .popup_check {
+        font-size: 0.8rem;
+    }
+    .checkbox {
+        width: 0.7rem;
+        height: 0.7rem;
+    }
+}
+@media (max-width:450px) {
+    .popup_title {
+        font-size: 1.4rem;
+    }
+    .popup_box {
+        font-size: 0.7rem;
+    }
+    .link_site {
+        font-size: 0.6rem;
+    }
+    .close {
+        font-size: 2.1rem;
+    }
+    .popup_check {
+        font-size: 0.7rem;
+    }
+    .checkbox {
+        width: 0.6rem;
+        height: 0.6rem;
+    }
+}
+@media (max-width:400px) {
+    .popup_title {
+        font-size: 1.2rem;
+    }
+    .popup_box {
+        font-size: 0.6rem;
+    }
+    .link_site {
+        font-size: 0.5rem;
+    }
+    .close {
+        font-size: 1.8rem;
+    }
+    .popup_check {
+        font-size: 0.6rem;
+    }
+    .checkbox {
+        width: 0.5rem;
+        height: 0.5rem;
     }
 }

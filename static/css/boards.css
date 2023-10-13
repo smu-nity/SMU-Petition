@@ -134,9 +134,15 @@
 		line-height:54px;
 	}
 }
+@media (max-width:600px) {
+	.tab a{
+		font-size:14px;
+		letter-spacing:-1px;
+	}
+}
 @media all and (max-width:414px) {
 	.tab a{
-		font-size:12px;
+		font-size:11px;
 		letter-spacing:-1px;
 	}
 }
