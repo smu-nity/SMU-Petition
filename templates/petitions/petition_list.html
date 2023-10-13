@@ -19,11 +19,11 @@
 			<div class="tab div3">
 				<ul>
 					<li class="motion fadeInLeft visible" data-animation="fadeInLeft"><a href="{% url 'petitions:petition_list' 'progress' %}"
-                            {% if status == 'progress' %}class="on" title="현재"{% endif %}>동의진행 청원</a></li>
+                            {% if status == 'progress' %}class="on" title="현재"{% endif %}>진행 중인 청원</a></li>
 					<li class="motion fadeInLeft visible" data-animation="fadeInLeft"><a href="{% url 'petitions:petition_list' 'established' %}"
-                            {% if status == 'established' %}class="on" title="현재"{% endif %}>성립된 청원</a></li>
+                            {% if status == 'established' %}class="on" title="현재"{% endif %}>답변 대기/완료 청원</a></li>
 					<li class="motion fadeInLeft visible" data-animation="fadeInLeft"><a href="{% url 'petitions:petition_list' 'unestablished' %}"
-                            {% if status == 'unestablished' %}class="on" title="현재"{% endif %}>미성립된 청원</a></li>
+                            {% if status == 'unestablished' %}class="on" title="현재"{% endif %}>만료/반려된 청원</a></li>
 				</ul>
 			</div>
 		</div>
