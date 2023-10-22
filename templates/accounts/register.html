@@ -14,7 +14,7 @@
     </div>
     <div class="white_sec">
         <div class="container box_web" id="box_mobile">
-            <form method="post" name='regi_form' onsubmit="return check_up()">
+            <form method="post" name='regi_form' onsubmit="return check_up();">
                 {% csrf_token %}
                     <label style="margin-top: 3rem;">이름</label>
                     <input class="form-control" type="text" name="name" value="{{ name }}" style="margin: auto; background-color:rgb(248,249,250);" readonly>
@@ -44,6 +44,19 @@
     </div>
 {% endblock %}
 {% block script %}
-<script src="{% static 'js/modal.js' %}"></script>
-
+    <script>
+        function check_up(){
+            if(!document.getElementById('pw1').value){
+                alert('😢 비밀번호를 입력해주세요.') ;
+                regi_form.pw1.focus();
+                return false;
+            }
+            if(document.getElementById('pw1').value !== document.getElementById('pw2').value){
+                alert('😢 비밀번호가 일치하지 않습니다.') ;
+                regi_form.pw1.focus();
+                return false;
+            }
+            return true;
+        }
+    </script>
 {% endblock %}
