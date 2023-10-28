@@ -131,9 +131,11 @@ def petition_delete(request, petition_id):
 @login_required
 def petition_vote(request, petition_id):
     petition = get_object_or_404(Petition, pk=petition_id)
-    if petition.status == 4:
+    if petition.status == 3:
+        messages.error(request, '답변완료된 청원입니다.')
+    elif petition.status == 4:
         messages.error(request, '만료된 청원입니다.')
-    if petition.status == 5:
+    elif petition.status == 5:
         messages.error(request, '반려된 청원입니다.')
     elif request.user == petition.author:
         messages.error(request, '본인이 작성한 청원에 동의할 수 없습니다.')
