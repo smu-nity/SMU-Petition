@@ -1,4 +1,4 @@
-# SMU Petition ![Python versions](https://img.shields.io/badge/Python-3.9-blue) ![License](https://img.shields.io/badge/license-MIT-green) ![Release](https://img.shields.io/badge/release-1.1.1-red)
+# SMU Petition ![Python versions](https://img.shields.io/badge/Python-3.9-blue) ![License](https://img.shields.io/badge/license-MIT-green) ![Release](https://img.shields.io/badge/release-1.1.2-red)
 #### 상명대학교 청원 사이트
 
 ![SMU Petition](https://github.com/smu-nity/SMU-Petition/assets/63601183/24248803-5052-43d4-b27e-83e4498869cd)
