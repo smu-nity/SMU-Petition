@@ -651,12 +651,18 @@ body {
 .info_img {
     height: 55px;
 }
+.info_margin {
+    margin: 30px 10px;
+}
 @media screen and (max-width: 1024px) {
     .logo_img {
         height: 55px;
     }
     .info_img {
         height: 50px;
+    }
+    .info_margin {
+        margin: 25px 10px;
     }
 }
 @media screen and (max-width: 767px) {
@@ -665,5 +671,8 @@ body {
     }
     .info_img {
         height: 40px;
+    }
+    .info_margin {
+        margin: 20px 10px;
     }
 }
