@@ -5,20 +5,19 @@
     <div style="background-color : #ebecf0;">
         <div class="navbar-img">
             <img class="main-img-image"/>
-
-            <div class="navbar-img__text">
-                <!--동의하기, 청원하기 버튼-->
-                <div class="col-5 enroll-btn display-none" style="padding-top : 10rem;">
-                    <a href="{% url 'petitions:petition_create' %}" class="btn btn-primary navbarMain-button">
-                        <i class="fas fa-pen enroll-btn__icon" ></i>
-                        <span>청원하기</span>
-                    </a>
-                    <a href="{% url 'petitions:petition_list' 'progress'%}" class="btn btn-primary navbarMain-button">
-                        <i class="fas fa-thumbs-up enroll-btn__icon"></i>
-                        <span>동의하기</span>
-                    </a>
-                </div>
-            </div>
+            <!--동의하기, 청원하기 버튼 (상명대학교 청원 운영 종료)-->
+{#            <div class="navbar-img__text">#}
+{#                <div class="col-5 enroll-btn display-none" style="padding-top : 10rem;">#}
+{#                    <a href="{% url 'petitions:petition_create' %}" class="btn btn-primary navbarMain-button">#}
+{#                        <i class="fas fa-pen enroll-btn__icon" ></i>#}
+{#                        <span>청원하기</span>#}
+{#                    </a>#}
+{#                    <a href="{% url 'petitions:petition_list' 'progress'%}" class="btn btn-primary navbarMain-button">#}
+{#                        <i class="fas fa-thumbs-up enroll-btn__icon"></i>#}
+{#                        <span>동의하기</span>#}
+{#                    </a>#}
+{#                </div>#}
+{#            </div>#}
         </div>
         {% if petition_list %}
             <div id="box_board" >
