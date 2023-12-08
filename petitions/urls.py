@@ -5,7 +5,7 @@ app_name = 'petitions'
 
 urlpatterns = [
     path('<int:petition_id>/', views.petition_detail, name='petition_detail'),
-    path('create/', views.petition_create, name='petition_create'),
+    # path('create/', views.petition_create, name='petition_create'),   # 상명대학교 청원 운영 종료
     path('modify/<int:petition_id>/', views.petition_modify, name='petition_modify'),
     path('delete/<int:petition_id>/', views.petition_delete, name='petition_delete'),
     path('vote/<int:petition_id>/', views.petition_vote, name='petition_vote'),
