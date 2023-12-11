@@ -45,7 +45,9 @@ class Petition(models.Model):
 
     def d_day(self):
         if self.status == 1:
-            return f'| D-{(self.end_date.date() - datetime.now().date()).days}'
+            day = (self.end_date.date() - datetime.now().date()).days
+            day = day if day != 0 else 'Day'
+            return f'| D-{day}'
         return ''
 
     def get_percentage(self):
