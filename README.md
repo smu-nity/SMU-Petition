@@ -3,10 +3,6 @@
 
 ![SMU Petition](https://github.com/smu-nity/SMU-Petition/assets/63601183/24248803-5052-43d4-b27e-83e4498869cd)
 
-## ⭐ Website URL
-
-* #### https://smu-petition.com
-
 ## ⚒️ Tech Stack
 
 * #### Backend
